@@ -1,0 +1,101 @@
+--[[
+    GD50
+    Super Mario Bros. Remake
+
+    Author: Colton Ogden
+    cogden@cs50.harvard.edu
+
+    -- Dependencies --
+
+    A file to organize all of the global dependencies for our project, as
+    well as the assets for our game, rather than pollute our main.lua file.
+]]
+
+--
+-- libraries
+--
+Class = require 'lib/class'
+push = require 'lib/push'
+Timer = require 'lib/knife.timer'
+
+--
+-- our own code
+--
+
+-- utility
+require 'src/constants'
+require 'src/StateMachine'
+require 'src/Util'
+
+-- game states
+require 'src/states/BaseState'
+require 'src/states/game/PlayState'
+require 'src/states/game/StartState'
+require 'src/states/game/GameOverState'
+
+-- entity states
+require 'src/states/entity/PlayerAirState'
+require 'src/states/entity/PlayerGroundState'
+
+-- general
+require 'src/Animation'
+require 'src/Entity'
+require 'src/GameObject'
+require 'src/GameLevel'
+require 'src/LevelMaker'
+require 'src/Player'
+require 'src/Tile'
+require 'src/TileMap'
+require 'src/entity_defs'
+require 'src/game-objects'
+
+gSounds = {
+    ['jump'] = love.audio.newSource('sounds/jump.wav'),
+    ['death'] = love.audio.newSource('sounds/death.wav'),
+    ['music'] = love.audio.newSource('sounds/music.wav'),
+    ['pickup'] = love.audio.newSource('sounds/pickup.wav'),
+    ['kill'] = love.audio.newSource('sounds/kill.wav'),
+    ['kill2'] = love.audio.newSource('sounds/kill2.wav')
+}
+
+gTextures = {
+    ['tiles'] = love.graphics.newImage('graphics/tiles.png'),
+    ['toppers'] = love.graphics.newImage('graphics/tile_tops.png'),
+    ['bushes'] = love.graphics.newImage('graphics/bushes_and_cacti.png'),
+    ['backgrounds'] = love.graphics.newImage('graphics/backgrounds.png'),
+    ['character-walk'] = love.graphics.newImage('graphics/characterWalk.png'),
+    ['character-idle'] = love.graphics.newImage('graphics/characterIdle.png'),
+    ['character-slide'] = love.graphics.newImage('graphics/characterSlide.png'),
+    ['dust'] = love.graphics.newImage('graphics/Dust.png'),
+    ['error'] = love.graphics.newImage('graphics/Error.png')
+    
+}
+
+gFrames = {
+    ['tiles'] = GenerateQuads(gTextures['tiles'], TILE_SIZE, TILE_SIZE),
+    
+    ['toppers'] = GenerateQuads(gTextures['toppers'], TILE_SIZE, TILE_SIZE),
+    
+    ['bushes'] = GenerateQuads(gTextures['bushes'], 16, 16),
+    ['backgrounds'] = GenerateQuads(gTextures['backgrounds'], 256, 128),
+    ['character-walk'] = GenerateQuads(gTextures['character-walk'], 16, 16),
+    ['character-idle'] = GenerateQuads(gTextures['character-idle'], 16, 16),
+    ['character-slide'] = GenerateQuads(gTextures['character-slide'], 16, 16),
+    ['dust'] = GenerateQuads(gTextures['dust'], 16, 16),
+    ['error'] = GenerateQuads(gTextures['error'], 16, 16)
+    
+}
+
+-- these need to be added after gFrames is initialized because they refer to gFrames from within
+gFrames['tilesets'] = GenerateTileSets(gFrames['tiles'], 
+    TILE_SETS_WIDE, TILE_SETS_TALL, TILE_SET_WIDTH, TILE_SET_HEIGHT)
+
+gFrames['toppersets'] = GenerateTileSets(gFrames['toppers'], 
+    TOPPER_SETS_WIDE, TOPPER_SETS_TALL, TILE_SET_WIDTH, TILE_SET_HEIGHT)
+
+gFonts = {
+    ['small'] = love.graphics.newFont('fonts/font.ttf', 8),
+    ['medium'] = love.graphics.newFont('fonts/font.ttf', 16),
+    ['large'] = love.graphics.newFont('fonts/font.ttf', 32),
+    ['title'] = love.graphics.newFont('fonts/ArcadeAlternate.ttf', 32)
+}
