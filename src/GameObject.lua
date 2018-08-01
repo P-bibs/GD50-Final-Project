@@ -11,10 +11,8 @@ GameObject = Class{}
 function GameObject:init(def, x, y)
     self.x = x
     self.y = y
-    self.texture = def.texture
     self.width = def.width
     self.height = def.height
-    self.frame = def.frame
     self.solid = def.solid
     self.collidable = def.collidable
     self.consumable = def.consumable
@@ -48,12 +46,12 @@ function GameObject:collides(target)
 end
 
 function GameObject:update(dt)
-    if self.currentAnimation.looping == false and self.currentAnimation.timesPlayed > 0 then
-        self.dead = true
-    end
-
     if self.currentAnimation then
         self.currentAnimation:update(dt)
+    end
+
+    if self.currentAnimation.looping == false and self.currentAnimation.timesPlayed > 0 then
+        self.dead = true
     end
 end
 

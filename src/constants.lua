@@ -90,3 +90,13 @@ ERROR_ANIM = {
     texture = 'error'
     }
 }
+
+--Keybinds
+
+KEY_MOVE_LEFT = 'a'
+KEY_MOVE_RIGHT = 'd'
+KEY_JUMP = 'w'
+KEY_ATTACK_RIGHT = 'right' 
+KEY_ATTACK_LEFT = 'left'
+KEY_ATTACK_UP = 'up'
+KEY_ATTACK_DOWN = 'down'

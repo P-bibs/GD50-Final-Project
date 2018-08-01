@@ -31,8 +31,7 @@ function Entity:init(def)
     -- reference to tile map so we can check collisions
     self.map = def.map
 
-    -- reference to level for tests against other entities + objects
-    self.level = def.level
+    self.effects = {}
 
     self.animations = self:createAnimations(def.animations)
 end
@@ -52,7 +51,6 @@ function Entity:createAnimations(animations)
 end
 
 function Entity:changeState(state, params)
-    print('changed to: ' .. state)
     self.stateMachine:change(state, params)
 end
 
@@ -61,6 +59,10 @@ function Entity:changeAnimation(name)
 end
 
 function Entity:update(dt)
+    for i = 1, #self.effects do
+        self.effects[i]:update(dt)
+    end
+
     self.stateMachine:update(dt)
 
     if self.currentAnimation then
@@ -74,6 +76,10 @@ function Entity:collides(entity)
 end
 
 function Entity:render()
+    for i = 1, #self.effects do
+        self.effects[i]:render()
+    end
+
     love.graphics.draw(gTextures[self.currentAnimation.texture], gFrames[self.currentAnimation.texture][self.currentAnimation:getCurrentFrame()],
         math.floor(self.x) + 8, math.floor(self.y) + 10, 0, 1, 1, 8, 10)
 end

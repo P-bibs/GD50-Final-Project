@@ -41,9 +41,11 @@ require 'src/states/entity/PlayerGroundState'
 require 'src/Animation'
 require 'src/Entity'
 require 'src/GameObject'
+require 'src/Effect'
 require 'src/GameLevel'
 require 'src/LevelMaker'
 require 'src/Player'
+
 require 'src/Tile'
 require 'src/TileMap'
 require 'src/entity_defs'
@@ -66,6 +68,8 @@ gTextures = {
     ['character-walk'] = love.graphics.newImage('graphics/characterWalk.png'),
     ['character-idle'] = love.graphics.newImage('graphics/characterIdle.png'),
     ['character-slide'] = love.graphics.newImage('graphics/characterSlide.png'),
+    ['character-attack-horizontal'] = love.graphics.newImage('graphics/CharacterAttackHorizontal.png'),
+    ['character-attack-vertical'] = love.graphics.newImage('graphics/CharacterAttackVertical.png'),
     ['dust'] = love.graphics.newImage('graphics/Dust.png'),
     ['error'] = love.graphics.newImage('graphics/Error.png')
     
@@ -81,6 +85,8 @@ gFrames = {
     ['character-walk'] = GenerateQuads(gTextures['character-walk'], 16, 16),
     ['character-idle'] = GenerateQuads(gTextures['character-idle'], 16, 16),
     ['character-slide'] = GenerateQuads(gTextures['character-slide'], 16, 16),
+    ['character-attack-horizontal'] = GenerateQuads(gTextures['character-attack-horizontal'], 32, 16),
+    ['character-attack-vertical'] = GenerateQuads(gTextures['character-attack-vertical'], 16, 32),
     ['dust'] = GenerateQuads(gTextures['dust'], 16, 16),
     ['error'] = GenerateQuads(gTextures['error'], 16, 16)
     

@@ -31,6 +31,54 @@ GAME_OBJECT_DEFS = {
             }
         }
     },
+    ['character-attack-right'] = { --Effect
+        width = 32,
+        height = 16,
+        animations = {
+            ['default'] = {
+                frames = {1, 2, 3, 4, 5},
+                interval = 0.1,
+                texture = 'character-attack-horizontal',
+                looping = false
+            }
+        }
+    },
+    ['character-attack-left'] = { --Effect
+        width = 32,
+        height = 16,
+        animations = {
+            ['default'] = {
+                frames = {6, 7, 8, 9, 10},
+                interval = 0.1,
+                texture = 'character-attack-horizontal',
+                looping = false
+            }
+        }
+    },
+    ['character-attack-up'] = { --Effect
+        width = 16,
+        height = 32,
+        animations = {
+            ['default'] = {
+                frames = {1, 2, 3, 4, 5},
+                interval = 0.1,
+                texture = 'character-attack-vertical',
+                looping = false
+            }
+        }
+    },
+    ['character-attack-down'] = { --Effect
+        width = 16,
+        height = 32,
+        animations = {
+            ['default'] = {
+                frames = {6, 7, 8, 9, 10},
+                interval = 0.1,
+                texture = 'character-attack-vertical',
+                looping = false
+            }
+        }
+    },
     bush = {
         width = 16,
         height = 16,

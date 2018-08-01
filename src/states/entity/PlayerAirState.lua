@@ -18,9 +18,9 @@ end
 function PlayerAirState:update(dt)
     self.player.currentAnimation:update(dt)
 
-    if love.keyboard.isDown('left') then
+    if love.keyboard.isDown(KEY_MOVE_LEFT) then
         self.player:changeAnimation('slide-left')
-    elseif love.keyboard.isDown('right') then
+    elseif love.keyboard.isDown(KEY_MOVE_RIGHT) then
         self.player:changeAnimation('slide-right')
     else
         self.player:changeAnimation('idle')

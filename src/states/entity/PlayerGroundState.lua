@@ -19,7 +19,7 @@ function PlayerGroundState:update(dt)
         self.player:changeAnimation('idle')
     end
 
-    if ((love.keyboard.isDown('right') and self.player.vx < 0) or (love.keyboard.isDown('left') and self.player.vx > 0 )) and math.random(7) == 1 then
+    if ((love.keyboard.isDown(KEY_MOVE_RIGHT) and self.player.vx < 0) or (love.keyboard.isDown(KEY_MOVE_LEFT) and self.player.vx > 0 )) and math.random(7) == 1 then
         table.insert(self.player.level.objects,
                 GameObject(GAME_OBJECT_DEFS['dust'], self.player.x, self.player.y)
             )
@@ -40,7 +40,7 @@ function PlayerGroundState:update(dt)
     if #collidedObjects == 0 and (tileBottomLeft and tileBottomRight) and (not tileBottomLeft:collidable() and not tileBottomRight:collidable()) then
         self.player.dy = 0
         self.player:changeState('air')
-    elseif love.keyboard.isDown('left') then
+    elseif love.keyboard.isDown(KEY_MOVE_LEFT) then
         self.player.direction = 'left'
         self.player:checkLeftCollisions(dt)
         if self.player.vx < 0 then
@@ -48,7 +48,7 @@ function PlayerGroundState:update(dt)
         else
             self.player:changeAnimation('slide-left')
         end
-    elseif love.keyboard.isDown('right') then
+    elseif love.keyboard.isDown(KEY_MOVE_RIGHT) then
         self.player.direction = 'right'
         self.player:checkRightCollisions(dt)
         if self.player.vx > 0 then

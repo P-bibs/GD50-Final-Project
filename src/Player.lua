@@ -21,11 +21,43 @@ function Player:init(def, score)
     self.vy = 0
     self.ay = 0
 
-    self.jumps = 4
+    self.jumps = 6
 end
 
 function Player:update(dt)
     Entity.update(self, dt)
+
+    if love.keyboard.wasPressed(KEY_ATTACK_RIGHT) then
+        table.insert(self.effects, Effect(
+            GAME_OBJECT_DEFS['character-attack-right'], 
+            self.x + self.width,
+            self.y
+        ))
+    end
+
+    if love.keyboard.wasPressed(KEY_ATTACK_LEFT) then
+        table.insert(self.effects, Effect(
+            GAME_OBJECT_DEFS['character-attack-left'], 
+            self.x - 4 - GAME_OBJECT_DEFS['character-attack-left'].width,
+            self.y
+        ))
+    end
+
+    if love.keyboard.wasPressed(KEY_ATTACK_UP) then
+        table.insert(self.effects, Effect(
+            GAME_OBJECT_DEFS['character-attack-up'], 
+            self.x,
+            self.y - GAME_OBJECT_DEFS['character-attack-down'].height
+        ))
+    end
+
+    if love.keyboard.wasPressed(KEY_ATTACK_DOWN) then
+        table.insert(self.effects, Effect(
+            GAME_OBJECT_DEFS['character-attack-down'], 
+            self.x,
+            self.y + self.height
+        ))
+    end
 
     self.ay = -7
     self.ax = 0
@@ -35,20 +67,20 @@ function Player:update(dt)
         self.y = ((7 - 1) * TILE_SIZE) - self.height
         self.ay = 0
         self.vy = 0
-        self.jumps = 4
+        self.jumps = 6
     end
 
     --jump
-    if love.keyboard.wasPressed('space') and self.jumps > 0 then
+    if love.keyboard.wasPressed(KEY_JUMP) and self.jumps > 0 then
         self.vy = PLAYER_JUMP_VELOCITY
         self.jumps = self.jumps - 1
     end
 
     --input
-    if love.keyboard.isDown('left') then
+    if love.keyboard.isDown(KEY_MOVE_LEFT) then
         self.ax = -5
     end
-    if love.keyboard.isDown('right') then
+    if love.keyboard.isDown(KEY_MOVE_RIGHT) then
         self.ax = 5
     end
 
@@ -72,6 +104,10 @@ function Player:update(dt)
 
     self.vy = self.vy + self.ay
     self.y = self.y - self.vy * dt
+
+    for i = 1, #self.effects do
+        self.effects[i]:update(dt)
+    end
 end
 
 function Player:checkLeftCollisions(dt)
@@ -142,9 +178,13 @@ function Player:render()
     love.graphics.draw(gTextures[self.currentAnimation.texture], gFrames[self.currentAnimation.texture][self.currentAnimation:getCurrentFrame()],
         math.floor(self.x) + 8, math.floor(self.y) + 10, 0, 1, 1, 8, 10)
 
-    for i = 1, 4 do
+    for i = 1, 6 do
         if i <= self.jumps then
-            love.graphics.circle('fill', math.floor(self.x + 3 * i), math.floor(self.y), 1)
+            love.graphics.circle('fill', math.floor(self.x  - 3 + 3 * i), math.floor(self.y), 1)
         end
+    end
+
+    for i = 1, #self.effects do
+        if not self.effects[i].dead then self.effects[i]:render() end
     end
 end
