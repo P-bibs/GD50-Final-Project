@@ -8,7 +8,9 @@
 
 ENTITY_DEFS = {
     ['player'] = {
-        walkSpeed = PLAYER_WALK_SPEED,
+        speed = PLAYER_WALK_SPEED,
+        width = 16,
+        height = 16,
         animations = {
             ['walk-right'] = {
                 frames = {1, 2, 3, 4},
@@ -34,6 +36,20 @@ ENTITY_DEFS = {
                 frames = {2},
                 interval = 0.3,
                 texture = 'character-slide'
+            }
+        }
+    },
+    ['bug'] = {
+        speed = 120,
+        height = 20,
+        width = 24,
+        walkSpeed = 100,
+        health = 1,
+        animations = {
+            ['idle'] = {
+                frames = {1, 2, 3, 4, 5, 6, 7},
+                interval = 0.1,
+                texture = 'bug'
             }
         }
     }

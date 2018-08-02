@@ -20,8 +20,10 @@ function PlayState:enter(def)
     self.gravityAmount = 6
 
     self.player = Player({
-        x = 0, y = 0,
-        width = 16, height = 15,
+        width = ENTITY_DEFS['player'].width,
+        height = ENTITY_DEFS['player'].height,
+        animations = ENTITY_DEFS['player'].animations,
+        level = self.level,
         stateMachine = StateMachine {
             --['idle'] = function() return PlayerIdleState(self.player) end,
             ['ground'] = function() return PlayerGroundState(self.player) end,
@@ -29,13 +31,10 @@ function PlayState:enter(def)
             --['jump'] = function() return PlayerJumpState(self.player, self.gravityAmount) end,
             ['air'] = function() return PlayerAirState(self.player, self.gravityAmount) end
         },
-        animations = ENTITY_DEFS['player'].animations,
-        
         map = self.tileMap,
-        level = self.level
-    },
-    --pass the score from the previous level
-    def and def[2] or 0)
+        level = self.level},
+        0, 0
+        )
 
     self.player.level = self.level
     
@@ -51,6 +50,30 @@ function PlayState:enter(def)
     self.cameraAY = 0
     self.K = 2.5
     self.damping = 50
+
+    Timer.every(3, function()
+        local type = 'bug'
+        table.insert(self.level.entities, Entity({
+            animations = ENTITY_DEFS[type].animations,
+            speed = ENTITY_DEFS[type].speed,
+            health = ENTITY_DEFS[type].health,
+            width = ENTITY_DEFS[type].width,
+            height = ENTITY_DEFS[type].height,
+            player = self.player,
+
+            stateMachine = StateMachine {
+                ['chase'] = function() return EntityChaseState(self.level.entities[#self.level.entities]) end,
+                ['idle'] = function() return EntityIdleState(self.level.entities[#self.level.entities]) end
+            }
+        },
+        math.random(self.player.x - 100, self.player.x + 100), 
+        math.random(self.player.y - 100, self.player.y + 100)
+        )
+        )
+
+        self.level.entities[#self.level.entities]:changeState('chase')
+    end
+    )
 end
 
 function PlayState:update(dt)
@@ -70,6 +93,7 @@ function PlayState:update(dt)
     elseif self.player.x > TILE_SIZE * self.tileMap.width - self.player.width then
         self.player.x = TILE_SIZE * self.tileMap.width - self.player.width
     end
+
 
     self.cameraXEquilibrium = self.player.x - (VIRTUAL_WIDTH / 2) + (self.player.width / 2)
     self.cameraXEquilibrium = math.max(0,
@@ -114,10 +138,10 @@ function PlayState:render()
     love.graphics.setColor(255, 255, 255, 255)
     love.graphics.print(tostring(self.player.score), 4, 4)
 
-    love.graphics.print(tostring(self.player.ax), 5, 20)
-    love.graphics.print(tostring(self.player.vx), 5, 35)
-    love.graphics.print(tostring(0), 5, 50)
-    love.graphics.print(tostring(0), 5, 65)
+    -- love.graphics.print(tostring(self.player.ax), 5, 20)
+    -- love.graphics.print(tostring(self.player.vx), 5, 35)
+    -- love.graphics.print(tostring(0), 5, 50)
+    -- love.graphics.print(tostring(0), 5, 65)
 
     --render key info
     if self.player.hasKey then

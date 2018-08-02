@@ -10,26 +10,32 @@
 
 Entity = Class{}
 
-function Entity:init(def)
+function Entity:init(def, x, y)
     -- position
-    self.x = def.x
-    self.y = def.y
+    self.x = x
+    self.vx = 0
+    self.ax = 0
 
-    -- velocity
-    self.dx = 0
-    self.dy = 0
+    self.y = y
+    self.vy = 0
+    self.ay = 0
 
     -- dimensions
     self.width = def.width
     self.height = def.height
 
-    self.texture = def.texture
+    self.speed = def.speed
+
     self.stateMachine = def.stateMachine
 
     self.direction = 'left'
 
     -- reference to tile map so we can check collisions
     self.map = def.map
+
+    self.player = def.player
+
+    self.level = def.level
 
     self.effects = {}
 
@@ -45,6 +51,7 @@ function Entity:createAnimations(animations)
             frames = animationDef.frames,
             interval = animationDef.interval
         }
+        self.currentAnimation = animationsReturned[k]
     end
 
     return animationsReturned

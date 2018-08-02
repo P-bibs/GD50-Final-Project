@@ -10,18 +10,12 @@
 
 Player = Class{__includes = Entity}
 
-function Player:init(def, score)
-    Entity.init(self, def)
-    self.score = score
-    self.hasKey = false
-
-    self.vx = 0
-    self.ax = 0
-
-    self.vy = 0
-    self.ay = 0
+function Player:init(def, x, y)
+    Entity.init(self, def, x, y)
 
     self.jumps = 6
+
+    self.hitbox = nil
 end
 
 function Player:update(dt)
@@ -33,6 +27,8 @@ function Player:update(dt)
             self.x + self.width,
             self.y
         ))
+        self.hitbox = Hitbox(self.x + self.width, self.y, 32, 16)
+        self.jumps = self.jumps - 1
     end
 
     if love.keyboard.wasPressed(KEY_ATTACK_LEFT) then
@@ -41,6 +37,8 @@ function Player:update(dt)
             self.x - 4 - GAME_OBJECT_DEFS['character-attack-left'].width,
             self.y
         ))
+        self.hitbox = Hitbox(self.x - 4 - GAME_OBJECT_DEFS['character-attack-left'].width, self.y, 32, 16)
+        self.jumps = self.jumps - 1
     end
 
     if love.keyboard.wasPressed(KEY_ATTACK_UP) then
@@ -49,6 +47,8 @@ function Player:update(dt)
             self.x,
             self.y - GAME_OBJECT_DEFS['character-attack-down'].height
         ))
+        self.hitbox = Hitbox(self.x, self.y - GAME_OBJECT_DEFS['character-attack-down'].height, 16, 32)
+        self.jumps = self.jumps - 1
     end
 
     if love.keyboard.wasPressed(KEY_ATTACK_DOWN) then
@@ -57,7 +57,26 @@ function Player:update(dt)
             self.x,
             self.y + self.height
         ))
+        self.hitbox = Hitbox(self.x, self.y + self.height, 16, 32)
+        self.jumps = self.jumps - 1
     end
+
+    print(#self.effects)
+
+    if #self.effects == 0 then
+        self.hitbox = nil
+    end
+
+    if self.hitbox then
+        for k, entity in pairs(self.level.entities) do
+            if entity:collides(self.hitbox) then
+                table.remove(self.level.entities, k)
+                self.jumps = 6
+            end
+        end
+    end
+
+
 
     self.ay = -7
     self.ax = 0
@@ -107,6 +126,7 @@ function Player:update(dt)
 
     for i = 1, #self.effects do
         self.effects[i]:update(dt)
+        if self.effects[i].dead then table.remove(self.effects, i) end
     end
 end
 
@@ -186,5 +206,9 @@ function Player:render()
 
     for i = 1, #self.effects do
         if not self.effects[i].dead then self.effects[i]:render() end
+    end
+
+    if self.hitbox then
+        love.graphics.rectangle('line', self.hitbox.x, self.hitbox.y, self.hitbox.width, self.hitbox.height)
     end
 end

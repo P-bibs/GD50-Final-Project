@@ -36,6 +36,8 @@ require 'src/states/game/GameOverState'
 -- entity states
 require 'src/states/entity/PlayerAirState'
 require 'src/states/entity/PlayerGroundState'
+require 'src/states/entity/EntityChaseState'
+require 'src/states/entity/EntityIdleState'
 
 -- general
 require 'src/Animation'
@@ -45,6 +47,7 @@ require 'src/Effect'
 require 'src/GameLevel'
 require 'src/LevelMaker'
 require 'src/Player'
+require 'src/Hitbox'
 
 require 'src/Tile'
 require 'src/TileMap'
@@ -65,11 +68,12 @@ gTextures = {
     ['toppers'] = love.graphics.newImage('graphics/tile_tops.png'),
     ['bushes'] = love.graphics.newImage('graphics/bushes_and_cacti.png'),
     ['backgrounds'] = love.graphics.newImage('graphics/backgrounds.png'),
-    ['character-walk'] = love.graphics.newImage('graphics/characterWalk.png'),
-    ['character-idle'] = love.graphics.newImage('graphics/characterIdle.png'),
-    ['character-slide'] = love.graphics.newImage('graphics/characterSlide.png'),
+    ['character-walk'] = love.graphics.newImage('graphics/CharacterWalk.png'),
+    ['character-idle'] = love.graphics.newImage('graphics/CharacterIdle.png'),
+    ['character-slide'] = love.graphics.newImage('graphics/CharacterSlide.png'),
     ['character-attack-horizontal'] = love.graphics.newImage('graphics/CharacterAttackHorizontal.png'),
     ['character-attack-vertical'] = love.graphics.newImage('graphics/CharacterAttackVertical.png'),
+    ['bug'] = love.graphics.newImage('graphics/Bug.png'),
     ['dust'] = love.graphics.newImage('graphics/Dust.png'),
     ['error'] = love.graphics.newImage('graphics/Error.png')
     
@@ -87,6 +91,7 @@ gFrames = {
     ['character-slide'] = GenerateQuads(gTextures['character-slide'], 16, 16),
     ['character-attack-horizontal'] = GenerateQuads(gTextures['character-attack-horizontal'], 32, 16),
     ['character-attack-vertical'] = GenerateQuads(gTextures['character-attack-vertical'], 16, 32),
+    ['bug'] = GenerateQuads(gTextures['bug'], 24, 20),
     ['dust'] = GenerateQuads(gTextures['dust'], 16, 16),
     ['error'] = GenerateQuads(gTextures['error'], 16, 16)
     
