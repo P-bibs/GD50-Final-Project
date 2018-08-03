@@ -36,8 +36,12 @@ require 'src/states/game/GameOverState'
 -- entity states
 require 'src/states/entity/PlayerAirState'
 require 'src/states/entity/PlayerGroundState'
-require 'src/states/entity/EntityChaseState'
+require 'src/states/entity/EntityMoveState'
 require 'src/states/entity/EntityIdleState'
+require 'src/states/entity/BugEnemy/BugIdleState'
+require 'src/states/entity/BugEnemy/BugMoveState'
+require 'src/states/entity/DashEnemy/DashIdleState'
+require 'src/states/entity/DashEnemy/DashMoveState'
 
 -- general
 require 'src/Animation'
@@ -74,6 +78,7 @@ gTextures = {
     ['character-attack-horizontal'] = love.graphics.newImage('graphics/CharacterAttackHorizontal.png'),
     ['character-attack-vertical'] = love.graphics.newImage('graphics/CharacterAttackVertical.png'),
     ['bug'] = love.graphics.newImage('graphics/Bug.png'),
+    ['dash-enemy'] = love.graphics.newImage('graphics/DashEnemy.png'),
     ['dust'] = love.graphics.newImage('graphics/Dust.png'),
     ['error'] = love.graphics.newImage('graphics/Error.png')
     
@@ -92,6 +97,7 @@ gFrames = {
     ['character-attack-horizontal'] = GenerateQuads(gTextures['character-attack-horizontal'], 32, 16),
     ['character-attack-vertical'] = GenerateQuads(gTextures['character-attack-vertical'], 16, 32),
     ['bug'] = GenerateQuads(gTextures['bug'], 24, 20),
+    ['dash-enemy'] = GenerateQuads(gTextures['dash-enemy'], 24, 24),
     ['dust'] = GenerateQuads(gTextures['dust'], 16, 16),
     ['error'] = GenerateQuads(gTextures['error'], 16, 16)
     

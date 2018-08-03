@@ -40,16 +40,33 @@ ENTITY_DEFS = {
         }
     },
     ['bug'] = {
-        speed = 120,
+        speed = 80,
         height = 20,
         width = 24,
-        walkSpeed = 100,
         health = 1,
         animations = {
             ['idle'] = {
                 frames = {1, 2, 3, 4, 5, 6, 7},
                 interval = 0.1,
                 texture = 'bug'
+            }
+        }
+    },
+    ['dash'] = {
+        speed = 200,
+        height = 24,
+        width = 24,
+        health = 1,
+        animations = {
+            ['idle'] = {
+                frames = {1, 2, 3, 4, 5, 6, 7, 8, 9},
+                interval = 0.1,
+                texture = 'dash-enemy'
+            },
+            ['dash'] = {
+                frames = {10},
+                interval = 0.1,
+                texture = 'dash-enemy'
             }
         }
     }

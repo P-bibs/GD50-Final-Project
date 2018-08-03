@@ -67,8 +67,6 @@ end
 function love.update(dt)
     gStateMachine:update(dt)
 
-    Timer.update(dt)
-
     love.keyboard.keysPressed = {}
 end
 

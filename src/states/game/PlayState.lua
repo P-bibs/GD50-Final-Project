@@ -51,8 +51,9 @@ function PlayState:enter(def)
     self.K = 2.5
     self.damping = 50
 
-    Timer.every(3, function()
-        local type = 'bug'
+    Timer.every(5, function()
+        local type = 'dash'
+        index = #self.level.entities + 1
         table.insert(self.level.entities, Entity({
             animations = ENTITY_DEFS[type].animations,
             speed = ENTITY_DEFS[type].speed,
@@ -61,17 +62,23 @@ function PlayState:enter(def)
             height = ENTITY_DEFS[type].height,
             player = self.player,
 
-            stateMachine = StateMachine {
-                ['chase'] = function() return EntityChaseState(self.level.entities[#self.level.entities]) end,
-                ['idle'] = function() return EntityIdleState(self.level.entities[#self.level.entities]) end
-            }
+            stateMachine = type == 'bug' and 
+                StateMachine {
+                    ['move'] = function() return BugMoveState(self.level.entities[index]) end,
+                    ['idle'] = function() return BugIdleState(self.level.entities[index]) end
+                }
+                or
+                StateMachine {
+                    ['move'] = function() return DashMoveState(self.level.entities[index]) end,
+                    ['idle'] = function() return DashIdleState(self.level.entities[index]) end
+                }
         },
         math.random(self.player.x - 100, self.player.x + 100), 
         math.random(self.player.y - 100, self.player.y + 100)
         )
         )
 
-        self.level.entities[#self.level.entities]:changeState('chase')
+        self.level.entities[index]:changeState('idle')
     end
     )
 end
@@ -143,13 +150,6 @@ function PlayState:render()
     -- love.graphics.print(tostring(0), 5, 50)
     -- love.graphics.print(tostring(0), 5, 65)
 
-    --render key info
-    if self.player.hasKey then
-        love.graphics.setColor(0, 0, 0, 255)
-        love.graphics.print('key', 45, 5)
-        love.graphics.setColor(255, 255, 255, 255)
-        love.graphics.print('key', 44, 4)
-    end
 end
 
 function PlayState:updateCamera()

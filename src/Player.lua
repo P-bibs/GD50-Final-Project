@@ -61,8 +61,6 @@ function Player:update(dt)
         self.jumps = self.jumps - 1
     end
 
-    print(#self.effects)
-
     if #self.effects == 0 then
         self.hitbox = nil
     end
@@ -75,8 +73,6 @@ function Player:update(dt)
             end
         end
     end
-
-
 
     self.ay = -7
     self.ax = 0
@@ -124,7 +120,7 @@ function Player:update(dt)
     self.vy = self.vy + self.ay
     self.y = self.y - self.vy * dt
 
-    for i = 1, #self.effects do
+    for i = #self.effects, 1, -1 do
         self.effects[i]:update(dt)
         if self.effects[i].dead then table.remove(self.effects, i) end
     end
@@ -192,9 +188,6 @@ function Player:checkObjectCollisions()
 end
 
 function Player:render()
-    --love.graphics.draw(gTextures[self.currentAnimation.texture], gFrames[self.currentAnimation.texture][self.currentAnimation:getCurrentFrame()],
-    --    math.floor(self.x) + 8, math.floor(self.y) + 10, 0, self.direction == 'right' and 1 or -1, 1, 8, 10)
-
     love.graphics.draw(gTextures[self.currentAnimation.texture], gFrames[self.currentAnimation.texture][self.currentAnimation:getCurrentFrame()],
         math.floor(self.x) + 8, math.floor(self.y) + 10, 0, 1, 1, 8, 10)
 
