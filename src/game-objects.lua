@@ -79,12 +79,22 @@ GAME_OBJECT_DEFS = {
             }
         }
     },
-    bush = {
+    ['hit-effect'] = { --Effect
         width = 16,
         height = 16,
-        
-        -- select random frame from bush_ids whitelist, then random row for variance
-        frame = BUSH_IDS[math.random(#BUSH_IDS)] + (math.random(4) - 1) * 7,
-        collidable = false
+        animations = {
+            ['hit03'] = {
+                frames = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10},
+                interval = 0.05,
+                texture = 'hit03',
+                looping = false
+            },
+            ['hit01'] = {
+                frames = {1, 2, 3, 4, 5},
+                interval = 0.05,
+                texture = 'hit01',
+                looping = false
+            }
+        }
     }
 }

@@ -65,7 +65,7 @@ function Player:update(dt)
         self.jumps = self.jumps - 1
     end
 
-    --update effects, hitbox and attack animations
+    --update effects
     for i = #self.effects, 1, -1 do
         self.effects[i]:update(dt)
         if self.effects[i].dead then table.remove(self.effects, i) end
@@ -85,13 +85,17 @@ function Player:update(dt)
             if entity:collides(self.hitbox) then
                 self.jumps = 6
                 self.score = self.score + 10
+
                 --freeze entities and animations temporarily
                 entity.currentAnimation:freeze(FREEZE_DURATION)
                 self.currentAnimation:freeze(FREEZE_DURATION)
                 entity:freeze(FREEZE_DURATION)
                 self:freeze(FREEZE_DURATION)
 
-                
+                table.insert(self.effects, Effect(GAME_OBJECT_DEFS['hit-effect'],
+                    entity.x + entity.width / 2 - GAME_OBJECT_DEFS['hit-effect'].width / 2,
+                    entity.y + entity.height / 2 - GAME_OBJECT_DEFS['hit-effect'].height / 2))
+
                 entity:damage(1)
                 if entity.dead then
                     table.remove(self.level.entities, k)
@@ -242,6 +246,6 @@ function Player:render()
     end
 
     if self.hitbox then
-        love.graphics.rectangle('line', self.hitbox.x, self.hitbox.y, self.hitbox.width, self.hitbox.height)
+        --love.graphics.rectangle('line', self.hitbox.x, self.hitbox.y, self.hitbox.width, self.hitbox.height)
     end
 end
