@@ -14,6 +14,12 @@ end
 
 function EntityIdleState:update(dt)
     self:processAI(nil, dt)
+
+    self.entity.vx = self.entity.vx + self.entity.ax
+    self.entity.x = self.entity.x + self.entity.vx * dt
+
+    self.entity.vy = self.entity.vy + self.entity.ay
+    self.entity.y = self.entity.y - self.entity.vy * dt
 end
 
 --[[
@@ -27,7 +33,7 @@ end
 function EntityIdleState:render()
     local anim = self.entity.currentAnimation
     love.graphics.draw(gTextures[anim.texture], gFrames[anim.texture][anim:getCurrentFrame()],
-        math.floor(self.entity.x - self.entity.offsetX), math.floor(self.entity.y - self.entity.offsetY))
+        math.floor(self.entity.x), math.floor(self.entity.y))
     
     -- love.graphics.setColor(255, 0, 255, 255)
     -- love.graphics.rectangle('line', self.entity.x, self.entity.y, self.entity.width, self.entity.height)

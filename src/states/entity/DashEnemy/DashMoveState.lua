@@ -22,8 +22,8 @@ function DashMoveState:enter(def)
 end
 
 function DashMoveState:processAI(params, dt)
-    self.entity.vx = self.entity.vx * .95
-    self.entity.vy = self.entity.vy * .95
+    self.entity.vx = self.entity.vx * .97
+    self.entity.vy = self.entity.vy * .97
 
     if self.entity.vx > -0.5 and self.entity.vx < 0.5 then
         self.entity.vx = 0

@@ -16,6 +16,8 @@ function Player:init(def, x, y)
     self.jumps = 6
 
     self.hitbox = nil
+
+    self.score = 0
 end
 
 function Player:update(dt)
@@ -70,6 +72,7 @@ function Player:update(dt)
             if entity:collides(self.hitbox) then
                 table.remove(self.level.entities, k)
                 self.jumps = 6
+                self.score = self.score + 10
             end
         end
     end
@@ -188,6 +191,11 @@ function Player:checkObjectCollisions()
 end
 
 function Player:render()
+    --debug to show area around player in which bug enemies will be alerted
+    --love.graphics.setColor(255, 255, 255, 100)
+    --love.graphics.circle('fill', self.x + self.width, self.y + self.height, BUG_ALERT_DISTANCE)
+    --love.graphics.setColor(255, 255, 255, 255)
+
     love.graphics.draw(gTextures[self.currentAnimation.texture], gFrames[self.currentAnimation.texture][self.currentAnimation:getCurrentFrame()],
         math.floor(self.x) + 8, math.floor(self.y) + 10, 0, 1, 1, 8, 10)
 

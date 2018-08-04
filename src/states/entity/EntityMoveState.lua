@@ -34,7 +34,7 @@ end
 function EntityMoveState:render()
     local anim = self.entity.currentAnimation
     love.graphics.draw(gTextures[anim.texture], gFrames[anim.texture][anim:getCurrentFrame()],
-        math.floor(self.entity.x - self.entity.offsetX), math.floor(self.entity.y - self.entity.offsetY))
+        math.floor(self.entity.x), math.floor(self.entity.y))
     
     -- debug code
     -- love.graphics.setColor(255, 0, 255, 255)

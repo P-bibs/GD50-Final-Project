@@ -15,8 +15,8 @@ WINDOW_WIDTH = 1280
 WINDOW_HEIGHT = 720
 
 -- size we're trying to emulate with push
-VIRTUAL_WIDTH = 320
-VIRTUAL_HEIGHT = 180
+VIRTUAL_WIDTH = 640
+VIRTUAL_HEIGHT = 360
 
 -- global standard tile size
 TILE_SIZE = 16
@@ -102,3 +102,5 @@ KEY_ATTACK_UP = 'up'
 KEY_ATTACK_DOWN = 'down'
 
 PI = math.pi
+
+BUG_ALERT_DISTANCE = 200

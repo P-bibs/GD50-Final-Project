@@ -89,6 +89,9 @@ function Entity:render()
 
     self.stateMachine:render()
 
-    --love.graphics.draw(gTextures[self.currentAnimation.texture], gFrames[self.currentAnimation.texture][self.currentAnimation:getCurrentFrame()],
-    --    math.floor(self.x) + 8, math.floor(self.y) + 10, 0, 1, 1, 8, 10)
+    --DEBUG for velocy/acceleration values
+    --love.graphics.print('ax: ' .. math.floor(self.ax), self.x, self.y + 10)
+    --love.graphics.print('vx: ' .. math.floor(self.vx), self.x, self.y + 23)
+    --love.graphics.print('ay: ' .. math.floor(self.ay), self.x, self.y + 36)
+    --love.graphics.print('vy: ' .. math.floor(self.vy), self.x, self.y + 49)
 end

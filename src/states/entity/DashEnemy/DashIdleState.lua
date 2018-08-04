@@ -5,31 +5,23 @@ function DashIdleState:enter(def)
     self.entity:changeAnimation('idle')
     self.rotation = def == nil and 0 or def.rotation
     self.waitTimer = 2
-    self.angle = 1
 end
 
 function DashIdleState:processAI(params, dt)
-    self.angle = self.angle + .04
-
     self.waitTimer = self.waitTimer - dt
 
     if self.waitTimer < 0 then
-        self.rotation = 180
         self.entity:changeState('move', {entity = self.entity})
     end
 end
 
 function DashIdleState:render()
     local anim = self.entity.currentAnimation
-    -- love.graphics.draw(gTextures[anim.texture], gFrames[anim.texture][anim:getCurrentFrame()],
-    --     math.floor(self.entity.x - self.entity.offsetX), math.floor(self.entity.y - self.entity.offsetY),
-    --     self.angle
-    -- )
     love.graphics.draw(gTextures[anim.texture], gFrames[anim.texture][anim:getCurrentFrame()],
         math.floor(self.entity.x + self.entity.width / 2), math.floor(self.entity.y + self.entity.height / 2),
         self.rotation, 1, 1, self.entity.width / 2, self.entity.height / 2
     )
 
     --debug
-    love.graphics.rectangle('line', self.entity.x, self.entity.y , self.entity.width, self.entity.height)
+    --love.graphics.rectangle('line', self.entity.x, self.entity.y , self.entity.width, self.entity.height)
 end

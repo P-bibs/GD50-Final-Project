@@ -40,7 +40,7 @@ ENTITY_DEFS = {
         }
     },
     ['bug'] = {
-        speed = 80,
+        speed = 5,
         height = 20,
         width = 24,
         health = 1,
@@ -53,7 +53,7 @@ ENTITY_DEFS = {
         }
     },
     ['dash'] = {
-        speed = 200,
+        speed = 350,
         height = 24,
         width = 24,
         health = 1,
