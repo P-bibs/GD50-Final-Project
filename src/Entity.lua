@@ -28,6 +28,9 @@ function Entity:init(def, x, y)
 
     self.stateMachine = def.stateMachine
 
+    self.entityType = def.entityType
+    print(self.entityType)
+
     self.direction = 'left'
 
     self.health = def.health

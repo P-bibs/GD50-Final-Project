@@ -8,6 +8,9 @@ function DashIdleState:enter(def)
 end
 
 function DashIdleState:processAI(params, dt)
+    self.entity.vx = self.entity.vx * .98
+    self.entity.vy = self.entity.vy * .98
+
     self.waitTimer = self.waitTimer - dt
 
     if self.waitTimer < 0 then

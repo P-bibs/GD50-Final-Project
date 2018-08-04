@@ -49,17 +49,18 @@ function PlayState:enter(def)
     self.damping = 50
 
     Timer.every(3, function()
-        local type = math.random(2) == 1 and 'bug' or 'dash'
+        local enemyType = math.random(2) == 1 and 'bug' or 'dash'
         index = #self.level.entities + 1
         table.insert(self.level.entities, Entity({
-            animations = ENTITY_DEFS[type].animations,
-            speed = ENTITY_DEFS[type].speed,
-            health = ENTITY_DEFS[type].health,
-            width = ENTITY_DEFS[type].width,
-            height = ENTITY_DEFS[type].height,
+            entityType = enemyType,
+            animations = ENTITY_DEFS[enemyType].animations,
+            speed = ENTITY_DEFS[enemyType].speed,
+            health = ENTITY_DEFS[enemyType].health,
+            width = ENTITY_DEFS[enemyType].width,
+            height = ENTITY_DEFS[enemyType].height,
             player = self.player,
 
-            stateMachine = type == 'bug' and 
+            stateMachine = enemyType == 'bug' and 
                 StateMachine {
                     ['move'] = function() return BugMoveState() end,
                     ['idle'] = function() return BugIdleState() end

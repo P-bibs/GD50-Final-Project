@@ -8,7 +8,8 @@
 
 Hitbox = Class{}
 
-function Hitbox:init(x, y, width, height)
+function Hitbox:init(x, y, width, height, direction)
+    self.direction = direction
     self.x = x
     self.y = y
     self.width = width
