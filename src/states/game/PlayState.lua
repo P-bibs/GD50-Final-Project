@@ -51,7 +51,7 @@ function PlayState:enter(def)
     self.K = 2.5
     self.damping = 50
 
-    Timer.every(5, function()
+    Timer.every(3, function()
         local type = 'dash'
         index = #self.level.entities + 1
         table.insert(self.level.entities, Entity({
@@ -69,8 +69,8 @@ function PlayState:enter(def)
                 }
                 or
                 StateMachine {
-                    ['move'] = function() return DashMoveState(self.level.entities[index]) end,
-                    ['idle'] = function() return DashIdleState(self.level.entities[index]) end
+                    ['move'] = function() return DashMoveState() end,
+                    ['idle'] = function() return DashIdleState() end
                 }
         },
         math.random(self.player.x - 100, self.player.x + 100), 
@@ -78,7 +78,7 @@ function PlayState:enter(def)
         )
         )
 
-        self.level.entities[index]:changeState('idle')
+        self.level.entities[index]:changeState('idle', {entity = self.level.entities[index]})
     end
     )
 end

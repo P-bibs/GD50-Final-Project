@@ -10,7 +10,6 @@ EntityMoveState = Class{__includes = BaseState}
 
 function EntityMoveState:init(entity)
     self.entity = entity
-    self.entity:changeAnimation('idle')
 
     -- used for AI control
     self.moveDuration = 0

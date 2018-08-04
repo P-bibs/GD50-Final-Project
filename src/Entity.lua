@@ -87,6 +87,8 @@ function Entity:render()
         self.effects[i]:render()
     end
 
-    love.graphics.draw(gTextures[self.currentAnimation.texture], gFrames[self.currentAnimation.texture][self.currentAnimation:getCurrentFrame()],
-        math.floor(self.x) + 8, math.floor(self.y) + 10, 0, 1, 1, 8, 10)
+    self.stateMachine:render()
+
+    --love.graphics.draw(gTextures[self.currentAnimation.texture], gFrames[self.currentAnimation.texture][self.currentAnimation:getCurrentFrame()],
+    --    math.floor(self.x) + 8, math.floor(self.y) + 10, 0, 1, 1, 8, 10)
 end
