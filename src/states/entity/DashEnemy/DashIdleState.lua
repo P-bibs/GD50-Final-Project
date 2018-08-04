@@ -4,7 +4,7 @@ function DashIdleState:enter(def)
     self.entity = def.entity
     self.entity:changeAnimation('idle')
     self.rotation = def == nil and 0 or def.rotation
-    self.waitTimer = 2
+    self.waitTimer = math.random(20, 50) / 10 --random idle time between 2.0 and 5.0
 end
 
 function DashIdleState:processAI(params, dt)

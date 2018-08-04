@@ -49,7 +49,7 @@ require 'src/Entity'
 require 'src/GameObject'
 require 'src/Effect'
 require 'src/GameLevel'
-require 'src/LevelMaker'
+require 'src/LevelFiller'
 require 'src/Player'
 require 'src/Hitbox'
 

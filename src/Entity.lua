@@ -29,7 +29,6 @@ function Entity:init(def, x, y)
     self.stateMachine = def.stateMachine
 
     self.entityType = def.entityType
-    print(self.entityType)
 
     self.direction = 'left'
 
@@ -119,7 +118,7 @@ function Entity:render()
     --love.graphics.print('vx: ' .. math.floor(self.vx), self.x, self.y + 23)
     --love.graphics.print('ay: ' .. math.floor(self.ay), self.x, self.y + 36)
     --love.graphics.print('vy: ' .. math.floor(self.vy), self.x, self.y + 49)
-    love.graphics.print('health: ' .. self.health, self.x, self.y + 62)
+    --love.graphics.print('health: ' .. self.health, self.x, self.y + 62)
 end
 
 function Entity:freeze(duration)

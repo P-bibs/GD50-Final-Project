@@ -11,7 +11,7 @@ function PlayState:enter(def)
     self.camX = 0
     self.camY = 0
     --set width based on what level you are on
-    self.level = LevelMaker.generate(100 + (def and def[1] or 0) * 10, 10)
+    self.level = LevelFiller.generate(100 + (def and def[1] or 0) * 10, 10)
     self.tileMap = self.level.tileMap
     self.background = math.random(3)
     self.backgroundX = 0
@@ -33,9 +33,12 @@ function PlayState:enter(def)
         0, 0
         )
 
+    --give each entity a reference to the player
+    for i = 1, #self.level.entities do
+        self.level.entities[i].player = self.player
+    end
+
     self.player.level = self.level
-    
-    self.player.hasKey = false
 
     self.player:changeState('air')
 
@@ -48,7 +51,7 @@ function PlayState:enter(def)
     self.K = 2.5
     self.damping = 50
 
-    Timer.every(3, function()
+    Timer.every(4, function()
         local enemyType = math.random(2) == 1 and 'bug' or 'dash'
         index = #self.level.entities + 1
         table.insert(self.level.entities, Entity({
@@ -120,9 +123,9 @@ function PlayState:render()
     -- render score
     love.graphics.setFont(gFonts['medium'])
     love.graphics.setColor(0, 0, 0, 255)
-    love.graphics.print(tostring(self.player.score), 5, 5)
+    love.graphics.print(tostring(self.player.y), 5, 5)
     love.graphics.setColor(255, 255, 255, 255)
-    love.graphics.print(tostring(self.player.score), 4, 4)
+    love.graphics.print(tostring(self.player.y), 4, 4)
 
     -- love.graphics.print(tostring(self.player.ax), 5, 20)
     -- love.graphics.print(tostring(self.player.vx), 5, 35)
