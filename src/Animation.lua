@@ -20,6 +20,8 @@ function Animation:init(def)
     self.currentFrame = 1
 
     self.timesPlayed = 0
+
+    self.frozen = false
 end
 
 function Animation:refresh()
@@ -36,7 +38,10 @@ function Animation:update(dt)
 
     -- no need to update if animation is only one frame
     if #self.frames > 1 then
-        self.timer = self.timer + dt
+        --only update timer if animatio not frozen
+        if not self.frozen then
+            self.timer = self.timer + dt 
+        end
 
         if self.timer > self.interval then
             self.timer = self.timer % self.interval
@@ -53,4 +58,10 @@ end
 
 function Animation:getCurrentFrame()
     return self.frames[self.currentFrame]
+end
+
+--function to temporarily freeze animation
+function Animation:freeze(duration)
+    self.frozen = true
+    Timer.after(duration, function() self.frozen = false end)
 end

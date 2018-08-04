@@ -12,5 +12,5 @@ function Effect:init(def, x, y)
     self.consumable = false
     self.onCollide = function() end
     self.onConsume = function() end
-    self.hit = flase
+    self.hit = false
 end

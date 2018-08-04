@@ -16,67 +16,93 @@ function Player:init(def, x, y)
     self.jumps = 6
 
     self.hitbox = nil
+    self.attackAnim = nil
 
     self.score = 0
+
 end
 
 function Player:update(dt)
-    Entity.update(self, dt)
+    self.stateMachine:update(dt)
 
     if love.keyboard.wasPressed(KEY_ATTACK_RIGHT) then
-        table.insert(self.effects, Effect(
+        self.attackAnim = GameObject(
             GAME_OBJECT_DEFS['character-attack-right'], 
             self.x + self.width,
             self.y
-        ))
+        )
         self.hitbox = Hitbox(self.x + self.width, self.y, 32, 16)
         self.jumps = self.jumps - 1
     end
 
     if love.keyboard.wasPressed(KEY_ATTACK_LEFT) then
-        table.insert(self.effects, Effect(
+        self.attackAnim = GameObject(
             GAME_OBJECT_DEFS['character-attack-left'], 
             self.x - 4 - GAME_OBJECT_DEFS['character-attack-left'].width,
             self.y
-        ))
+        )
         self.hitbox = Hitbox(self.x - 4 - GAME_OBJECT_DEFS['character-attack-left'].width, self.y, 32, 16)
         self.jumps = self.jumps - 1
     end
 
     if love.keyboard.wasPressed(KEY_ATTACK_UP) then
-        table.insert(self.effects, Effect(
+        self.attackAnim = GameObject(
             GAME_OBJECT_DEFS['character-attack-up'], 
             self.x,
             self.y - GAME_OBJECT_DEFS['character-attack-down'].height
-        ))
+        )
         self.hitbox = Hitbox(self.x, self.y - GAME_OBJECT_DEFS['character-attack-down'].height, 16, 32)
         self.jumps = self.jumps - 1
     end
 
     if love.keyboard.wasPressed(KEY_ATTACK_DOWN) then
-        table.insert(self.effects, Effect(
+        self.attackAnim = GameObject(
             GAME_OBJECT_DEFS['character-attack-down'], 
             self.x,
             self.y + self.height
-        ))
+        )
         self.hitbox = Hitbox(self.x, self.y + self.height, 16, 32)
         self.jumps = self.jumps - 1
     end
 
-    if #self.effects == 0 then
-        self.hitbox = nil
+    --update effects, hitbox and attack animations
+    for i = #self.effects, 1, -1 do
+        self.effects[i]:update(dt)
+        if self.effects[i].dead then table.remove(self.effects, i) end
     end
 
+    --update attack animation
+    if self.attackAnim then 
+        self.attackAnim:update(dt)
+        if self.attackAnim.dead then self.attackAnim = nil end
+    else
+        self.hitbox = nil --if the animation has expired, destroy the hitbox
+    end
+
+    --check for collisions with enemies
     if self.hitbox then
         for k, entity in pairs(self.level.entities) do
             if entity:collides(self.hitbox) then
-                table.remove(self.level.entities, k)
                 self.jumps = 6
                 self.score = self.score + 10
+                --freeze entities and animations temporarily
+                entity.currentAnimation:freeze(FREEZE_DURATION)
+                self.currentAnimation:freeze(FREEZE_DURATION)
+                entity:freeze(FREEZE_DURATION)
+                self:freeze(FREEZE_DURATION)
+
+                
+                entity:damage(1)
+                if entity.dead then
+                    table.remove(self.level.entities, k)
+                end
+                self.hitbox = nil
+                break
             end
         end
     end
 
+    --set initial acceleration values
     self.ay = -7
     self.ax = 0
 
@@ -118,14 +144,16 @@ function Player:update(dt)
     --calculations
     if self.vx >= 0 then self.vx = math.min(240, self.vx + self.ax) end
     if self.vx < 0 then self.vx = math.max(-240, self.vx + self.ax) end
-    self.x = self.x + self.vx * dt
-
     self.vy = self.vy + self.ay
-    self.y = self.y - self.vy * dt
 
-    for i = #self.effects, 1, -1 do
-        self.effects[i]:update(dt)
-        if self.effects[i].dead then table.remove(self.effects, i) end
+    if not self.frozen then
+        self.x = self.x + self.vx * dt
+        self.y = self.y - self.vy * dt
+    end
+
+    --update animation
+    if self.currentAnimation then
+        self.currentAnimation:update(dt)
     end
 end
 
@@ -207,6 +235,10 @@ function Player:render()
 
     for i = 1, #self.effects do
         if not self.effects[i].dead then self.effects[i]:render() end
+    end
+
+    if self.attackAnim then
+        self.attackAnim:render()
     end
 
     if self.hitbox then

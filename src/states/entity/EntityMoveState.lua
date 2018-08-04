@@ -19,12 +19,6 @@ end
 
 function EntityMoveState:update(dt)
     self:processAI(nil, dt)
-
-    self.entity.vx = self.entity.vx + self.entity.ax
-    self.entity.x = self.entity.x + self.entity.vx * dt
-
-    self.entity.vy = self.entity.vy + self.entity.ay
-    self.entity.y = self.entity.y - self.entity.vy * dt
 end
 
 function EntityMoveState:processAI(params, dt)

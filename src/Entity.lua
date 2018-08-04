@@ -30,6 +30,8 @@ function Entity:init(def, x, y)
 
     self.direction = 'left'
 
+    self.health = def.health
+
     -- reference to tile map so we can check collisions
     self.map = def.map
 
@@ -40,6 +42,10 @@ function Entity:init(def, x, y)
     self.effects = {}
 
     self.animations = self:createAnimations(def.animations)
+
+    self.dead = false
+    
+    self.frozen = false
 end
 
 function Entity:createAnimations(animations)
@@ -72,6 +78,14 @@ function Entity:update(dt)
 
     self.stateMachine:update(dt)
 
+    self.vx = self.vx + self.ax
+    self.vy = self.vy + self.ay
+
+    if not self.frozen then 
+        self.x = self.x + self.vx * dt
+        self.y = self.y - self.vy * dt
+    end
+
     if self.currentAnimation then
         self.currentAnimation:update(dt)
     end
@@ -80,6 +94,14 @@ end
 function Entity:collides(entity)
     return not (self.x > entity.x + entity.width or entity.x > self.x + self.width or
                 self.y > entity.y + entity.height or entity.y > self.y + self.height)
+end
+
+function Entity:damage(amount)
+    self.health = self.health - amount
+
+    if self.health < 1 then
+        self.dead = true
+    end
 end
 
 function Entity:render()
@@ -94,4 +116,10 @@ function Entity:render()
     --love.graphics.print('vx: ' .. math.floor(self.vx), self.x, self.y + 23)
     --love.graphics.print('ay: ' .. math.floor(self.ay), self.x, self.y + 36)
     --love.graphics.print('vy: ' .. math.floor(self.vy), self.x, self.y + 49)
+    love.graphics.print('health: ' .. self.health, self.x, self.y + 62)
+end
+
+function Entity:freeze(duration)
+    self.frozen = true
+    Timer.after(duration, function() self.frozen = false end)
 end
