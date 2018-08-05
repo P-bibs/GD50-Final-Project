@@ -72,6 +72,7 @@ gSounds = {
 
 gTextures = {
     ['tiles'] = love.graphics.newImage('graphics/tiles.png'),
+    ['hell-tiles'] = love.graphics.newImage('graphics/HellTiles.png'),
     ['toppers'] = love.graphics.newImage('graphics/tile_tops.png'),
     ['bushes'] = love.graphics.newImage('graphics/bushes_and_cacti.png'),
     ['backgrounds'] = love.graphics.newImage('graphics/backgrounds.png'),
@@ -86,12 +87,14 @@ gTextures = {
     ['dash-enemy'] = love.graphics.newImage('graphics/DashEnemy.png'),
     ['boss-walk'] = love.graphics.newImage('graphics/BossEnemy.png'),
     ['dust'] = love.graphics.newImage('graphics/Dust.png'),
-    ['error'] = love.graphics.newImage('graphics/Error.png')
+    ['error'] = love.graphics.newImage('graphics/Error.png'),
+    ['background'] = love.graphics.newImage('graphics/HellBackground.png')
     
 }
 
 gFrames = {
     ['tiles'] = GenerateQuads(gTextures['tiles'], TILE_SIZE, TILE_SIZE),
+    ['hell-tiles'] = GenerateQuads(gTextures['hell-tiles'], TILE_SIZE, TILE_SIZE),
     
     ['toppers'] = GenerateQuads(gTextures['toppers'], TILE_SIZE, TILE_SIZE),
     

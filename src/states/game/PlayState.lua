@@ -129,14 +129,14 @@ function PlayState:update(dt)
 end
 
 function PlayState:render()
+    --draw the parallax background
+    love.graphics.draw(gTextures['background'],
+        -(self.player.x / 1584) *  (1584 - VIRTUAL_WIDTH),
+        (1 - (-self.player.y / 3000)) * (VIRTUAL_HEIGHT - 630)
+        )
+
     love.graphics.push()
-    love.graphics.draw(gTextures['backgrounds'], gFrames['backgrounds'][self.background], math.floor(-self.backgroundX), 0)
-    love.graphics.draw(gTextures['backgrounds'], gFrames['backgrounds'][self.background], math.floor(-self.backgroundX),
-        gTextures['backgrounds']:getHeight() / 3 * 2, 0, 1, -1)
-    love.graphics.draw(gTextures['backgrounds'], gFrames['backgrounds'][self.background], math.floor(-self.backgroundX + 256), 0)
-    love.graphics.draw(gTextures['backgrounds'], gFrames['backgrounds'][self.background], math.floor(-self.backgroundX + 256),
-        gTextures['backgrounds']:getHeight() / 3 * 2, 0, 1, -1)
-    
+
     -- translate the entire view of the scene to emulate a camera
     love.graphics.translate(-math.floor(self.cameraX), -math.floor(self.cameraY))
     

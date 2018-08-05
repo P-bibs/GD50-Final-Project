@@ -22,10 +22,7 @@ function StartState:update(dt)
 end
 
 function StartState:render()
-    love.graphics.draw(gTextures['backgrounds'], gFrames['backgrounds'][self.background], 0, 0)
-    love.graphics.draw(gTextures['backgrounds'], gFrames['backgrounds'][self.background], 0,
-        gTextures['backgrounds']:getHeight() / 3 * 2, 0, 1, -1)
-    self.map:render()
+    love.graphics.draw(gTextures['background'], 0, 0)
 
     love.graphics.setFont(gFonts['title'])
     love.graphics.setColor(0, 0, 0, 255)
