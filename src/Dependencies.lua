@@ -42,6 +42,8 @@ require 'src/states/entity/BugEnemy/BugIdleState'
 require 'src/states/entity/BugEnemy/BugMoveState'
 require 'src/states/entity/DashEnemy/DashIdleState'
 require 'src/states/entity/DashEnemy/DashMoveState'
+require 'src/states/entity/BossEnemy/BossMoveState'
+require 'src/states/entity/BossEnemy/BossIdleState'
 
 -- general
 require 'src/Animation'
@@ -52,6 +54,7 @@ require 'src/GameLevel'
 require 'src/LevelFiller'
 require 'src/Player'
 require 'src/Hitbox'
+require 'src/Boss'
 
 require 'src/Tile'
 require 'src/TileMap'
@@ -81,6 +84,7 @@ gTextures = {
     ['hit03'] = love.graphics.newImage('graphics/hit03.png'),
     ['bug'] = love.graphics.newImage('graphics/Bug.png'),
     ['dash-enemy'] = love.graphics.newImage('graphics/DashEnemy.png'),
+    ['boss-walk'] = love.graphics.newImage('graphics/BossEnemy.png'),
     ['dust'] = love.graphics.newImage('graphics/Dust.png'),
     ['error'] = love.graphics.newImage('graphics/Error.png')
     
@@ -102,6 +106,7 @@ gFrames = {
     ['hit03'] = GenerateQuads(gTextures['hit03'], 64, 64),
     ['bug'] = GenerateQuads(gTextures['bug'], 24, 20),
     ['dash-enemy'] = GenerateQuads(gTextures['dash-enemy'], 24, 24),
+    ['boss-walk'] = GenerateQuads(gTextures['boss-walk'], 256, 256),
     ['dust'] = GenerateQuads(gTextures['dust'], 16, 16),
     ['error'] = GenerateQuads(gTextures['error'], 16, 16)
     

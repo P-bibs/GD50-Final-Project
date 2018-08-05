@@ -82,7 +82,7 @@ function Player:update(dt)
     --check for collisions with enemies
     if self.hitbox then
         for k, entity in pairs(self.level.entities) do
-            if entity:collides(self.hitbox) then
+            if entity.hurtbox:collides(self.hitbox) then
                 --update variables
                 self.jumps = 6
                 self.score = self.score + 10
@@ -261,7 +261,7 @@ function Player:render()
         self.attackAnim:render()
     end
 
-    if self.hitbox then
-        --love.graphics.rectangle('line', self.hitbox.x, self.hitbox.y, self.hitbox.width, self.hitbox.height)
-    end
+    --if self.hitbox then
+    --    love.graphics.rectangle('line', self.hitbox.x, self.hitbox.y, self.hitbox.width, self.hitbox.height)
+    --end
 end

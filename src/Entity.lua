@@ -48,6 +48,9 @@ function Entity:init(def, x, y)
     self.dead = false
     
     self.frozen = false
+
+    --rectangle where this entity can be damaged. By default, same as entities size
+    self.hurtbox = Hitbox(self.x, self.y, self.width, self.height, self.direction)
 end
 
 function Entity:createAnimations(animations)
@@ -88,6 +91,9 @@ function Entity:update(dt)
         self.y = self.y - self.vy * dt
     end
 
+    --update hurtbox so it tracks entity
+    self.hurtbox = Hitbox(self.x, self.y, self.width, self.height, self.direction)
+
     if self.currentAnimation then
         self.currentAnimation:update(dt)
     end
@@ -119,6 +125,8 @@ function Entity:render()
     --love.graphics.print('ay: ' .. math.floor(self.ay), self.x, self.y + 36)
     --love.graphics.print('vy: ' .. math.floor(self.vy), self.x, self.y + 49)
     --love.graphics.print('health: ' .. self.health, self.x, self.y + 62)
+
+    --love.graphics.rectangle('line', self.hurtbox.x, self.hurtbox.y, self.hurtbox.width, self.hurtbox.height)
 end
 
 function Entity:freeze(duration)

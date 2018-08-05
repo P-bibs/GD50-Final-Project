@@ -69,5 +69,23 @@ ENTITY_DEFS = {
                 texture = 'dash-enemy'
             }
         }
+    },
+    ['boss'] = {
+        speed = 30,
+        height = 256,
+        width = 256,
+        health = 100,
+        animations = {
+            --['idle'] = {
+            --    frames = {1, 2, 3, 4, 5, 6, 7, 8, 9},
+            --    interval = 0.1,
+            --    texture = 'boss-enemy'
+            --},
+            ['walk'] = {
+                frames = {1, 2, 3, 4, 5, 6, 7, 8},
+                interval = 0.2,
+                texture = 'boss-walk'
+            }
+        }
     }
 }
