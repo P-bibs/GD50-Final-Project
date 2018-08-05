@@ -56,10 +56,10 @@ PLAYER_JUMP_VELOCITY = 200
 --
 -- tile IDs
 --
-TILE_ID_EMPTY = 5
-TILE_ID_GROUND = 3
 TILE_ID_EMPTY = 40
 TILE_ID_GROUND = 362
+
+TOP_TILE = 326
 
 -- table of tiles that should trigger a collision
 COLLIDABLE_TILES = {
@@ -107,6 +107,6 @@ PI = math.pi
 
 BUG_ALERT_DISTANCE = 200
 
-FREEZE_DURATION = .1
+FREEZE_DURATION = 0.1
 
 KNOCKBACK = 100

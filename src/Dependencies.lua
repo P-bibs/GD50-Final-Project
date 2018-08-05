@@ -72,7 +72,7 @@ gSounds = {
 
 gTextures = {
     ['tiles'] = love.graphics.newImage('graphics/tiles.png'),
-    ['hell-tiles'] = love.graphics.newImage('graphics/HellTiles.png'),
+    ['hell-tiles'] = love.graphics.newImage('graphics/HellTiles.png'), --https://www.deviantart.com/neoz7/art/FREE-16x16-Tileset-511915116
     ['toppers'] = love.graphics.newImage('graphics/tile_tops.png'),
     ['bushes'] = love.graphics.newImage('graphics/bushes_and_cacti.png'),
     ['backgrounds'] = love.graphics.newImage('graphics/backgrounds.png'),
@@ -88,7 +88,7 @@ gTextures = {
     ['boss-walk'] = love.graphics.newImage('graphics/BossEnemy.png'),
     ['dust'] = love.graphics.newImage('graphics/Dust.png'),
     ['error'] = love.graphics.newImage('graphics/Error.png'),
-    ['background'] = love.graphics.newImage('graphics/HellBackground.png')
+    ['background'] = love.graphics.newImage('graphics/HellBackground.png') --https://forums.terraria.org/index.php?threads/terraria-desktop-wallpapers.12644/page-4
     
 }
 

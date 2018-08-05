@@ -42,9 +42,22 @@ function Tile:render()
         (self.x - 1) * TILE_SIZE, (self.y - 1) * TILE_SIZE)
     
     
-    -- tile top layer for graphical variety
+    --tile top layer for graphical variety
     --if self.topper then
     --    love.graphics.draw(gTextures['toppers'], gFrames['toppersets'][self.topperset][self.id],
     --        (self.x - 1) * TILE_SIZE, (self.y - 1) * TILE_SIZE)
     --end
+
+     --tile top layer for graphical variety
+    if self.topper then
+        love.graphics.draw(gTextures['hell-tiles'], gFrames['hell-tiles'][TOP_TILE],
+            (self.x - 1) * TILE_SIZE, (self.y - 1) * TILE_SIZE)
+
+        --love.graphics.rectangle('fill',
+        --    (self.x - 1) * TILE_SIZE, (self.y - 1) * TILE_SIZE, 16, 16)
+    else
+        love.graphics.draw(gTextures['hell-tiles'], gFrames['hell-tiles'][self.id],
+            (self.x - 1) * TILE_SIZE, (self.y - 1) * TILE_SIZE)
+        
+    end
 end
