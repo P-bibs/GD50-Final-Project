@@ -65,12 +65,12 @@ require 'src/game-objects'
 require 'src/menu-defs'
 
 gSounds = {
-    ['jump'] = love.audio.newSource('sounds/jump.wav'),
-    ['death'] = love.audio.newSource('sounds/death.wav'),
-    ['music'] = love.audio.newSource('sounds/music.wav'),
-    ['pickup'] = love.audio.newSource('sounds/pickup.wav'),
-    ['kill'] = love.audio.newSource('sounds/kill.wav'),
-    ['kill2'] = love.audio.newSource('sounds/kill2.wav')
+    ['player-jump'] = love.audio.newSource('sounds/PlayerJump.wav'),
+    ['player-hurt'] = love.audio.newSource('sounds/PlayerHurt.wav'),
+    ['menu-select'] = love.audio.newSource('sounds/MenuSelect.wav'),
+    ['failed-hit'] = love.audio.newSource('sounds/FailedHit.wav'),
+    ['enemy-hurt'] = love.audio.newSource('sounds/EnemyHurt.wav'),
+    ['music'] = love.audio.newSource('sounds/music.wav')
 }
 
 gTextures = {

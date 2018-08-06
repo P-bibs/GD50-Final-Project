@@ -82,42 +82,48 @@ function Player:update(dt)
     --check for collisions with enemies
     if self.hitbox then
         for k, entity in pairs(self.level.entities) do
-            if entity.hurtbox:collides(self.hitbox) then
-                --update variables
-                self.jumps = 6
-                self.score = self.score + 10
+            if entity:collides(self.hitbox) then
+                if entity.hurtbox:collides(self.hitbox) then
+                    gSounds['enemy-hurt']:play()
 
-                --freeze entities and animations temporarily
-                entity.currentAnimation:freeze(FREEZE_DURATION)
-                self.currentAnimation:freeze(FREEZE_DURATION)
-                entity:freeze(FREEZE_DURATION)
-                self:freeze(FREEZE_DURATION)
-                --create hit animation
-                table.insert(self.effects, Effect(GAME_OBJECT_DEFS['hit-effect'],
-                    entity.x + entity.width / 2 - GAME_OBJECT_DEFS['hit-effect'].width / 2,
-                    entity.y + entity.height / 2 - GAME_OBJECT_DEFS['hit-effect'].height / 2))
+                    --update variables
+                    self.jumps = 6
+                    self.score = self.score + 10
 
-                --knockback entity
-                if self.hitbox.direction == 'up' then entity.vy = KNOCKBACK 
-                elseif self.hitbox.direction == 'down' then entity.vy = -KNOCKBACK 
-                elseif self.hitbox.direction == 'right' then entity.vx = KNOCKBACK 
-                elseif self.hitbox.direction == 'left' then entity.vx = -KNOCKBACK end
+                    --freeze entities and animations temporarily
+                    entity.currentAnimation:freeze(FREEZE_DURATION)
+                    self.currentAnimation:freeze(FREEZE_DURATION)
+                    entity:freeze(FREEZE_DURATION)
+                    self:freeze(FREEZE_DURATION)
+                    --create hit animation
+                    table.insert(self.effects, Effect(GAME_OBJECT_DEFS['hit-effect'],
+                        entity.x + entity.width / 2 - GAME_OBJECT_DEFS['hit-effect'].width / 2,
+                        entity.y + entity.height / 2 - GAME_OBJECT_DEFS['hit-effect'].height / 2))
 
-                --knockback player
-                if self.hitbox.direction == 'down' then self.vy = KNOCKBACK end
+                    --knockback entity
+                    if self.hitbox.direction == 'up' then entity.vy = KNOCKBACK 
+                    elseif self.hitbox.direction == 'down' then entity.vy = -KNOCKBACK 
+                    elseif self.hitbox.direction == 'right' then entity.vx = KNOCKBACK 
+                    elseif self.hitbox.direction == 'left' then entity.vx = -KNOCKBACK end
 
-                --update attacked entity
-                entity:damage(1)
-                if entity.dead then
-                    table.remove(self.level.entities, k)
+                    --knockback player
+                    if self.hitbox.direction == 'down' then self.vy = KNOCKBACK end
+
+                    --update attacked entity
+                    entity:damage(1)
+                    if entity.dead then
+                        table.remove(self.level.entities, k)
+                    end
+
+                    if entity.entityType == 'dash' then
+                        entity:changeState('idle', {entity = entity})
+                    end
+                    
+                    self.hitbox = nil
+                    break
+                else
+                    gSounds['failed-hit']:play()
                 end
-
-                if entity.entityType == 'dash' then
-                    entity:changeState('idle', {entity = entity})
-                end
-                
-                self.hitbox = nil
-                break
             end
         end
     end
@@ -138,6 +144,7 @@ function Player:update(dt)
     if love.keyboard.wasPressed(KEY_JUMP) and self.jumps > 0 then
         self.vy = PLAYER_JUMP_VELOCITY
         self.jumps = self.jumps - 1
+        gSounds['player-jump']:play()
     end
 
     --input
