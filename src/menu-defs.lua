@@ -58,6 +58,10 @@ MENU_DEFS = {
                 text = '3 - Boss',
                 action = 'play',
                 param = {level = 3}
+            },
+            {
+                text = 'Go Back',
+                action = 'primary'
             }
         }
     }

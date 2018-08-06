@@ -69,7 +69,7 @@ function StartState:render()
         love.graphics.setColor(0, 0, 0, 255)
         love.graphics.printf(MENU_DEFS[self.currentMenu].options[i].text,
         3,
-        (VIRTUAL_HEIGHT * 3 / 5) + ((i - 1) / (#MENU_DEFS[self.currentMenu].options)) * (VIRTUAL_HEIGHT / 3 - 20) + 3,
+        (VIRTUAL_HEIGHT * 3 / 5) + ((i - 1) / (#MENU_DEFS[self.currentMenu].options)) * (VIRTUAL_HEIGHT / 3 - 10) + 3,
         VIRTUAL_WIDTH, 'center'
         )
         
@@ -77,7 +77,7 @@ function StartState:render()
         love.graphics.setColor(255, 255, self.selected == i and 0 or 255, 255)
         love.graphics.printf(MENU_DEFS[self.currentMenu].options[i].text,
         0,
-        (VIRTUAL_HEIGHT * 3 / 5) + ((i - 1) / (#MENU_DEFS[self.currentMenu].options)) * (VIRTUAL_HEIGHT / 3 - 20),
+        (VIRTUAL_HEIGHT * 3 / 5) + ((i - 1) / (#MENU_DEFS[self.currentMenu].options)) * (VIRTUAL_HEIGHT / 3 - 10),
         VIRTUAL_WIDTH, 'center'
         )
     end
