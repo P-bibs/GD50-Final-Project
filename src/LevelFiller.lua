@@ -5,7 +5,7 @@
 LevelFiller = Class{}
 
 --generate a level by filling a table with integers that specify what to generate later
-function LevelFiller.generate(width, height)
+function LevelFiller.generate(width, height, boss)
     local tiles = {}
     local entities = {}
 
@@ -20,6 +20,31 @@ function LevelFiller.generate(width, height)
     -- insert blank tables into tiles for later access
     for x = 1, height do
         table.insert(tiles, {})
+    end
+
+    --spawn a boss if this is the third level. Boss will always be the first index in the entities array until it is killed
+    if boss then
+        local enemyType = 'boss'
+        table.insert(entities, Boss({
+            entityType = enemyType,
+            animations = ENTITY_DEFS[enemyType].animations,
+            speed = ENTITY_DEFS[enemyType].speed,
+            health = ENTITY_DEFS[enemyType].health,
+            width = ENTITY_DEFS[enemyType].width,
+            height = ENTITY_DEFS[enemyType].height,
+
+            stateMachine = 
+                StateMachine {
+                    ['move'] = function() return BossMoveState() end,
+                    ['idle'] = function() return BossIdleState() end
+                }
+        },
+        VIRTUAL_WIDTH / 2,
+        -200
+        )
+        )
+
+        entities[#entities]:changeState('move', {entity = entities[#entities]})
     end
 
     for y = -100, -3000, -200 do

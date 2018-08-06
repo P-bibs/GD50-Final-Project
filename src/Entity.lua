@@ -11,7 +11,6 @@
 Entity = Class{}
 
 function Entity:init(def, x, y)
-    print(self.createAnimations == nil)
     -- position
     self.x = x
     self.vx = 0

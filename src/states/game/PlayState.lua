@@ -7,11 +7,11 @@
 
 PlayState = Class{__includes = BaseState}
 
-function PlayState:enter(def)
+function PlayState:enter(level)
     self.camX = 0
     self.camY = 0
     --set width based on what level you are on
-    self.level = LevelFiller.generate(100, 20)
+    self.level = LevelFiller.generate(100, 20, level == 3)
     self.tileMap = self.level.tileMap
     self.background = math.random(3)
     self.backgroundX = 0

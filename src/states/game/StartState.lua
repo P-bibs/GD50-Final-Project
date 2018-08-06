@@ -26,7 +26,7 @@ function StartState:update(dt)
             love.event.quit()
         --if the currently selected item's action is play, play the game, passing a specific level
         elseif MENU_DEFS[self.currentMenu].options[self.selected].action == 'play' then
-            gStateMachine:change('play', MENU_DEFS[self.currentMenu].options[self.selected].param[1])
+            gStateMachine:change('play', MENU_DEFS[self.currentMenu].options[self.selected].param['level'])
         else
         --if the currently selected item's action is any other string, change to that menu
             self.currentMenu = MENU_DEFS[self.currentMenu].options[self.selected].action
