@@ -60,6 +60,7 @@ require 'src/Tile'
 require 'src/TileMap'
 require 'src/entity_defs'
 require 'src/game-objects'
+require 'src/menu-defs'
 
 gSounds = {
     ['jump'] = love.audio.newSource('sounds/jump.wav'),
