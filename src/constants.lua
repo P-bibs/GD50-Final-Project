@@ -59,7 +59,7 @@ PLAYER_JUMP_VELOCITY = 200
 TILE_ID_EMPTY = 40
 TILE_ID_GROUND = 362
 
-TOP_TILE = 326
+TILE_ID_TOP = 326
 
 -- table of tiles that should trigger a collision
 COLLIDABLE_TILES = {

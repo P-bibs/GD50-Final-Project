@@ -82,7 +82,6 @@ function Player:update(dt)
     --check for collisions with enemies
     if self.hitbox then
         for k, entity in pairs(self.level.entities) do
-            print(entity.entityType)
             if entity:collides(self.hitbox) then
                 if entity.hurtbox:collides(self.hitbox) then
                     gSounds['enemy-hurt']:play()
@@ -136,8 +135,8 @@ function Player:update(dt)
     self.ax = 0
 
     -- if we've gone below the map limit, set DY to 0
-    if self.y > ((7 - 1) * TILE_SIZE) - self.height then
-        self.y = ((7 - 1) * TILE_SIZE) - self.height
+    if self.y > 0 - self.height then
+        self.y = 0 - self.height
         self.ay = 0
         self.vy = 0
         self.jumps = 6

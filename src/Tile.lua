@@ -8,7 +8,7 @@
 
 Tile = Class{}
 
-function Tile:init(x, y, id, topper, tileset, topperset)
+function Tile:init(x, y, id)
     self.x = x
     self.y = y
 
@@ -16,9 +16,6 @@ function Tile:init(x, y, id, topper, tileset, topperset)
     self.height = TILE_SIZE
 
     self.id = id
-    self.tileset = tileset
-    self.topper = topper
-    self.topperset = topperset
 end
 
 --[[
@@ -35,29 +32,6 @@ function Tile:collidable(target)
 end
 
 function Tile:render()
-    --love.graphics.draw(gTextures['tiles'], gFrames['tilesets'][self.tileset][self.id],
-    --    (self.x - 1) * TILE_SIZE, (self.y - 1) * TILE_SIZE)
-
     love.graphics.draw(gTextures['hell-tiles'], gFrames['hell-tiles'][self.id],
         (self.x - 1) * TILE_SIZE, (self.y - 1) * TILE_SIZE)
-    
-    
-    --tile top layer for graphical variety
-    --if self.topper then
-    --    love.graphics.draw(gTextures['toppers'], gFrames['toppersets'][self.topperset][self.id],
-    --        (self.x - 1) * TILE_SIZE, (self.y - 1) * TILE_SIZE)
-    --end
-
-     --tile top layer for graphical variety
-    if self.topper then
-        love.graphics.draw(gTextures['hell-tiles'], gFrames['hell-tiles'][TOP_TILE],
-            (self.x - 1) * TILE_SIZE, (self.y - 1) * TILE_SIZE)
-
-        --love.graphics.rectangle('fill',
-        --    (self.x - 1) * TILE_SIZE, (self.y - 1) * TILE_SIZE, 16, 16)
-    else
-        love.graphics.draw(gTextures['hell-tiles'], gFrames['hell-tiles'][self.id],
-            (self.x - 1) * TILE_SIZE, (self.y - 1) * TILE_SIZE)
-        
-    end
 end

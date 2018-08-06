@@ -12,13 +12,8 @@ function LevelFiller.generate(width, height, boss)
     --tables of integers to keep track of what type of terrain should be generated
     local groundMap = {} --1 is normal, 2 is pillar, 3 is empty
 
-    -- whether we should draw our tiles with toppers
-    local topper = true
-    local tileset = math.random(20)
-    local topperset = math.random(20)
-
     -- insert blank tables into tiles for later access
-    for x = 1, height do
+    for x = 1, 20 do
         table.insert(tiles, {})
     end
 
@@ -83,12 +78,9 @@ function LevelFiller.generate(width, height, boss)
         --draw normal ground
         for y = 1, height do
             tiles[y][x] = Tile(x, y, 
-            y > 6 and TILE_ID_GROUND or TILE_ID_EMPTY,
-            y == 7,  
-            tileset, 
-            topperset)
+            y == 1 and TILE_ID_TOP or TILE_ID_GROUND
+            )
         end
-        blockHeight = 4
     end
 
     local map = TileMap(width, height)

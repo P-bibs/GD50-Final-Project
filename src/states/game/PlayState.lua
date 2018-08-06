@@ -30,7 +30,7 @@ function PlayState:enter(level)
         },
         map = self.tileMap,
         level = self.level},
-        0, 0
+        50 * TILE_SIZE, 0
         )
 
     --give each entity a reference to the player
@@ -42,10 +42,11 @@ function PlayState:enter(level)
 
     self.player:changeState('air')
 
-    self.cameraX = 0
+    --initialize camera values to focus on the center of the stage where the player spawns
+    self.cameraX = 50 * TILE_SIZE - VIRTUAL_WIDTH / 2
     self.cameraVX = 0
     self.cameraAX = 0
-    self.cameraY = 0
+    self.cameraY = -VIRTUAL_HEIGHT
     self.cameraVY = 0
     self.cameraAY = 0
     self.K = 2.5
@@ -85,30 +86,6 @@ function PlayState:enter(level)
 end
 
 function PlayState:update(dt)
-    if love.keyboard.wasPressed('g') then
-        local enemyType = 'boss'
-        table.insert(self.level.entities, Boss({
-            entityType = enemyType,
-            animations = ENTITY_DEFS[enemyType].animations,
-            speed = ENTITY_DEFS[enemyType].speed,
-            health = ENTITY_DEFS[enemyType].health,
-            width = ENTITY_DEFS[enemyType].width,
-            height = ENTITY_DEFS[enemyType].height,
-            player = self.player,
-
-            stateMachine = 
-                StateMachine {
-                    ['move'] = function() return BossMoveState() end,
-                    ['idle'] = function() return BossIdleState() end
-                }
-        },
-        VIRTUAL_WIDTH / 2,
-        -200
-        )
-        )
-
-        self.level.entities[#self.level.entities]:changeState('move', {entity = self.level.entities[#self.level.entities]})
-    end
 
     Timer.update(dt)
 
@@ -148,9 +125,9 @@ function PlayState:render()
     -- render score
     love.graphics.setFont(gFonts['medium'])
     love.graphics.setColor(0, 0, 0, 255)
-    love.graphics.print(tostring(-math.min(0, math.floor(self.player.y))), 5, 5)
+    love.graphics.print(tostring(-math.min(0, math.floor(self.player.y + self.player.height))), 5, 5)
     love.graphics.setColor(255, 255, 255, 255)
-    love.graphics.print(tostring(-math.min(0, math.floor(self.player.y))), 4, 4)
+    love.graphics.print(tostring(-math.min(0, math.floor(self.player.y  + self.player.height))), 4, 4)
 
     -- love.graphics.print(tostring(self.player.ax), 5, 20)
     -- love.graphics.print(tostring(self.player.vx), 5, 35)
