@@ -29,6 +29,8 @@ function PlayState:enter(def)
     self.K = 2.5
     self.damping = 50
 
+    self.vignetteOpacity = 0
+
     -- Timer.every(4, function()
     --     local enemyType = math.random(2) == 1 and 'bug' or 'dash'
     --     index = #self.level.entities + 1
@@ -63,6 +65,15 @@ function PlayState:enter(def)
 end
 
 function PlayState:update(dt)
+    --if player collides with an entity, flash a red vignett around the screen to indicate taking damage
+    for k, entity in pairs(self.level.entities) do
+        if self.player:collides(entity) then
+            self.vignetteOpacity = 255
+            Timer.tween(.3, {
+                [self] = {vignetteOpacity = 0}
+            })
+        end
+    end
 
     -- remove any nils from pickups, etc.
     self.level:clear()
@@ -81,6 +92,7 @@ function PlayState:update(dt)
 end
 
 function PlayState:render()
+    love.graphics.setColor(255, 255, 255, 255)
     --draw the parallax background
     love.graphics.draw(gTextures['background'],
         -(self.player.x / 1584) *  (1584 - VIRTUAL_WIDTH),
@@ -103,6 +115,10 @@ function PlayState:render()
     love.graphics.print(tostring(-math.min(0, math.floor(self.player.y + self.player.height))), 5, 5)
     love.graphics.setColor(255, 255, 255, 255)
     love.graphics.print(tostring(-math.min(0, math.floor(self.player.y  + self.player.height))), 4, 4)
+
+    --draw vignette caused by getting hurt
+    love.graphics.setColor(255, 255, 255, self.vignetteOpacity)
+    love.graphics.draw(gTextures['hurt-vignette'], 0, 0)
 
     -- love.graphics.print(tostring(self.player.ax), 5, 20)
     -- love.graphics.print(tostring(self.player.vx), 5, 35)

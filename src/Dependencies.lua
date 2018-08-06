@@ -89,8 +89,8 @@ gTextures = {
     ['boss-walk'] = love.graphics.newImage('graphics/BossEnemy.png'),
     ['dust'] = love.graphics.newImage('graphics/Dust.png'),
     ['error'] = love.graphics.newImage('graphics/Error.png'),
-    ['background'] = love.graphics.newImage('graphics/HellBackground.png') --https://forums.terraria.org/index.php?threads/terraria-desktop-wallpapers.12644/page-4
-    
+    ['background'] = love.graphics.newImage('graphics/HellBackground.png'), --https://forums.terraria.org/index.php?threads/terraria-desktop-wallpapers.12644/page-4
+    ['hurt-vignette'] = love.graphics.newImage('graphics/HurtVignette.png')
 }
 
 gFrames = {
