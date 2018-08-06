@@ -15,18 +15,26 @@ function StartState:init()
     self.background = math.random(3)
     self.currentMenu = 'primary'
     self.selected = 1
+
+    self.allowInput = true
+    self.rectOpacity = 0
 end
 
 function StartState:update(dt)
     --action to take when the user presses enter on their currently selected item
-    if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
+    if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') and self.allowInput then
         gSounds['menu-select']:play()
         --if the currently selected item's action is quit, quit the game
         if MENU_DEFS[self.currentMenu].options[self.selected].action == 'quit' then
             love.event.quit()
         --if the currently selected item's action is play, play the game, passing a specific level
         elseif MENU_DEFS[self.currentMenu].options[self.selected].action == 'play' then
-            gStateMachine:change('play', MENU_DEFS[self.currentMenu].options[self.selected].param['level'])
+            self.allowInput = false
+            Timer.tween(1, {
+                [self] = {rectOpacity = 255}
+            }):finish(function()
+                gStateMachine:change('begin', MENU_DEFS[self.currentMenu].options[self.selected].param['level'])
+            end)
         else
         --if the currently selected item's action is any other string, change to that menu
             self.currentMenu = MENU_DEFS[self.currentMenu].options[self.selected].action
@@ -34,14 +42,14 @@ function StartState:update(dt)
         end
     end
     --change currently selected menu item up
-    if love.keyboard.wasPressed(KEY_MOVE_UP) or love.keyboard.wasPressed(KEY_ATTACK_UP) then
+    if love.keyboard.wasPressed(KEY_MOVE_UP) or love.keyboard.wasPressed(KEY_ATTACK_UP) and self.allowInput then
         self.selected = self.selected  - 1
         if self.selected == 0 then
             self.selected = #MENU_DEFS[self.currentMenu].options
         end
     end
     --change currently selected menu item down
-    if love.keyboard.wasPressed(KEY_MOVE_DOWN) or love.keyboard.wasPressed(KEY_ATTACK_DOWN) then
+    if love.keyboard.wasPressed(KEY_MOVE_DOWN) or love.keyboard.wasPressed(KEY_ATTACK_DOWN) and self.allowInput then
         self.selected = self.selected + 1
         if self.selected == #MENU_DEFS[self.currentMenu].options + 1 then
             self.selected = 1
@@ -51,6 +59,7 @@ end
 
 function StartState:render()
     --draw background first
+    love.graphics.setColor(255, 255, 255, 255)
     love.graphics.draw(gTextures['background'], 0, -100)
 
     --set font for this menu's text. If its indicated this is a title, use a bigger font. If this is a paragraph of information, use a smaller text
@@ -82,4 +91,8 @@ function StartState:render()
         VIRTUAL_WIDTH, 'center'
         )
     end
+
+    --rectangle for transition
+    love.graphics.setColor(255, 255, 255, self.rectOpacity)
+    love.graphics.rectangle('fill', 0, 0, VIRTUAL_WIDTH, VIRTUAL_HEIGHT)
 end

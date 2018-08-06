@@ -7,46 +7,23 @@
 
 PlayState = Class{__includes = BaseState}
 
-function PlayState:enter(level)
-    self.camX = 0
-    self.camY = 0
-    --set width based on what level you are on
-    self.level = LevelFiller.generate(100, 20, level == 3)
+function PlayState:enter(def)
+    --set up the level and player based on what was passed from BeginStageState
+    self.level = def.level
+    self.player = def.player
+
     self.tileMap = self.level.tileMap
-    self.background = math.random(3)
-    self.backgroundX = 0
-
-    self.gravityOn = true
-    self.gravityAmount = 6
-
-    self.player = Player({
-        width = ENTITY_DEFS['player'].width,
-        height = ENTITY_DEFS['player'].height,
-        animations = ENTITY_DEFS['player'].animations,
-        level = self.level,
-        stateMachine = StateMachine {
-            ['ground'] = function() return PlayerGroundState(self.player) end,
-            ['air'] = function() return PlayerAirState(self.player, self.gravityAmount) end
-        },
-        map = self.tileMap,
-        level = self.level},
-        50 * TILE_SIZE, 0
-        )
 
     --give each entity a reference to the player
     for i = 1, #self.level.entities do
         self.level.entities[i].player = self.player
     end
 
-    self.player.level = self.level
-
-    self.player:changeState('air')
-
     --initialize camera values to focus on the center of the stage where the player spawns
     self.cameraX = 50 * TILE_SIZE - VIRTUAL_WIDTH / 2
     self.cameraVX = 0
     self.cameraAX = 0
-    self.cameraY = -VIRTUAL_HEIGHT
+    self.cameraY = -VIRTUAL_HEIGHT / 2 - TILE_SIZE
     self.cameraVY = 0
     self.cameraAY = 0
     self.K = 2.5
@@ -86,8 +63,6 @@ function PlayState:enter(level)
 end
 
 function PlayState:update(dt)
-
-    Timer.update(dt)
 
     -- remove any nils from pickups, etc.
     self.level:clear()

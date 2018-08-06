@@ -14,7 +14,7 @@ MENU_DEFS = {
             {
                 text = 'Play',
                 action = 'play',
-                param = {1}
+                param = {level = 1}
             },
             {
                 text = 'Level Select',
