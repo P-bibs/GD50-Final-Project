@@ -82,6 +82,7 @@ function Player:update(dt)
     --check for collisions with enemies
     if self.hitbox then
         for k, entity in pairs(self.level.entities) do
+            print(entity.entityType)
             if entity:collides(self.hitbox) then
                 if entity.hurtbox:collides(self.hitbox) then
                     gSounds['enemy-hurt']:play()
@@ -97,8 +98,8 @@ function Player:update(dt)
                     self:freeze(FREEZE_DURATION)
                     --create hit animation
                     table.insert(self.effects, Effect(GAME_OBJECT_DEFS['hit-effect'],
-                        entity.x + entity.width / 2 - GAME_OBJECT_DEFS['hit-effect'].width / 2,
-                        entity.y + entity.height / 2 - GAME_OBJECT_DEFS['hit-effect'].height / 2))
+                        entity.hurtbox.x + entity.hurtbox.width / 2 - GAME_OBJECT_DEFS['hit-effect'].width / 2,
+                        entity.hurtbox.y + entity.hurtbox.height / 2 - GAME_OBJECT_DEFS['hit-effect'].height / 2))
 
                     --knockback entity
                     if self.hitbox.direction == 'up' then entity.vy = KNOCKBACK 
@@ -124,6 +125,7 @@ function Player:update(dt)
                 else
                     gSounds['failed-hit']:play()
                     self.hitbox = nil
+                    break
                 end
             end
         end

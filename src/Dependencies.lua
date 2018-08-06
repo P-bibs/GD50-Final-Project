@@ -64,6 +64,7 @@ require 'src/entity_defs'
 require 'src/game-objects'
 require 'src/menu-defs'
 
+--created using bfxr
 gSounds = {
     ['player-jump'] = love.audio.newSource('sounds/PlayerJump.wav'),
     ['player-hurt'] = love.audio.newSource('sounds/PlayerHurt.wav'),
@@ -73,6 +74,7 @@ gSounds = {
     ['music'] = love.audio.newSource('sounds/music.wav')
 }
 
+--all textures not otherwise credited created by me using Piskel
 gTextures = {
     ['hell-tiles'] = love.graphics.newImage('graphics/HellTiles.png'), --https://www.deviantart.com/neoz7/art/FREE-16x16-Tileset-511915116
     ['character-walk'] = love.graphics.newImage('graphics/CharacterWalk.png'),
