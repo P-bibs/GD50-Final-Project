@@ -28,25 +28,6 @@ SCREEN_TILE_HEIGHT = VIRTUAL_HEIGHT / TILE_SIZE
 -- camera scrolling speed
 CAMERA_SPEED = 100
 
--- speed of scrolling background
-BACKGROUND_SCROLL_SPEED = 10
-
--- number of tiles in each tile set
-TILE_SET_WIDTH = 5
-TILE_SET_HEIGHT = 4
-
--- number of tile sets in sheet
-TILE_SETS_WIDE = 6
-TILE_SETS_TALL = 10
-
--- number of topper sets in sheet
-TOPPER_SETS_WIDE = 6
-TOPPER_SETS_TALL = 18
-
--- total number of topper and tile sets
-TOPPER_SETS = TOPPER_SETS_WIDE * TOPPER_SETS_TALL
-TILE_SETS = TILE_SETS_WIDE * TILE_SETS_TALL
-
 -- player walking speed
 PLAYER_WALK_SPEED = 10
 
@@ -60,30 +41,6 @@ TILE_ID_EMPTY = 40
 TILE_ID_GROUND = 362
 
 TILE_ID_TOP = 326
-
--- table of tiles that should trigger a collision
-COLLIDABLE_TILES = {
-    TILE_ID_GROUND
-}
-
---
--- game object IDs
---
-BUSH_IDS = {
-    1, 2, 5, 6, 7
-}
-
-COIN_IDS = {
-    1, 2, 3
-}
-
-GEMS = {
-    1, 2, 3, 4, 5, 6, 7, 8
-}
-
-POLES = {
-    1, 2, 3, 4, 5, 6
-}
 
 ERROR_ANIM = {
     ['error'] = {

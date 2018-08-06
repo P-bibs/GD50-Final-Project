@@ -147,6 +147,7 @@ function Player:update(dt)
         self.vy = PLAYER_JUMP_VELOCITY
         self.jumps = self.jumps - 1
         gSounds['player-jump']:play()
+        self.stateMachine:change('air')
     end
 
     --input
