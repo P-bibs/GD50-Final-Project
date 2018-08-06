@@ -20,6 +20,7 @@ end
 function StartState:update(dt)
     --action to take when the user presses enter on their currently selected item
     if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
+        gSounds['menu-select']:play()
         --if the currently selected item's action is quit, quit the game
         if MENU_DEFS[self.currentMenu].options[self.selected].action == 'quit' then
             love.event.quit()
