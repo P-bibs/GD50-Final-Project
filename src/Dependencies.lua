@@ -46,8 +46,8 @@ require 'src/states/entity/BossEnemy/BossMoveState'
 require 'src/states/entity/BossEnemy/BossIdleState'
 
 -- general
-require 'src/Boss'
 require 'src/Entity'
+require 'src/Boss'
 require 'src/Animation'
 require 'src/Player'
 require 'src/Hitbox'

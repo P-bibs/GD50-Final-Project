@@ -11,6 +11,7 @@
 Entity = Class{}
 
 function Entity:init(def, x, y)
+    print(self.createAnimations == nil)
     -- position
     self.x = x
     self.vx = 0
@@ -43,7 +44,7 @@ function Entity:init(def, x, y)
 
     self.effects = {}
 
-    self.animations = self:createAnimations(def.animations)
+    self.animations = def.animations == nil and self:createAnimations(ERROR_ANIM) or self:createAnimations(def.animations)
 
     self.dead = false
     

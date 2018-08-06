@@ -51,37 +51,37 @@ function PlayState:enter(def)
     self.K = 2.5
     self.damping = 50
 
-    Timer.every(4, function()
-        local enemyType = math.random(2) == 1 and 'bug' or 'dash'
-        index = #self.level.entities + 1
-        table.insert(self.level.entities, Entity({
-            entityType = enemyType,
-            animations = ENTITY_DEFS[enemyType].animations,
-            speed = ENTITY_DEFS[enemyType].speed,
-            health = ENTITY_DEFS[enemyType].health,
-            width = ENTITY_DEFS[enemyType].width,
-            height = ENTITY_DEFS[enemyType].height,
-            player = self.player,
+    -- Timer.every(4, function()
+    --     local enemyType = math.random(2) == 1 and 'bug' or 'dash'
+    --     index = #self.level.entities + 1
+    --     table.insert(self.level.entities, Entity({
+    --         entityType = enemyType,
+    --         animations = ENTITY_DEFS[enemyType].animations,
+    --         speed = ENTITY_DEFS[enemyType].speed,
+    --         health = ENTITY_DEFS[enemyType].health,
+    --         width = ENTITY_DEFS[enemyType].width,
+    --         height = ENTITY_DEFS[enemyType].height,
+    --         player = self.player,
 
-            stateMachine = enemyType == 'bug' and 
-                StateMachine {
-                    ['move'] = function() return BugMoveState() end,
-                    ['idle'] = function() return BugIdleState() end
-                }
-                or
-                StateMachine {
-                    ['move'] = function() return DashMoveState() end,
-                    ['idle'] = function() return DashIdleState() end
-                }
-        },
-        math.random(self.player.x - 100, self.player.x + 100), 
-        math.random(self.player.y - 100, self.player.y + 100)
-        )
-        )
+    --         stateMachine = enemyType == 'bug' and 
+    --             StateMachine {
+    --                 ['move'] = function() return BugMoveState() end,
+    --                 ['idle'] = function() return BugIdleState() end
+    --             }
+    --             or
+    --             StateMachine {
+    --                 ['move'] = function() return DashMoveState() end,
+    --                 ['idle'] = function() return DashIdleState() end
+    --             }
+    --     },
+    --     math.random(self.player.x - 100, self.player.x + 100), 
+    --     math.random(self.player.y - 100, self.player.y + 100)
+    --     )
+    --     )
 
-        self.level.entities[index]:changeState('idle', {entity = self.level.entities[index]})
-    end
-    )
+    --     self.level.entities[index]:changeState('idle', {entity = self.level.entities[index]})
+    -- end
+    -- )
 end
 
 function PlayState:update(dt)

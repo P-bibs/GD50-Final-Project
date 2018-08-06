@@ -123,6 +123,7 @@ function Player:update(dt)
                     break
                 else
                     gSounds['failed-hit']:play()
+                    self.hitbox = nil
                 end
             end
         end
