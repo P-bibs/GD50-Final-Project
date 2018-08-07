@@ -24,7 +24,7 @@ function StartState:update(dt)
         --if the currently selected item's action is play, play the game, passing a specific level
         elseif MENU_DEFS[self.currentMenu].options[self.selected].action == 'play' then
             self.allowInput = false
-            Timer.tween(1, {
+            Timer.tween(.5, {
                 [self] = {rectOpacity = 255}
             }):finish(function()
                 gStateMachine:change('begin', MENU_DEFS[self.currentMenu].options[self.selected].param['level'])

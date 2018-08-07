@@ -7,14 +7,16 @@ GameObject = Class{}
 function GameObject:init(def, x, y)
     self.x = x
     self.y = y
+
+    --most gameobjects don't move. Only have velocity if explicitly set
+    self.vx = 0
+    self.vy = 0
+
+
     self.width = def.width
     self.height = def.height
-    self.solid = def.solid
     self.collidable = def.collidable
-    self.consumable = def.consumable
     self.onCollide = def.onCollide
-    self.onConsume = def.onConsume
-    self.hit = def.hit
 
     self.dead = false
     self.animations = def.animations == nil and self:createAnimations(ERROR_ANIM) or self:createAnimations(def.animations)
@@ -42,6 +44,10 @@ function GameObject:collides(target)
 end
 
 function GameObject:update(dt)
+    --update position
+    self.x = self.x + self.vx * dt
+    self.y = self.y - self.vy * dt
+
     if self.currentAnimation then
         self.currentAnimation:update(dt)
     end

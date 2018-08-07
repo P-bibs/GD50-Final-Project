@@ -3,6 +3,10 @@ BossMoveState = Class {__includes = EntityMoveState}
 function BossMoveState:enter(def)
     self.entity = def.entity
     self.entity:changeAnimation('walk')
+    --walk for a bit, then shoot fireballs, giving the player a chance to attack
+    Timer.after(4, function()
+        self.entity.stateMachine:change('fireball', {entity = self.entity})
+    end)
 end
 
 function BossMoveState:processAI(params, dt)

@@ -96,5 +96,18 @@ GAME_OBJECT_DEFS = {
                 looping = false
             }
         }
+    },
+    ['fireball'] = { --Effect
+        width = 16,
+        height = 16,
+        speed = 120,
+        animations = {
+            ['red'] = {
+                frames = {1, 2, 3, 4},
+                interval = 0.1,
+                texture = 'fireballs',
+                looping = true
+            }
+        }
     }
 }

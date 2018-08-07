@@ -11,7 +11,10 @@ end
 function BossIdleState:render()
     local anim = self.entity.currentAnimation
     love.graphics.draw(gTextures[anim.texture], gFrames[anim.texture][anim:getCurrentFrame()],
-        math.floor(self.entity.x), math.floor(self.entity.y))
+        math.floor(self.entity.x), math.floor(self.entity.y),
+        0, self.entity.direction == 'right' and -1 or 1, 1,
+        self.entity.direction == 'right' and self.entity.width or 0
+        )
     
     --debug
     --love.graphics.setColor(255, 0, 255, 255)

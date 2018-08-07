@@ -36,6 +36,7 @@ require 'src/states/entity/DashEnemy/DashIdleState'
 require 'src/states/entity/DashEnemy/DashMoveState'
 require 'src/states/entity/BossEnemy/BossMoveState'
 require 'src/states/entity/BossEnemy/BossIdleState'
+require 'src/states/entity/BossEnemy/BossFireballState'
 
 -- general
 require 'src/Entity'
@@ -77,6 +78,7 @@ gTextures = {
     ['character-attack-horizontal'] = love.graphics.newImage('graphics/CharacterAttackHorizontal.png'),
     ['character-attack-vertical'] = love.graphics.newImage('graphics/CharacterAttackVertical.png'),
     ['hit01'] = love.graphics.newImage('graphics/hit01.png'),
+    ['fireballs'] = love.graphics.newImage('graphics/Fireballs.png'),
     ['bug'] = love.graphics.newImage('graphics/Bug.png'),
     ['dash-enemy'] = love.graphics.newImage('graphics/DashEnemy.png'),
     ['boss-walk'] = love.graphics.newImage('graphics/BossEnemy.png'),
@@ -95,6 +97,7 @@ gFrames = {
     ['character-attack-horizontal'] = GenerateQuads(gTextures['character-attack-horizontal'], 32, 16),
     ['character-attack-vertical'] = GenerateQuads(gTextures['character-attack-vertical'], 16, 32),
     ['hit01'] = GenerateQuads(gTextures['hit01'], 16, 16),
+    ['fireballs'] = GenerateQuads(gTextures['fireballs'], 16, 16),
     ['bug'] = GenerateQuads(gTextures['bug'], 24, 20),
     ['dash-enemy'] = GenerateQuads(gTextures['dash-enemy'], 24, 24),
     ['boss-walk'] = GenerateQuads(gTextures['boss-walk'], 256, 256),
