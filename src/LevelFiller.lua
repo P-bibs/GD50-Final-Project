@@ -77,14 +77,14 @@ function LevelFiller.generate(width, height, boss)
 
     for x = 1, width do  
         --draw normal ground
-        for y = 1, height do
+        for y = 1, 20 do
             tiles[y][x] = Tile(x, y, 
             y == 1 and TILE_ID_TOP or TILE_ID_GROUND
             )
         end
     end
 
-    local map = TileMap(width, height)
+    local map = TileMap(width, 20)
     map.tiles = tiles
     
     return Stage(entities, map)

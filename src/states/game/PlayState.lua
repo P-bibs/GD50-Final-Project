@@ -118,6 +118,8 @@ function PlayState:render()
     love.graphics.draw(gTextures['hurt-vignette'], 0, 0)
 
     --render bosses healthbar if a boss exists
+    print(#self.level.entities)
+    print(self.level.entities[1].entityType)
     if self.level.entities[1].entityType == 'boss' then
         self.level.entities[1].healthbar:render(30, VIRTUAL_HEIGHT - 40, VIRTUAL_WIDTH - 60, 7)
     end
