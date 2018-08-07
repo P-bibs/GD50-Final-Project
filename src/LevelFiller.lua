@@ -35,7 +35,7 @@ function LevelFiller.generate(width, height, boss)
                 }
         },
         VIRTUAL_WIDTH / 2,
-        -200
+        -100
         )
         )
 

@@ -19,8 +19,8 @@ function BossMoveState:processAI(params, dt)
     self.entity.ax = 0
 
     -- if we've gone below the map limit, set DY to 0
-    if self.entity.y + self.entity.height > ((7 - 1) * TILE_SIZE) then
-        self.entity.y = ((7 - 1) * TILE_SIZE) - self.entity.height
+    if self.entity.y + self.entity.height > 0 then
+        self.entity.y = 0 - self.entity.height
         self.entity.ay = 0
         self.entity.vy = 0
     end

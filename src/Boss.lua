@@ -4,6 +4,7 @@ function Boss:init(def, x, y)
     Entity.init(self, def, x, y)
 
     self.hurtbox = Hitbox(self.x + 172, self.y + 212, 84, 39, nil)
+    self.healthbar = Healthbar(ENTITY_DEFS['boss'].health)
 
 end
 

@@ -120,6 +120,11 @@ function PlayState:render()
     love.graphics.setColor(255, 255, 255, self.vignetteOpacity)
     love.graphics.draw(gTextures['hurt-vignette'], 0, 0)
 
+    --render bosses healthbar if a boss exists
+    if self.level.entities[1].entityType == 'boss' then
+        self.level.entities[1].healthbar:render(30, VIRTUAL_HEIGHT - 40, VIRTUAL_WIDTH - 60, 7)
+    end
+
     -- love.graphics.print(tostring(self.player.ax), 5, 20)
     -- love.graphics.print(tostring(self.player.vx), 5, 35)
     -- love.graphics.print(tostring(0), 5, 50)

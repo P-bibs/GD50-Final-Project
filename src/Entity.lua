@@ -110,6 +110,9 @@ function Entity:damage(amount)
     if self.health < 1 then
         self.dead = true
     end
+    if self.entityType == 'boss' then
+        self.healthbar:damage(1)
+    end
 end
 
 function Entity:render()
