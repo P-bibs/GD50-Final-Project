@@ -1,8 +1,5 @@
 --[[
-    GD50
-    Super Mario Bros. Remake
-
-    -- PlayState Class --
+   
 ]]
 
 PlayState = Class{__includes = BaseState}

@@ -43,8 +43,8 @@ function LevelFiller.generate(width, height, boss)
         entities[#entities]:changeState('move', {entity = entities[#entities]})
     end
 
-    for y = -100, -3000, -200 do
-        for x = 100, 1500, 200 do
+    for y = -100, -height, -200 do
+        for x = 100, width * TILE_SIZE, 200 do
             local enemyType = math.random(3) == 1 and 'dash' or 'bug'
             index = #entities + 1
             table.insert(entities, Entity({
@@ -87,5 +87,5 @@ function LevelFiller.generate(width, height, boss)
     local map = TileMap(width, height)
     map.tiles = tiles
     
-    return GameLevel(entities, map)
+    return Stage(entities, map)
 end

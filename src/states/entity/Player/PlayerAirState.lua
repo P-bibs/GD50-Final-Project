@@ -1,11 +1,5 @@
 --[[
-    GD50
-    Super Mario Bros. Remake
-
-    -- PlayerAirState Class --
-
-    Author: Colton Ogden
-    cogden@cs50.harvard.edu
+    
 ]]
 
 PlayerAirState = Class{__includes = BaseState}

@@ -1,14 +1,5 @@
 --[[
-    GD50
-    Super Mario Bros. Remake
-
-    Author: Colton Ogden
-    cogden@cs50.harvard.edu
-
-    -- Dependencies --
-
-    A file to organize all of the global dependencies for our project, as
-    well as the assets for our game, rather than pollute our main.lua file.
+    
 ]]
 
 --
@@ -57,7 +48,7 @@ require 'src/Healthbar'
 require 'src/GameObject'
 require 'src/Effect'
 
-require 'src/GameLevel'
+require 'src/Stage'
 require 'src/LevelFiller'
 require 'src/Tile'
 require 'src/TileMap'

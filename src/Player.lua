@@ -1,11 +1,5 @@
 --[[
-    GD50
-    Super Mario Bros. Remake
-
-    -- Player Class --
-
-    Author: Colton Ogden
-    cogden@cs50.harvard.edu
+    
 ]]
 
 Player = Class{__includes = Entity}

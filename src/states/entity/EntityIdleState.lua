@@ -1,9 +1,5 @@
 --[[
-    GD50
-    Legend of Zelda
 
-    Author: Colton Ogden
-    cogden@cs50.harvard.edu
 ]]
 
 EntityIdleState = Class{__includes = BaseState}
