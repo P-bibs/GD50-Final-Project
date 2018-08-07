@@ -27,6 +27,7 @@ function PlayState:enter(def)
     self.damping = 50
 
     self.vignetteOpacity = 0
+    self.rectangleOpacity = 0
 
     -- Timer.every(4, function()
     --     local enemyType = math.random(2) == 1 and 'bug' or 'dash'
@@ -63,6 +64,7 @@ end
 
 function PlayState:update(dt)
     --if player collides with an entity, flash a red vignett around the screen to indicate taking damage
+    --TODO implement with event.on()
     for k, entity in pairs(self.stage.entities) do
         if self.player:collides(entity) then
             self.vignetteOpacity = 255
@@ -72,11 +74,17 @@ function PlayState:update(dt)
         end
     end
 
-    -- remove any nils from pickups, etc.
-    self.stage:clear()
+    --TODO implement with event.on
+    if self.player.y < -self.stage.height then
+        Timer.tween(1, {
+            [self] = {rectangleOpacity = 255}
+        })
+        :finish(function()
+            gStateMachine:change('begin', self.stage.levelNumber + 1)
+        end)
+    end
 
-    -- update player and stage
-    self.player:update(dt)
+    -- update stage
     self.stage:update(dt)
     self:updateCamera(dt)
 
@@ -86,6 +94,31 @@ function PlayState:update(dt)
     elseif self.player.x > TILE_SIZE * self.tileMap.width - self.player.width then
         self.player.x = TILE_SIZE * self.tileMap.width - self.player.width
     end
+end
+
+function PlayState:updateCamera(dt)
+    -- clamp movement of the camera's X between 0 and the map bounds - virtual width,
+    -- setting it half the screen to the left of the player so they are in the center
+    self.camX = math.max(0,
+        math.min(TILE_SIZE * self.tileMap.width - VIRTUAL_WIDTH,
+        self.player.x - (VIRTUAL_WIDTH / 2 - 8)))
+
+    -- adjust background X to move a third the rate of the camera for parallax
+    self.backgroundX = (self.camX / 3) % 256
+
+    self.cameraXEquilibrium = self.player.x - (VIRTUAL_WIDTH / 2) + (self.player.width / 2)
+    self.cameraXEquilibrium = math.max(0,
+        math.min(TILE_SIZE * self.tileMap.width - VIRTUAL_WIDTH,
+        self.player.x - (VIRTUAL_WIDTH / 2 - 8)))
+    self.cameraAX = ((self.K * (self.cameraXEquilibrium - self.cameraX)) - (self.damping * self.cameraVX)) * dt
+    self.cameraVX = self.cameraVX + self.cameraAX
+    self.cameraX = self.cameraX + self.cameraVX 
+    self.cameraX = math.max(0, self.cameraX)
+
+    self.cameraYEquilibrium = self.player.y - (VIRTUAL_HEIGHT / 2) + (self.player.height / 2)
+    self.cameraAY = ((self.K*2 * (self.cameraYEquilibrium - self.cameraY)) - (self.damping * self.cameraVY)) * dt
+    self.cameraVY = self.cameraVY + self.cameraAY
+    self.cameraY = self.cameraY + self.cameraVY 
 end
 
 function PlayState:render()
@@ -122,34 +155,13 @@ function PlayState:render()
         self.stage.entities[1].healthbar:render(30, VIRTUAL_HEIGHT - 40, VIRTUAL_WIDTH - 60, 7)
     end
 
+    --rectangle for transition
+    love.graphics.setColor(255, 255, 255, self.rectangleOpacity)
+    love.graphics.rectangle('fill', 0, 0, VIRTUAL_WIDTH, VIRTUAL_HEIGHT)
+
     -- love.graphics.print(tostring(self.player.ax), 5, 20)
     -- love.graphics.print(tostring(self.player.vx), 5, 35)
     -- love.graphics.print(tostring(0), 5, 50)
     -- love.graphics.print(tostring(0), 5, 65)
 
-end
-
-function PlayState:updateCamera(dt)
-    -- clamp movement of the camera's X between 0 and the map bounds - virtual width,
-    -- setting it half the screen to the left of the player so they are in the center
-    self.camX = math.max(0,
-        math.min(TILE_SIZE * self.tileMap.width - VIRTUAL_WIDTH,
-        self.player.x - (VIRTUAL_WIDTH / 2 - 8)))
-
-    -- adjust background X to move a third the rate of the camera for parallax
-    self.backgroundX = (self.camX / 3) % 256
-
-    self.cameraXEquilibrium = self.player.x - (VIRTUAL_WIDTH / 2) + (self.player.width / 2)
-    self.cameraXEquilibrium = math.max(0,
-        math.min(TILE_SIZE * self.tileMap.width - VIRTUAL_WIDTH,
-        self.player.x - (VIRTUAL_WIDTH / 2 - 8)))
-    self.cameraAX = ((self.K * (self.cameraXEquilibrium - self.cameraX)) - (self.damping * self.cameraVX)) * dt
-    self.cameraVX = self.cameraVX + self.cameraAX
-    self.cameraX = self.cameraX + self.cameraVX 
-    self.cameraX = math.max(0, self.cameraX)
-
-    self.cameraYEquilibrium = self.player.y - (VIRTUAL_HEIGHT / 2) + (self.player.height / 2)
-    self.cameraAY = ((self.K*2 * (self.cameraYEquilibrium - self.cameraY)) - (self.damping * self.cameraVY)) * dt
-    self.cameraVY = self.cameraVY + self.cameraAY
-    self.cameraY = self.cameraY + self.cameraVY 
 end

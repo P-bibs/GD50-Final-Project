@@ -40,7 +40,8 @@ function BeginStageState:enter(level) --enter is used here to take care of inita
     self.levelNumber = level
 
     --set width based on what level you are on
-    self.stage = LevelFiller.generate(100, 3000, self.levelNumber == 3)
+    self.stage = LevelFiller.generate(100, LEVEL_DEFS[self.levelNumber].height,  LEVEL_DEFS[self.levelNumber].boss)
+    self.stage.levelNumber = self.levelNumber
     self.tileMap = self.stage.tileMap
 
     self.player = Player({
@@ -59,6 +60,7 @@ function BeginStageState:enter(level) --enter is used here to take care of inita
 
 
     self.player.stage = self.stage
+    self.stage.player = self.player
 
     self.player:changeState('ground')
 end

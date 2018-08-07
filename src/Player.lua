@@ -73,57 +73,6 @@ function Player:update(dt)
         self.hitbox = nil --if the animation has expired, destroy the hitbox
     end
 
-    --check for collisions with enemies
-    if self.hitbox then
-        for k, entity in pairs(self.stage.entities) do
-            if entity:collides(self.hitbox) then
-                if entity.hurtbox:collides(self.hitbox) then
-                    gSounds['enemy-hurt']:play()
-
-                    --update variables
-                    self.jumps = PLAYER_MAX_JUMPS
-                    self.score = self.score + 10
-
-                    --freeze entities and animations temporarily
-                    entity.currentAnimation:freeze(FREEZE_DURATION)
-                    self.currentAnimation:freeze(FREEZE_DURATION)
-                    entity:freeze(FREEZE_DURATION)
-                    self:freeze(FREEZE_DURATION)
-                    --create hit animation
-                    table.insert(self.effects, Effect(GAME_OBJECT_DEFS['hit-effect'],
-                        entity.hurtbox.x + entity.hurtbox.width / 2 - GAME_OBJECT_DEFS['hit-effect'].width / 2,
-                        entity.hurtbox.y + entity.hurtbox.height / 2 - GAME_OBJECT_DEFS['hit-effect'].height / 2))
-
-                    --knockback entity
-                    if self.hitbox.direction == 'up' then entity.vy = KNOCKBACK 
-                    elseif self.hitbox.direction == 'down' then entity.vy = -KNOCKBACK 
-                    elseif self.hitbox.direction == 'right' then entity.vx = KNOCKBACK 
-                    elseif self.hitbox.direction == 'left' then entity.vx = -KNOCKBACK end
-
-                    --knockback player
-                    if self.hitbox.direction == 'down' then self.vy = KNOCKBACK end
-
-                    --update attacked entity
-                    entity:damage(1)
-                    if entity.dead then
-                        table.remove(self.stage.entities, k)
-                    end
-
-                    if entity.entityType == 'dash' then
-                        entity:changeState('idle', {entity = entity})
-                    end
-                    
-                    self.hitbox = nil
-                    break
-                else
-                    gSounds['failed-hit']:play()
-                    self.hitbox = nil
-                    break
-                end
-            end
-        end
-    end
-
     --set initial acceleration values
     self.ay = -7
     self.ax = 0
