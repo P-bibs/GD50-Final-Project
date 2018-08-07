@@ -71,17 +71,6 @@ function PlayState:update(dt)
             Timer.tween(.3, {
                 [self] = {vignetteOpacity = 0}
             })
-
-            --if the player collides with the boss, apply a large knockback
-            if entity.entityType == 'boss' then
-                if self.player.x + self.player.width / 2 > entity.collisionBox.x + entity.collisionBox.width / 2 then
-                    self.player.vx = 400
-                    self.player.vy = 150
-                else
-                    self.player.vx = -400
-                    self.player.vy = 150
-                end
-            end
         end
     end
 

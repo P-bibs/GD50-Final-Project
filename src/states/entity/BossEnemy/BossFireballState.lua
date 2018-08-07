@@ -2,6 +2,7 @@ BossFireballState = Class {__includes = BossIdleState}
 
 function BossFireballState:enter(def)
     self.entity = def.entity
+    self.entity:changeAnimation('idle')
 
     self.angle = PI
     self.initialAngle = 0
