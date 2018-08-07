@@ -75,6 +75,14 @@ function Stage:update(dt)
         end
     end
 
+    if self.entities[1].entityType == 'boss' then
+        for i = 1, #self.entities[1].effects do
+            if self.player:collides(self.entities[1].effects[i]) then
+                --TODO damage player on fireball collision
+            end
+        end
+    end
+
     -- --if player collides with an entity, flash a red vignett around the screen to indicate taking damage
     -- for k, entity in pairs(self.entities) do
     --     if self.player:collides(entity) then
