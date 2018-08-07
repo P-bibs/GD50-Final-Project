@@ -4,9 +4,10 @@
 
 Stage = Class{}
 
-function Stage:init(entities, tilemap)
+function Stage:init(entities, tilemap, height)
     self.entities = entities
     self.tileMap = tilemap
+    self.height = height
 end
 
 --[[
@@ -32,6 +33,11 @@ end
 function Stage:render()
     self.tileMap:render()
 
+    --draw finish line for this stage
+    love.graphics.setColor(255, 0, 0, 255)
+    love.graphics.rectangle('fill', 0, -self.height, self.tileMap.width * TILE_SIZE, 20)
+
+    love.graphics.setColor(255, 255, 255, 255)
     for k, entity in pairs(self.entities) do
         entity:render()
     end

@@ -87,5 +87,5 @@ function LevelFiller.generate(width, height, boss)
     local map = TileMap(width, 20)
     map.tiles = tiles
     
-    return Stage(entities, map)
+    return Stage(entities, map, height)
 end

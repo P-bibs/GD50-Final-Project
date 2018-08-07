@@ -7,7 +7,7 @@ Player = Class{__includes = Entity}
 function Player:init(def, x, y)
     Entity.init(self, def, x, y)
 
-    self.jumps = 6
+    self.jumps = PLAYER_MAX_JUMPS
 
     self.hitbox = nil
     self.attackAnim = nil
@@ -75,13 +75,13 @@ function Player:update(dt)
 
     --check for collisions with enemies
     if self.hitbox then
-        for k, entity in pairs(self.level.entities) do
+        for k, entity in pairs(self.stage.entities) do
             if entity:collides(self.hitbox) then
                 if entity.hurtbox:collides(self.hitbox) then
                     gSounds['enemy-hurt']:play()
 
                     --update variables
-                    self.jumps = 6
+                    self.jumps = PLAYER_MAX_JUMPS
                     self.score = self.score + 10
 
                     --freeze entities and animations temporarily
@@ -106,7 +106,7 @@ function Player:update(dt)
                     --update attacked entity
                     entity:damage(1)
                     if entity.dead then
-                        table.remove(self.level.entities, k)
+                        table.remove(self.stage.entities, k)
                     end
 
                     if entity.entityType == 'dash' then
@@ -133,7 +133,7 @@ function Player:update(dt)
         self.y = 0 - self.height
         self.ay = 0
         self.vy = 0
-        self.jumps = 6
+        self.jumps = PLAYER_MAX_JUMPS
     end
 
     --jump
@@ -191,7 +191,7 @@ function Player:render()
     love.graphics.draw(gTextures[self.currentAnimation.texture], gFrames[self.currentAnimation.texture][self.currentAnimation:getCurrentFrame()],
         math.floor(self.x) + 8, math.floor(self.y) + 10, 0, 1, 1, 8, 10)
 
-    for i = 1, 6 do
+    for i = 1, PLAYER_MAX_JUMPS do
         if i <= self.jumps then
             love.graphics.circle('fill', math.floor(self.x  - 3 + 3 * i), math.floor(self.y), 1)
         end

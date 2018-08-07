@@ -40,25 +40,25 @@ function BeginStageState:enter(level) --enter is used here to take care of inita
     self.levelNumber = level
 
     --set width based on what level you are on
-    self.level = LevelFiller.generate(100, 3000, level == 3)
-    self.tileMap = self.level.tileMap
+    self.stage = LevelFiller.generate(100, 3000, self.levelNumber == 3)
+    self.tileMap = self.stage.tileMap
 
     self.player = Player({
         width = ENTITY_DEFS['player'].width,
         height = ENTITY_DEFS['player'].height,
         animations = ENTITY_DEFS['player'].animations,
-        level = self.level,
+        stage = self.stage,
         stateMachine = StateMachine {
             ['ground'] = function() return PlayerGroundState(self.player) end,
             ['air'] = function() return PlayerAirState(self.player, self.gravityAmount) end
         },
         map = self.tileMap,
-        level = self.level},
+        stage = self.stage},
         50 * TILE_SIZE, -TILE_SIZE
         )
 
 
-    self.player.level = self.level
+    self.player.stage = self.stage
 
     self.player:changeState('ground')
 end
@@ -67,7 +67,7 @@ function BeginStageState:update(dt)
     --if the timer has counted down to 0, change to PlayState
     if self.timer == 0 then
         gStateMachine:change('play', {
-            level = self.level,
+            stage = self.stage,
             player = self.player
         })
     end
@@ -86,17 +86,17 @@ function BeginStageState:render()
     -- translate the entire view of the scene to emulate a camera
     love.graphics.translate(-math.floor(50 * TILE_SIZE - VIRTUAL_WIDTH / 2), -math.floor(-VIRTUAL_HEIGHT / 2 - TILE_SIZE))
     
-    self.level:render()
+    self.stage:render()
 
     self.player:render()
     
     love.graphics.pop()
 
-    --Countdown to level begin
+    --Countdown to stage begin
     love.graphics.setFont(gFonts['large'])
     love.graphics.printf(self.timer, 0, VIRTUAL_HEIGHT / 2, VIRTUAL_WIDTH, 'center')
 
-    --Level number indicator
+    --level number indicator
     love.graphics.setFont(gFonts['title'])
     love.graphics.printf('Level: ' .. self.levelNumber, 0, self.levelLabelY, VIRTUAL_WIDTH, 'center')
 

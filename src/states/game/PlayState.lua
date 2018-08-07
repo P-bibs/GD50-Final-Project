@@ -5,15 +5,15 @@
 PlayState = Class{__includes = BaseState}
 
 function PlayState:enter(def)
-    --set up the level and player based on what was passed from BeginStageState
-    self.level = def.level
+    --set up the stage and player based on what was passed from BeginStageState
+    self.stage = def.stage
     self.player = def.player
 
-    self.tileMap = self.level.tileMap
+    self.tileMap = self.stage.tileMap
 
     --give each entity a reference to the player
-    for i = 1, #self.level.entities do
-        self.level.entities[i].player = self.player
+    for i = 1, #self.stage.entities do
+        self.stage.entities[i].player = self.player
     end
 
     --initialize camera values to focus on the center of the stage where the player spawns
@@ -30,8 +30,8 @@ function PlayState:enter(def)
 
     -- Timer.every(4, function()
     --     local enemyType = math.random(2) == 1 and 'bug' or 'dash'
-    --     index = #self.level.entities + 1
-    --     table.insert(self.level.entities, Entity({
+    --     index = #self.stage.entities + 1
+    --     table.insert(self.stage.entities, Entity({
     --         entityType = enemyType,
     --         animations = ENTITY_DEFS[enemyType].animations,
     --         speed = ENTITY_DEFS[enemyType].speed,
@@ -56,14 +56,14 @@ function PlayState:enter(def)
     --     )
     --     )
 
-    --     self.level.entities[index]:changeState('idle', {entity = self.level.entities[index]})
+    --     self.stage.entities[index]:changeState('idle', {entity = self.stage.entities[index]})
     -- end
     -- )
 end
 
 function PlayState:update(dt)
     --if player collides with an entity, flash a red vignett around the screen to indicate taking damage
-    for k, entity in pairs(self.level.entities) do
+    for k, entity in pairs(self.stage.entities) do
         if self.player:collides(entity) then
             self.vignetteOpacity = 255
             Timer.tween(.3, {
@@ -73,11 +73,11 @@ function PlayState:update(dt)
     end
 
     -- remove any nils from pickups, etc.
-    self.level:clear()
+    self.stage:clear()
 
-    -- update player and level
+    -- update player and stage
     self.player:update(dt)
-    self.level:update(dt)
+    self.stage:update(dt)
     self:updateCamera(dt)
 
     -- constrain player X no matter which state
@@ -101,7 +101,7 @@ function PlayState:render()
     -- translate the entire view of the scene to emulate a camera
     love.graphics.translate(-math.floor(self.cameraX), -math.floor(self.cameraY))
     
-    self.level:render()
+    self.stage:render()
 
     self.player:render()
     love.graphics.pop()
@@ -118,8 +118,8 @@ function PlayState:render()
     love.graphics.draw(gTextures['hurt-vignette'], 0, 0)
 
     --render bosses healthbar if a boss exists
-    if self.level.entities[1].entityType == 'boss' then
-        self.level.entities[1].healthbar:render(30, VIRTUAL_HEIGHT - 40, VIRTUAL_WIDTH - 60, 7)
+    if self.stage.entities[1].entityType == 'boss' then
+        self.stage.entities[1].healthbar:render(30, VIRTUAL_HEIGHT - 40, VIRTUAL_WIDTH - 60, 7)
     end
 
     -- love.graphics.print(tostring(self.player.ax), 5, 20)
