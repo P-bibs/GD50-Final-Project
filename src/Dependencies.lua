@@ -53,9 +53,10 @@ require 'src/LevelFiller'
 require 'src/Tile'
 require 'src/TileMap'
 
-require 'src/entity_defs'
-require 'src/game-objects'
-require 'src/menu-defs'
+require 'src/defs/entity_defs'
+require 'src/defs/game-object-defs'
+require 'src/defs/menu-defs'
+require 'src/defs/level-defs'
 
 --created using bfxr
 gSounds = {
