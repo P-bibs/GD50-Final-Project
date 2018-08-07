@@ -9,11 +9,8 @@ function LevelFiller.generate(width, height, boss)
     local tiles = {}
     local entities = {}
 
-    --tables of integers to keep track of what type of terrain should be generated
-    local groundMap = {} --1 is normal, 2 is pillar, 3 is empty
-
     -- insert blank tables into tiles for later access
-    for x = 1, 20 do
+    for y = 1, 20 do
         table.insert(tiles, {})
     end
 
@@ -76,7 +73,7 @@ function LevelFiller.generate(width, height, boss)
     end
 
     for x = 1, width do  
-        --draw normal ground
+        --draw ground
         for y = 1, 20 do
             tiles[y][x] = Tile(x, y, 
             y == 1 and TILE_ID_TOP or TILE_ID_GROUND
