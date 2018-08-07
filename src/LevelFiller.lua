@@ -34,8 +34,9 @@ function LevelFiller.generate(width, height, boss)
                     ['idle'] = function() return BossIdleState() end
                 }
         },
-        VIRTUAL_WIDTH / 2,
-        -100
+        --spawn boss on the ground on the right side of the screen
+        width * TILE_SIZE - ENTITY_DEFS[enemyType].width,
+        -ENTITY_DEFS[enemyType].height
         )
         )
 
