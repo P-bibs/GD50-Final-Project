@@ -75,6 +75,7 @@ ENTITY_DEFS = {
         height = 256,
         width = 256,
         health = 20,
+        name = 'Marauder of the Deep',
         animations = {
             --['idle'] = {
             --    frames = {1, 2, 3, 4, 5, 6, 7, 8, 9},
