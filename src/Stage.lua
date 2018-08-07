@@ -43,10 +43,12 @@ function Stage:update(dt)
                         entity.hurtbox.y + entity.hurtbox.height / 2 - GAME_OBJECT_DEFS['hit-effect'].height / 2))
 
                     --knockback entity
-                    if self.player.hitbox.direction == 'up' then entity.vy = KNOCKBACK 
-                    elseif self.player.hitbox.direction == 'down' then entity.vy = -KNOCKBACK 
-                    elseif self.player.hitbox.direction == 'right' then entity.vx = KNOCKBACK 
-                    elseif self.player.hitbox.direction == 'left' then entity.vx = -KNOCKBACK end
+                    if entity.entityType ~= 'boss' then
+                        if self.player.hitbox.direction == 'up' then entity.vy = KNOCKBACK 
+                        elseif self.player.hitbox.direction == 'down' then entity.vy = -KNOCKBACK 
+                        elseif self.player.hitbox.direction == 'right' then entity.vx = KNOCKBACK 
+                        elseif self.player.hitbox.direction == 'left' then entity.vx = -KNOCKBACK end
+                    end
 
                     --knockback player
                     if self.player.hitbox.direction == 'down' then self.player.vy = KNOCKBACK end

@@ -67,7 +67,7 @@ ENTITY_DEFS = {
         }
     },
     ['boss'] = {
-        speed = 30,
+        speed = 60,
         height = 256,
         width = 256,
         health = 20,
