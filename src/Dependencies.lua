@@ -8,6 +8,7 @@
 Class = require 'lib/class'
 push = require 'lib/push'
 Timer = require 'lib/knife.timer'
+Event = require 'lib/knife.event'
 
 --
 -- our own code

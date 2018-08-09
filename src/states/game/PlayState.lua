@@ -63,18 +63,15 @@ function PlayState:enter(def)
 end
 
 function PlayState:update(dt)
-    --if player collides with an entity, flash a red vignett around the screen to indicate taking damage
-    --TODO implement with event.on()
-    for k, entity in pairs(self.stage.entities) do
-        if self.player:collides(entity.collisionBox) then
+    --If updating Stage tirggers a player damaged event, flash a red vignette over the screen to indicate damage
+    Event.on('player-damaged', function()
             self.vignetteOpacity = 255
             Timer.tween(.3, {
                 [self] = {vignetteOpacity = 0}
             })
-        end
-    end
+    end)
 
-    --TODO implement with event.on
+    --change to next level if player has climbed high enough
     if self.player.y < -self.stage.height then
         Timer.tween(1, {
             [self] = {rectangleOpacity = 255}

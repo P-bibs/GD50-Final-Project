@@ -8,6 +8,7 @@ function Stage:init(entities, tilemap, height)
     self.entities = entities
     self.tileMap = tilemap
     self.height = height
+    self.stageComplete = false
 end
 
 --[[
@@ -131,12 +132,8 @@ function Stage:update(dt)
     --if player collides with an entity, flash a red vignett around the screen to indicate taking damage
     for k, entity in pairs(self.entities) do
         if self.player:collides(entity.collisionBox) then
-            --TODO add an event handler here that calls a function in the play state to flash the vignette. Can't be done here since
-            --the stage is translated when it is drawn
-            --self.vignetteOpacity = 255
-            --Timer.tween(.3, {
-            --    [self] = {vignetteOpacity = 0}
-            --})
+            --dispatch an event that triggers a red vignette to flash in PlayState
+            Event.dispatch('player-damaged')
 
             --if the player collides with the boss, apply a large knockback
             if entity.entityType == 'boss' then
@@ -150,16 +147,6 @@ function Stage:update(dt)
             end
         end
     end
-
-    --TODO implement with event.on()
-    -- if self.player.y < -self.height then
-    --     Timer.tween(1, {
-    --         [self] = {rectangleOpacity = 255}
-    --     })
-    --     :finish(function()
-    --         gStateMachine:change('begin', self.stage.levelNumber + 1)
-    --     end)
-    -- end
 
     self.tileMap:update(dt)
 
