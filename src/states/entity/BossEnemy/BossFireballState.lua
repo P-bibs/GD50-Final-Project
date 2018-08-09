@@ -13,7 +13,7 @@ function BossFireballState:enter(def)
     self.entity.ay = 0
 
     --Every five seconds, shoot a fireball. Starting horizontal, then angling down
-    Timer.every(.5, function()
+    self.fireballTimer = Timer.every(.5, function()
         --use hardcoded values to pinpoint location of monsters mouth. This is where the fireball is spawned
         local x, y
         if self.entity.direction == 'left' then 
@@ -43,4 +43,8 @@ end
 
 function BossFireballState:processAI(dt)
 
+end
+
+function BossFireballState:exit()
+    self.fireballTimer:remove()
 end

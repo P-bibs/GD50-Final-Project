@@ -37,6 +37,7 @@ require 'src/states/entity/DashEnemy/DashMoveState'
 require 'src/states/entity/BossEnemy/BossMoveState'
 require 'src/states/entity/BossEnemy/BossIdleState'
 require 'src/states/entity/BossEnemy/BossFireballState'
+require 'src/states/entity/BossEnemy/BossStunState'
 
 -- general
 require 'src/Entity'

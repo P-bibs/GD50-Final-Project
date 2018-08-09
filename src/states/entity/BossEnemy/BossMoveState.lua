@@ -4,7 +4,7 @@ function BossMoveState:enter(def)
     self.entity = def.entity
     self.entity:changeAnimation('walk')
     --walk for a bit, then shoot fireballs, giving the player a chance to attack
-    Timer.after(4, function()
+    self.stateTimer = Timer.after(4, function()
         self.entity.stateMachine:change('fireball', {entity = self.entity})
     end)
 end
@@ -44,4 +44,8 @@ function BossMoveState:render()
         0, self.entity.direction == 'right' and -1 or 1, 1,
         self.entity.direction == 'right' and self.entity.width or 0
         )
+end
+
+function BossMoveState:exit()
+    self.stateTimer:remove()
 end

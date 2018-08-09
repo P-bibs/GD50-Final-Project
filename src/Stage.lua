@@ -75,11 +75,56 @@ function Stage:update(dt)
         end
     end
 
-    if self.entities[1].entityType == 'boss' then
-        for i = 1, #self.entities[1].effects do
-            if self.player:collides(self.entities[1].effects[i]) then
-                --TODO damage player on fireball collision
+    --Reflect fireballs back if hit by player
+    if self.player.hitbox then
+        if self.entities[1].entityType == 'boss' then
+            for i = 1, #self.entities[1].effects do
+                local fireball = self.entities[1].effects[i] --alias fireball
+                if self.player.hitbox:collides(fireball) then
+                    --update variables
+                    self.player.jumps = PLAYER_MAX_JUMPS
+                    fireball.reflected = true
+
+                    --freeze entities and animations temporarily
+                    fireball.currentAnimation:freeze(FREEZE_DURATION)
+                    self.player.currentAnimation:freeze(FREEZE_DURATION)
+                    fireball:freeze(FREEZE_DURATION)
+                    self.player:freeze(FREEZE_DURATION)
+
+                    --alias each entity's center coordinates
+                    local playerX, playerY = fireball.x + fireball.width / 2, fireball.y + fireball.height / 2
+                    local entityX, entityY = self.entities[1].x + 50, self.entities[1].y + 85
+
+                    --using trigonometry, determine the angle between the boss and the player
+                    local a = -(playerY - entityY )
+                    local b = (playerX - entityX)
+                    local rotation = math.atan(a / b)
+
+                    --Because the range of the inverse tangent function is only -π<y<π, add π radians to the rotation if the player is left of the enemy
+                    --if playerX < entityX then rotation = rotation + PI end
+
+                    --figure out component velocities using trig. The fireball will now be directed back at the boss
+                    fireball.vx = (GAME_OBJECT_DEFS['fireball'].speed * 2) * math.cos(rotation)
+                    fireball.vy = (GAME_OBJECT_DEFS['fireball'].speed * 2) * math.sin(rotation)
+                    
+                    self.player.hitbox = nil
+                    break
+                    --TODO add parry sound effect
+                end
+                if self.player:collides(self.entities[1].effects[i]) then
+                    --TODO damage player on fireball collision
+                end
             end
+        end
+    end
+
+    --determine if a reflected fireball hits boss. If so, stun the boss
+    for i = 1, #self.entities[1].effects do
+        local fireball = self.entities[1].effects[i]
+        if fireball:collides(self.entities[1].collisionBox) and fireball.reflected then
+            self.entities[1]:changeState('stun', {entity = self.entities[1]})
+            table.remove(self.entities[1].effects, i)
+            break
         end
     end
 

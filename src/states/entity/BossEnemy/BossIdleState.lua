@@ -2,6 +2,12 @@ BossIdleState = Class {__includes = EntityIdleState}
 
 function BossIdleState:enter(def)
     self.entity = def.entity
+
+    --boss is immobile in this state
+    self.entity.vx = 0
+    self.entity.ax = 0
+    self.entity.vy = 0
+    self.entity.ay = 0
 end
 
 function BossIdleState:processAI(dt)

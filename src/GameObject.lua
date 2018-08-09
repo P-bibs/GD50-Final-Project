@@ -15,11 +15,16 @@ function GameObject:init(def, x, y)
 
     self.width = def.width
     self.height = def.height
-    self.collidable = def.collidable
-    self.onCollide = def.onCollide
 
+    --this flag only used for fireballs
+    self.reflected = false
+
+    --flag used to see if gameobject should be removed
     self.dead = false
+
     self.animations = def.animations == nil and self:createAnimations(ERROR_ANIM) or self:createAnimations(def.animations)
+
+    self.frozen = false
 end
 
 function GameObject:createAnimations(animations)
@@ -45,8 +50,10 @@ end
 
 function GameObject:update(dt)
     --update position
-    self.x = self.x + self.vx * dt
-    self.y = self.y - self.vy * dt
+    if not self.frozen then
+        self.x = self.x + self.vx * dt
+        self.y = self.y - self.vy * dt
+    end
 
     if self.currentAnimation then
         self.currentAnimation:update(dt)
@@ -59,6 +66,12 @@ end
 
 function GameObject:changeAnimation(name)
     self.currentAnimation = self.animations[name]
+end
+
+--temporarily freeze position of game object
+function GameObject:freeze(duration)
+    self.frozen = true
+    Timer.after(duration, function() self.frozen = false end)
 end
 
 function GameObject:render()

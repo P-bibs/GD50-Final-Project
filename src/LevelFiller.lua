@@ -29,7 +29,8 @@ function LevelFiller.generate(width, height, boss)
                 StateMachine {
                     ['move'] = function() return BossMoveState() end,
                     ['idle'] = function() return BossIdleState() end,
-                    ['fireball'] = function() return BossFireballState() end
+                    ['fireball'] = function() return BossFireballState() end,
+                    ['stun'] = function() return BossStunState() end
                 }
         },
         --spawn boss on the ground on the right side of the screen
