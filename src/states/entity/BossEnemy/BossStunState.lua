@@ -1,6 +1,6 @@
 --[[
     State used after the boss has been hit by a fireball.
-    Automatically transitions back to move state after 6 seconds
+    Automatically transitions back to move state after 4 seconds
 ]]
 
 BossStunState = Class {__includes = BossIdleState}
@@ -15,7 +15,7 @@ function BossStunState:enter(def)
     self.entity.ay = 0
 
     --self.entity:changeAnimation('stun')
-    Timer.after(6, function()
+    Timer.after(4, function()
         self.entity.stateMachine:change('move', {entity = self.entity})
     end)
 end
