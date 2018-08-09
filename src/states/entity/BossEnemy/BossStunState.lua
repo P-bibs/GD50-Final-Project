@@ -14,7 +14,8 @@ function BossStunState:enter(def)
     self.entity.vy = 0
     self.entity.ay = 0
 
-    --self.entity:changeAnimation('stun')
+    self.entity:changeAnimation('stun')
+    
     Timer.after(4, function()
         self.entity.stateMachine:change('move', {entity = self.entity})
     end)

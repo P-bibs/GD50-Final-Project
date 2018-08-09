@@ -82,6 +82,11 @@ ENTITY_DEFS = {
                 frames = {1, 2, 3, 4, 5, 6, 7, 8},
                 interval = 0.1,
                 texture = 'boss-walk'
+            },
+            ['stun'] = {
+                frames = {1, 2, 3, 4, 5, 6},
+                interval = 0.1,
+                texture = 'boss-stun'
             }
         }
     }

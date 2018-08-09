@@ -84,6 +84,7 @@ gTextures = {
     ['bug'] = love.graphics.newImage('graphics/Bug.png'),
     ['dash-enemy'] = love.graphics.newImage('graphics/DashEnemy.png'),
     ['boss-walk'] = love.graphics.newImage('graphics/BossEnemy.png'),
+    ['boss-stun'] = love.graphics.newImage('graphics/BossStun.png'),
     ['dust'] = love.graphics.newImage('graphics/Dust.png'),
     ['error'] = love.graphics.newImage('graphics/Error.png'),
     ['background'] = love.graphics.newImage('graphics/HellBackground.png'), --https://forums.terraria.org/index.php?threads/terraria-desktop-wallpapers.12644/page-4
@@ -103,6 +104,7 @@ gFrames = {
     ['bug'] = GenerateQuads(gTextures['bug'], 24, 20),
     ['dash-enemy'] = GenerateQuads(gTextures['dash-enemy'], 24, 24),
     ['boss-walk'] = GenerateQuads(gTextures['boss-walk'], 256, 256),
+    ['boss-stun'] = GenerateQuads(gTextures['boss-stun'], 256, 256),
     ['dust'] = GenerateQuads(gTextures['dust'], 16, 16),
     ['error'] = GenerateQuads(gTextures['error'], 16, 16)
     
