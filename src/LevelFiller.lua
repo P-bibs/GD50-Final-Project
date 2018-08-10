@@ -44,33 +44,35 @@ function LevelFiller.generate(width, height, boss)
 
     for y = -100, -height, -200 do
         for x = 100, width * TILE_SIZE, 200 do
-            local enemyType = math.random(3) == 1 and 'dash' or 'bug'
-            index = #entities + 1
-            table.insert(entities, Entity({
-                entityType = enemyType,
-                animations = ENTITY_DEFS[enemyType].animations,
-                speed = ENTITY_DEFS[enemyType].speed,
-                health = ENTITY_DEFS[enemyType].health,
-                width = ENTITY_DEFS[enemyType].width,
-                height = ENTITY_DEFS[enemyType].height,
+            if x ~= 900 then --don't spawn an enemy where the player spawns
+                local enemyType = math.random(3) == 1 and 'dash' or 'bug'
+                index = #entities + 1
+                table.insert(entities, Entity({
+                    entityType = enemyType,
+                    animations = ENTITY_DEFS[enemyType].animations,
+                    speed = ENTITY_DEFS[enemyType].speed,
+                    health = ENTITY_DEFS[enemyType].health,
+                    width = ENTITY_DEFS[enemyType].width,
+                    height = ENTITY_DEFS[enemyType].height,
 
-                stateMachine = enemyType == 'bug' and 
-                    StateMachine {
-                        ['move'] = function() return BugMoveState() end,
-                        ['idle'] = function() return BugIdleState() end
-                    }
-                    or
-                    StateMachine {
-                        ['move'] = function() return DashMoveState() end,
-                        ['idle'] = function() return DashIdleState() end
-                    }
-            },
-            math.random(x - 100, x),
-            math.random(y + 100, y)
-            )
-            )
+                    stateMachine = enemyType == 'bug' and 
+                        StateMachine {
+                            ['move'] = function() return BugMoveState() end,
+                            ['idle'] = function() return BugIdleState() end
+                        }
+                        or
+                        StateMachine {
+                            ['move'] = function() return DashMoveState() end,
+                            ['idle'] = function() return DashIdleState() end
+                        }
+                },
+                math.random(x - 100, x),
+                math.random(y + 100, y)
+                )
+                )
 
-            entities[index]:changeState('idle', {entity = entities[index]})
+                entities[index]:changeState('idle', {entity = entities[index]})
+            end
         end
     end
 
