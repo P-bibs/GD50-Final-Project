@@ -117,9 +117,6 @@ function Stage:update(dt)
                     self.player.hitbox = nil
                     break
                 end
-                if self.player:collides(fireball) then
-                    Event.dispatch('player-damaged')
-                end
             end
         end
     end
@@ -134,7 +131,7 @@ function Stage:update(dt)
             table.remove(self.entities[1].effects, i)
             break
         end
-        if fireball:collides(self.player.collisionBox) and not fireball.reflected then
+        if self.player.collisionBox:collides(fireball) and not fireball.reflected then
             Event.dispatch('player-damaged')
         end
     end

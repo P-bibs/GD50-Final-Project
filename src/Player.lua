@@ -190,6 +190,10 @@ function Player:update(dt)
 
     --update combo
     self.comboTracker:update(dt)
+
+    --update hurtbox and collisionbox so they track entity
+    self.hurtbox = Hitbox(self.x, self.y, self.width, self.height, self.direction)
+    self.collisionBox = Hitbox(self.x, self.y, self.width, self.height, self.direction)
 end
 
 function Player:alterJumps(amount)
@@ -251,7 +255,11 @@ function Player:render()
         self.attackAnim:render()
     end
 
+    --DEBUG: hitbox
     --if self.hitbox then
     --    love.graphics.rectangle('line', self.hitbox.x, self.hitbox.y, self.hitbox.width, self.hitbox.height)
     --end
+
+    --DEBUG: hurtbox
+    --self.collisionBox:render()
 end
