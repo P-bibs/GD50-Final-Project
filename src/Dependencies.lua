@@ -70,7 +70,9 @@ gSounds = {
     ['menu-select'] = love.audio.newSource('sounds/MenuSelect.wav'),
     ['failed-hit'] = love.audio.newSource('sounds/FailedHit.wav'),
     ['enemy-hurt'] = love.audio.newSource('sounds/EnemyHurt.wav'),
-    ['music'] = love.audio.newSource('sounds/music.wav')
+    ['music'] = love.audio.newSource('sounds/music.wav'),
+    ['boss-stun'] = love.audio.newSource('sounds/Boss-Stun.wav'),
+    ['heal'] = love.audio.newSource('sounds/heal.wav')
 }
 
 --all textures not otherwise credited created by me using Piskel

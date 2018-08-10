@@ -38,6 +38,7 @@ function BossFireballState:enter(def)
         table.insert(self.entity.effects, GameObject(
             GAME_OBJECT_DEFS['fireball'], x, y
         ))
+        self.entity.effects[#self.entity.effects]:changeAnimation('red')
 
         --use trig to set velocities, flipping x if the boss is facing right
         self.entity.effects[#self.entity.effects].vx = math.cos(self.angle) * GAME_OBJECT_DEFS['fireball'].speed * (self.entity.direction == 'right' and -1 or 1)

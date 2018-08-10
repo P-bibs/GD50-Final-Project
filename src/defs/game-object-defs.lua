@@ -103,6 +103,12 @@ GAME_OBJECT_DEFS = {
                 interval = 0.1,
                 texture = 'fireballs',
                 looping = true
+            },
+            ['blue'] = {
+                frames = {13 ,14, 15, 16},
+                interval = 0.1,
+                texture = 'fireballs',
+                looping = true
             }
         }
     }

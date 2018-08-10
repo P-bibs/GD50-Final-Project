@@ -28,11 +28,7 @@ function love.load()
         ['lose'] = function() return GameLoseState() end
     }
     gStateMachine:change('start')
-
-    gSounds['music']:setLooping(true)
-    gSounds['music']:setVolume(0.1)
-    gSounds['music']:play()
-
+    
     love.keyboard.keysPressed = {}
 end
 

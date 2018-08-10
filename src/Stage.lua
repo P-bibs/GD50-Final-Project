@@ -89,6 +89,7 @@ function Stage:update(dt)
                     self.player:alterJumps(PLAYER_MAX_JUMPS)
                     fireball.reflected = true
                     self.player.comboTracker:addHit()
+                    fireball:changeAnimation('blue')
 
                     --freeze entities and animations temporarily
                     fireball.currentAnimation:freeze(FREEZE_DURATION)
@@ -116,8 +117,8 @@ function Stage:update(dt)
                     break
                     --TODO add parry sound effect
                 end
-                if self.player:collides(self.entities[1].effects[i]) then
-                    --TODO damage player on fireball collision
+                if self.player:collides(fireball) then
+                    Event.dispatch('player-damaged')
                 end
             end
         end
@@ -128,11 +129,12 @@ function Stage:update(dt)
     for i = 1, #self.entities[1].effects do
         local fireball = self.entities[1].effects[i]
         if fireball:collides(self.entities[1].collisionBox) and fireball.reflected then
+            gSounds['boss-stun']:play()
             self.entities[1]:changeState('stun', {entity = self.entities[1]})
             table.remove(self.entities[1].effects, i)
             break
         end
-        if fireball:collides(self.player.hurtbox) and not fireball.reflected then
+        if fireball:collides(self.player.collisionBox) and not fireball.reflected then
             Event.dispatch('player-damaged')
         end
     end

@@ -23,6 +23,9 @@ function Player:init(def, x, y)
         function(hits)
             --if the combo is a multiple of 3, repair all the player's jumps
             if hits % 3 == 0 then 
+                if self.brokenJumps ~= 0 then
+                    gSounds['heal']:play()
+                end
                 self.brokenJumps = 0
                 self:alterJumps(PLAYER_MAX_JUMPS)
             end
