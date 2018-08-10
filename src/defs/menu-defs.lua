@@ -50,19 +50,35 @@ MENU_DEFS = {
                 param = {level = 1}
             },
             {
-                text = '2 - Harder',
-                action = 'play',
-                param = {level = 2}
+                text = '????????',
+                action = 'level-select'
             },
             {
-                text = '3 - Boss',
-                action = 'play',
-                param = {level = 3}
+                text = '????????',
+                action = 'level-select'
             },
             {
                 text = 'Go Back',
                 action = 'primary'
             }
         }
+    }
+}
+--list of all numbers. These are loaded into the main table as they are unlocked
+LEVELS = {
+    {
+        text = '1 - Easy',
+        action = 'play',
+        param = {level = 1}
+    },
+    {
+        text = '2 - Harder',
+        action = 'play',
+        param = {level = 2}
+    },
+    {
+        text = '3 - Boss',
+        action = 'play',
+        param = {level = 3}
     }
 }

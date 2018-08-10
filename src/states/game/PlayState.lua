@@ -79,6 +79,10 @@ function PlayState:update(dt)
         :finish(function()
             gStateMachine:change('begin', self.stage.levelNumber + 1)
         end)
+        --unlock the next level
+        if self.stage.levelNumber + 1 <= #LEVELS then
+            MENU_DEFS['level-select'].options[self.stage.levelNumber + 1] = LEVELS[self.stage.levelNumber + 1]
+        end
     end
 
     -- update stage
