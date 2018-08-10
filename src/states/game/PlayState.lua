@@ -103,7 +103,25 @@ function PlayState:update(dt)
             --In that case, just set the leaderboard to the current attempt, as it is the first attempt
             MENU_DEFS['leaderboard'].options[self.stage.levelNumber].text = self.levelTimer
         end
+    end
 
+    --change to game over if a boss is defeated
+    if LEVEL_DEFS[self.stage.levelNumber].boss and self.stage.entities[1].entityType ~= 'boss' then
+        Timer.tween(1, {
+            [self] = {rectangleOpacity = 255}
+        })
+        :finish(function()
+            gStateMachine:change('game-over', {time = self.levelTimer})
+        end)
+
+        --update leaderboard, see above for documentation/explanation
+        self.timerIncrementer:remove()
+        if pcall(function()
+            MENU_DEFS['leaderboard'].options[self.stage.levelNumber].text = math.min(self.levelTimer,  MENU_DEFS['leaderboard'].options[self.stage.levelNumber].text)
+        end) then
+        else
+            MENU_DEFS['leaderboard'].options[self.stage.levelNumber].text = self.levelTimer
+        end
     end
 
     -- update stage

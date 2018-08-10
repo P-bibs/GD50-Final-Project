@@ -55,6 +55,9 @@ function StartState:update(dt)
     if love.keyboard.wasPressed('escape') then
         love.event.quit()
     end
+    if love.keyboard.wasPressed('k') then
+        MENU_DEFS['level-select'].options = LEVELS
+    end
 end
 
 function StartState:render()
