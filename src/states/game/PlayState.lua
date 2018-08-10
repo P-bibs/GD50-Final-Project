@@ -59,6 +59,15 @@ function PlayState:update(dt)
             Timer.tween(.3, {
                 [self] = {vignetteOpacity = 0}
             })
+
+            if self.player.brokenJumps == PLAYER_MAX_JUMPS then
+                Timer.tween(1, {
+                    [self] = {rectangleOpacity = 255}
+                })
+                :finish(function()
+                    gStateMachine:change('lose')
+                end)
+            end
         end
     end)
 

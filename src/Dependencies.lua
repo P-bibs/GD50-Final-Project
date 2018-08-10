@@ -25,6 +25,7 @@ require 'src/states/game/PlayState'
 require 'src/states/game/StartState'
 require 'src/states/game/GameOverState'
 require 'src/states/game/BeginStageState'
+require 'src/states/game/GameLoseState'
 
 -- entity states
 require 'src/states/entity/EntityMoveState'
