@@ -90,6 +90,7 @@ function Stage:update(dt)
                     fireball.reflected = true
                     self.player.comboTracker:addHit()
                     fireball:changeAnimation('blue')
+                    gSounds['reflect']:play()
 
                     --freeze entities and animations temporarily
                     fireball.currentAnimation:freeze(FREEZE_DURATION)
@@ -115,7 +116,6 @@ function Stage:update(dt)
                     
                     self.player.hitbox = nil
                     break
-                    --TODO add parry sound effect
                 end
                 if self.player:collides(fireball) then
                     Event.dispatch('player-damaged')

@@ -72,7 +72,8 @@ gSounds = {
     ['enemy-hurt'] = love.audio.newSource('sounds/EnemyHurt.wav'),
     ['music'] = love.audio.newSource('sounds/music.wav'),
     ['boss-stun'] = love.audio.newSource('sounds/Boss-Stun.wav'),
-    ['heal'] = love.audio.newSource('sounds/heal.wav')
+    ['heal'] = love.audio.newSource('sounds/heal.wav'),
+    ['reflect'] = love.audio.newSource('sounds/Reflect.wav')
 }
 
 --all textures not otherwise credited created by me using Piskel
