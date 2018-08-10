@@ -25,6 +25,10 @@ MENU_DEFS = {
                 action = 'how-to'
             },
             {
+                text = 'Leaderboard',
+                action = 'leaderboard'
+            },
+            {
                 text = 'Quit Game',
                 action = 'quit'
             }
@@ -42,7 +46,7 @@ MENU_DEFS = {
     },
     ['level-select'] = {
         text = 'Select a level to play',
-        type = 'Title',
+        type = 'title',
         options = {
             {
                 text = '1 - Easy',
@@ -51,11 +55,33 @@ MENU_DEFS = {
             },
             {
                 text = '????????',
-                action = 'level-select'
+                action = ''
             },
             {
                 text = '????????',
-                action = 'level-select'
+                action = ''
+            },
+            {
+                text = 'Go Back',
+                action = 'primary'
+            }
+        }
+    },
+    ['leaderboard'] = {
+        text = 'Top Times for Levels 1, 2 & 3',
+        type = 'title',
+        options = {
+            {
+                text = 'Level 1 - Not Yet Set',
+                action = ''
+            },
+            {
+                text = 'Level 2 - Not Yet Set',
+                action = ''
+            },
+            {
+                text = 'Level 3 - Not Yet Set',
+                action = ''
             },
             {
                 text = 'Go Back',

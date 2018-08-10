@@ -29,6 +29,8 @@ function StartState:update(dt)
             }):finish(function()
                 gStateMachine:change('begin', MENU_DEFS[self.currentMenu].options[self.selected].param['level'])
             end)
+        elseif MENU_DEFS[self.currentMenu].options[self.selected].action == '' then
+            --do nothing
         else
         --if the currently selected item's action is any other string, change to that menu
             self.currentMenu = MENU_DEFS[self.currentMenu].options[self.selected].action
@@ -67,8 +69,11 @@ function StartState:render()
     love.graphics.setColor(255, 255, 255, 255)
 
     --Draw actual text of this submenu. Draw centered in the upper third of this screen if a title, otherwise use up full upper part of screen with 50 pixel margin on either side
-    if MENU_DEFS[self.currentMenu].type == 'title' then love.graphics.printf(MENU_DEFS[self.currentMenu].text, 0, VIRTUAL_HEIGHT / 3, VIRTUAL_WIDTH, 'center')
-    elseif MENU_DEFS[self.currentMenu].type == 'paragraph' then love.graphics.printf(MENU_DEFS[self.currentMenu].text, 50, 10, VIRTUAL_WIDTH - 100, 'center') end
+    if MENU_DEFS[self.currentMenu].type == 'title' then
+        love.graphics.printf(MENU_DEFS[self.currentMenu].text, 0, VIRTUAL_HEIGHT / 3, VIRTUAL_WIDTH, 'center')
+    elseif MENU_DEFS[self.currentMenu].type == 'paragraph' then
+        love.graphics.printf(MENU_DEFS[self.currentMenu].text, 50, 10, VIRTUAL_WIDTH - 100, 'center')
+    end
 
     love.graphics.setFont(gFonts['large'])
 
@@ -77,7 +82,7 @@ function StartState:render()
         love.graphics.setColor(0, 0, 0, 255)
         love.graphics.printf(MENU_DEFS[self.currentMenu].options[i].text,
         3,
-        (VIRTUAL_HEIGHT * 3 / 5) + ((i - 1) / (#MENU_DEFS[self.currentMenu].options)) * (VIRTUAL_HEIGHT / 3 - 10) + 3,
+        (VIRTUAL_HEIGHT * 3 / 5) + ((i - 1) / (#MENU_DEFS[self.currentMenu].options)) * (VIRTUAL_HEIGHT * 2 / 5 - 10) + 3,
         VIRTUAL_WIDTH, 'center'
         )
         
@@ -85,7 +90,7 @@ function StartState:render()
         love.graphics.setColor(255, 255, self.selected == i and 0 or 255, 255)
         love.graphics.printf(MENU_DEFS[self.currentMenu].options[i].text,
         0,
-        (VIRTUAL_HEIGHT * 3 / 5) + ((i - 1) / (#MENU_DEFS[self.currentMenu].options)) * (VIRTUAL_HEIGHT / 3 - 10),
+        (VIRTUAL_HEIGHT * 3 / 5) + ((i - 1) / (#MENU_DEFS[self.currentMenu].options)) * (VIRTUAL_HEIGHT * 2 / 5 - 10),
         VIRTUAL_WIDTH, 'center'
         )
     end

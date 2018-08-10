@@ -9,6 +9,12 @@ function PlayState:enter(def)
     self.stage = def.stage
     self.player = def.player
 
+    --create a timer to see how fast the player makes it through this level
+    self.levelTimer = 0
+    self.timerIncrementer = Timer.every(1, function()
+        self.levelTimer = self.levelTimer + 1
+    end)
+
     self.tileMap = self.stage.tileMap
 
     --give each entity a reference to the player
@@ -79,10 +85,25 @@ function PlayState:update(dt)
         :finish(function()
             gStateMachine:change('begin', self.stage.levelNumber + 1)
         end)
+
         --unlock the next level
         if self.stage.levelNumber + 1 <= #LEVELS then
             MENU_DEFS['level-select'].options[self.stage.levelNumber + 1] = LEVELS[self.stage.levelNumber + 1]
         end
+
+        --end the timer and update leaderboard with the new time if lower than the current time
+        self.timerIncrementer:remove()
+        if pcall(function()
+            --set the leaderboard to the lesser of the current record and the current attempt
+            MENU_DEFS['leaderboard'].options[self.stage.levelNumber].text = math.min(self.levelTimer,  MENU_DEFS['leaderboard'].options[self.stage.levelNumber].text)
+        end) then
+            --do nothing if pcall returns true (no errors)
+        else
+            --The leaderboard starts as a string,  not an int, which means the above errors when initially setting a value
+            --In that case, just set the leaderboard to the current attempt, as it is the first attempt
+            MENU_DEFS['leaderboard'].options[self.stage.levelNumber].text = self.levelTimer
+        end
+
     end
 
     -- update stage
@@ -156,9 +177,14 @@ function PlayState:render()
     love.graphics.draw(gTextures['hurt-vignette'], 0, 0)
 
     --render bosses healthbar if a boss exists
+    love.graphics.setColor(255, 255, 255, 255)
     if self.stage.entities[1].entityType == 'boss' then
         self.stage.entities[1].healthbar:render(30, VIRTUAL_HEIGHT - 40, VIRTUAL_WIDTH - 60, 7)
     end
+
+    --draw timer
+    love.graphics.setColor(255, 255, 255, 255)
+    love.graphics.printf('Timer: ' .. self.levelTimer,  0, 10, VIRTUAL_WIDTH - 10, 'right')
 
     --rectangle for transition
     love.graphics.setColor(255, 255, 255, self.rectangleOpacity)

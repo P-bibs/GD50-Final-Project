@@ -64,9 +64,3 @@ HOW_TO_TEXT = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam m
 PLAYER_MAX_JUMPS = 100
 
 NUMBER_FIREBALLS = 8
-
-gLevelUnlocks= {
-    [1] = true,
-    [2] = false,
-    [3] = false
-}
