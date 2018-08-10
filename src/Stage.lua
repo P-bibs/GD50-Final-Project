@@ -23,7 +23,7 @@ function Stage:clear()
 end
 
 function Stage:update(dt)
-    --check for collisions with enemies
+    --check for player attacking enemies
     if self.player.hitbox then
         for k, entity in pairs(self.entities) do
             if entity:collides(self.player.hitbox) then
@@ -120,6 +120,7 @@ function Stage:update(dt)
     end
 
     --determine if a reflected fireball hits boss. If so, stun the boss
+    --Also check if a fireball hits the player. If so, damage the player
     for i = 1, #self.entities[1].effects do
         local fireball = self.entities[1].effects[i]
         if fireball:collides(self.entities[1].collisionBox) and fireball.reflected then
@@ -127,9 +128,12 @@ function Stage:update(dt)
             table.remove(self.entities[1].effects, i)
             break
         end
+        if fireball:collides(self.player.hurtbox) and not fireball.reflected then
+            Event.dispatch('player-damaged')
+        end
     end
 
-    --if player collides with an entity, flash a red vignett around the screen to indicate taking damage
+    --if player collides with an entity, flash a red vignette around the screen to indicate taking damage
     for k, entity in pairs(self.entities) do
         if self.player:collides(entity.collisionBox) then
             --dispatch an event that triggers a red vignette to flash in PlayState

@@ -64,7 +64,7 @@ require 'src/defs/level-defs'
 --created using bfxr
 gSounds = {
     ['player-jump'] = love.audio.newSource('sounds/PlayerJump.wav'),
-    ['player-hurt'] = love.audio.newSource('sounds/PlayerHurt.wav'),
+    ['player-damaged'] = love.audio.newSource('sounds/PlayerHurt.wav'),
     ['menu-select'] = love.audio.newSource('sounds/MenuSelect.wav'),
     ['failed-hit'] = love.audio.newSource('sounds/FailedHit.wav'),
     ['enemy-hurt'] = love.audio.newSource('sounds/EnemyHurt.wav'),

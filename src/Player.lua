@@ -10,6 +10,8 @@ function Player:init(def, x, y)
     self.jumps = PLAYER_MAX_JUMPS
     self.brokenJumps = 0
 
+    self.invulnerable = false
+
     self.hitbox = nil
     self.attackAnim = nil
 
@@ -142,13 +144,25 @@ function Player:alterJumps(amount)
     end
 end
 
+function Player:makeInvulnerable()
+    self.invulnerable = true
+    Timer.every(.1, function()
+        --flash the player so he appears invulnerable
+        self.playerInvisible = not self.playerInvisible
+    end)
+    :limit(20)
+    :finish(function()
+        self.invulnerable = false
+    end)
+end
+
 function Player:render()
     --debug to show area around player in which bug enemies will be alerted
     --love.graphics.setColor(255, 255, 255, 100)
     --love.graphics.circle('fill', self.x + self.width, self.y + self.height, BUG_ALERT_DISTANCE)
     --love.graphics.setColor(255, 255, 255, 255)
 
-    love.graphics.setColor(255, 255, 255, 255)
+    love.graphics.setColor(255, 255, 255, self.playerInvisible and 0 or 255)
     love.graphics.draw(gTextures[self.currentAnimation.texture], gFrames[self.currentAnimation.texture][self.currentAnimation:getCurrentFrame()],
         math.floor(self.x) + 8, math.floor(self.y) + 10, 0, 1, 1, 8, 10)
 

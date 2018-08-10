@@ -71,10 +71,22 @@ end
 function PlayState:update(dt)
     --If updating Stage tirggers a player damaged event, flash a red vignette over the screen to indicate damage
     Event.on('player-damaged', function()
+        if not self.player.invulnerable then
+            --damage the player by removing a jump
+            self.player.brokenJumps = math.min(self.player.brokenJumps + 1, PLAYER_MAX_JUMPS)
+
+            --sound cue
+            gSounds['player-damaged']:play()
+
+            --make player tmeporarily invulnerable
+            self.player:makeInvulnerable()
+
+            --red vignette
             self.vignetteOpacity = 255
             Timer.tween(.3, {
                 [self] = {vignetteOpacity = 0}
             })
+        end
     end)
 
     --change to next level if player has climbed high enough
