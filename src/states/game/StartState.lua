@@ -52,9 +52,15 @@ function StartState:update(dt)
         end
     end
 
+    --escape either backs up to the main menu or exits
     if love.keyboard.wasPressed('escape') then
-        love.event.quit()
+        if self.currentMenu == 'primary' then
+            love.event.quit()
+        else
+            self.currentMenu = 'primary'
+        end
     end
+    --DEBUG: unlock all levels
     if love.keyboard.wasPressed('k') then
         MENU_DEFS['level-select'].options = LEVELS
     end
