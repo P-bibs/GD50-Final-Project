@@ -57,10 +57,13 @@ BUG_ALERT_DISTANCE = 200
 
 FREEZE_DURATION = 0.1
 
+PLAYER_MAX_JUMPS = 100
+
 KNOCKBACK = 100
 
-HOW_TO_TEXT = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam molestie, tellus eget eleifend volutpat, lacus sapien porttitor velit, ut fermentum urna tortor vel tellus. Nullam in bibendum felis. Morbi vel arcu vel turpis convallis imperdiet auctor vitae odio. Donec interdum mi risus, sed tempus odio laoreet sed. Nunc ultricies odio massa, aliquam lobortis nulla vehicula at. Etiam sem neque, semper ac mi pretium, viverra bibendum lorem. Curabitur et fermentum dolor, et molestie nisl. Sed luctus sagittis ipsum sit amet pellentesque. Quisque viverra felis a imperdiet dapibus. Morbi malesuada iaculis nulla, quis finibus elit laoreet vitae. In eu urna porttitor, dapibus.'
+HOW_TO_TEXT1 = [[Welcome to Super Beat Up! You are trapped at the bottom of a hellish land, and the only tool you have to escape is your considerable jumping ability and a feisty punch.
+To progress, you must advance upward, but you're 6 jumps will only get you so far. To make real progress, you'll have to vanquish baddies, which will refill you jump meter and allow you to continue. Be careful though, missed swings will cost you a jump as well. If you are overcome by one of the many monsters you wil encounter, your number of jumps will be limited. Get a combo of hits to repair your jumping ability to full form!]]
 
-PLAYER_MAX_JUMPS = 100
+HOW_TO_TEXT2 = [[Attempt to make youre way through 2 challenging levels of ascent through harrowing pits, and then pit yourself against a new foe in level 3. To best him, you will have to be creative in your fighting tactics. (Maybe there is a way to stun him?). Once you have completed every level, try to do them again, but faster! You're fastest times are recorded on the leaderboard. Now go! Adventure!]]
 
 NUMBER_FIREBALLS = 8

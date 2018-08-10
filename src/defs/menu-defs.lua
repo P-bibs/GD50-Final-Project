@@ -22,7 +22,7 @@ MENU_DEFS = {
             },
             {
                 text = 'How to Play',
-                action = 'how-to'
+                action = 'how-to-1'
             },
             {
                 text = 'Leaderboard',
@@ -34,10 +34,28 @@ MENU_DEFS = {
             }
         }
     },
-    ['how-to'] = {
-        text = HOW_TO_TEXT,
+    ['how-to-1'] = {
+        text = HOW_TO_TEXT1,
         type = 'paragraph',
         options = {
+            {
+                text = 'Next',
+                action = 'how-to-2'
+            },
+            {
+                text = 'Go Back',
+                action = 'primary'
+            }
+        }
+    },
+    ['how-to-2'] = {
+        text = HOW_TO_TEXT2,
+        type = 'paragraph',
+        options = {
+            {
+                text = 'Previous',
+                action = 'how-to-1'
+            },
             {
                 text = 'Go Back',
                 action = 'primary'
