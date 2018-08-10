@@ -62,7 +62,9 @@ function PlayState:update(dt)
 
             --transition to lose state if player dies
             if self.player.brokenJumps == PLAYER_MAX_JUMPS then
-                Timer.tween(1, {
+                self.player.dead = true
+                self.player:changeAnimation('dead')
+                Timer.tween(2, {
                     [self] = {rectangleOpacity = 255}
                 })
                 :finish(function()

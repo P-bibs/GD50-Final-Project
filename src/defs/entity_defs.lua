@@ -32,6 +32,11 @@ ENTITY_DEFS = {
                 frames = {2},
                 interval = 0.3,
                 texture = 'character-slide'
+            },
+            ['dead'] = {
+                frames = {1},
+                interval = 1,
+                texture = 'character-dead'
             }
         }
     },

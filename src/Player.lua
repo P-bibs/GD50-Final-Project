@@ -88,56 +88,94 @@ function Player:update(dt)
     end
 
     --[[ All below is movemt calculations ]]
+    if not self.dead then
+        --set initial acceleration values
+        self.ay = -7
+        self.ax = 0
 
-    --set initial acceleration values
-    self.ay = -7
-    self.ax = 0
+        -- if we've gone below the map limit, set DY to 0
+        if self.y > 0 - self.height then
+            self.y = 0 - self.height
+            self.ay = 0
+            self.vy = 0
+            self:alterJumps(PLAYER_MAX_JUMPS)
+        end
 
-    -- if we've gone below the map limit, set DY to 0
-    if self.y > 0 - self.height then
-        self.y = 0 - self.height
-        self.ay = 0
-        self.vy = 0
-        self:alterJumps(PLAYER_MAX_JUMPS)
-    end
+        --jump
+        if love.keyboard.wasPressed(KEY_JUMP) and self.jumps > 0 then
+            self.vy = PLAYER_JUMP_VELOCITY
+            self:alterJumps(-1)
+            gSounds['player-jump']:play()
+            self.stateMachine:change('air')
+        end
 
-    --jump
-    if love.keyboard.wasPressed(KEY_JUMP) and self.jumps > 0 then
-        self.vy = PLAYER_JUMP_VELOCITY
-        self:alterJumps(-1)
-        gSounds['player-jump']:play()
-        self.stateMachine:change('air')
-    end
+        --input
+        if love.keyboard.isDown(KEY_MOVE_LEFT) then
+            self.ax = -5
+        end
+        if love.keyboard.isDown(KEY_MOVE_RIGHT) then
+            self.ax = 5
+        end
 
-    --input
-    if love.keyboard.isDown(KEY_MOVE_LEFT) then
-        self.ax = -5
-    end
-    if love.keyboard.isDown(KEY_MOVE_RIGHT) then
-        self.ax = 5
-    end
+        --friction
+        if self.vx > 0 then 
+            self.ax = self.ax - 2
+        end
+        if self.vx < 0 then
+            self.ax = self.ax + 2
+        end
 
-    --friction
-    if self.vx > 0 then 
-        self.ax = self.ax - 2
-    end
-    if self.vx < 0 then
-        self.ax = self.ax + 2
-    end
+        --if x velocity is approximately 0, set to 0
+        if self.vx > -2 and self.vx < 2 then
+            self.vx = 0
+        end
 
-    --if x velocity is approximately 0, set to 0
-    if self.vx > -2 and self.vx < 2 then
-        self.vx = 0
-    end
+        --calculations
+        if self.vx >= 0 then self.vx = math.min(240, self.vx + self.ax) end
+        if self.vx < 0 then self.vx = math.max(-240, self.vx + self.ax) end
+        self.vy = self.vy + self.ay
 
-    --calculations
-    if self.vx >= 0 then self.vx = math.min(240, self.vx + self.ax) end
-    if self.vx < 0 then self.vx = math.max(-240, self.vx + self.ax) end
-    self.vy = self.vy + self.ay
+        if not self.frozen then
+            self.x = self.x + self.vx * dt
+            self.y = self.y - self.vy * dt
+        end
+    --continue player's trajectory, but dont allow input if dead
+    else
+        self:changeAnimation('dead')
+        --set initial acceleration values
+        self.ay = -7
+        self.ax = 0
 
-    if not self.frozen then
-        self.x = self.x + self.vx * dt
-        self.y = self.y - self.vy * dt
+        -- if we've gone below the map limit, set DY to 0
+        if self.y > 0 - self.height then
+            self.y = 0 - self.height
+            self.ay = 0
+            self.vy = 0
+        end
+
+        --friction
+        if self.vx > 0 then 
+            self.ax = self.ax - 2
+        end
+        if self.vx < 0 then
+            self.ax = self.ax + 2
+        end
+
+        --if x velocity is approximately 0, set to 0
+        if self.vx > -2 and self.vx < 2 then
+            self.vx = 0
+        end
+
+        --calculations
+        if self.vx >= 0 then self.vx = math.min(240, self.vx + self.ax) end
+        if self.vx < 0 then self.vx = math.max(-240, self.vx + self.ax) end
+        self.vy = self.vy + self.ay
+
+        if not self.frozen then
+            self.x = self.x + self.vx * dt
+            self.y = self.y - self.vy * dt
+        end
+
     end
 
     --[[ End movement logic ]]
@@ -173,6 +211,8 @@ function Player:makeInvulnerable()
         self.invulnerable = false
     end)
 end
+
+
 
 function Player:render()
     --debug to show area around player in which bug enemies will be alerted
