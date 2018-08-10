@@ -1,3 +1,6 @@
+--[[
+    the Boss has to be a seperate class that inherits from entity because it has specific hitbox locations
+]]
 Boss = Class {__includes = Entity}
 
 function Boss:init(def, x, y)
@@ -8,9 +11,7 @@ function Boss:init(def, x, y)
     self.collisionBox = Hitbox(self.x + 21, self.y + 67, 149, 189, nil)
 
 end
--- 21, 57
 
--- 168
 function Boss:update(dt)
     Entity.update(self, dt)
     if self.direction == 'left' then
@@ -22,7 +23,3 @@ function Boss:update(dt)
     end
 
 end
-
---function Boss:update()
---    Entity.render(self)
---end
