@@ -60,6 +60,7 @@ function PlayState:update(dt)
                 [self] = {vignetteOpacity = 0}
             })
 
+            --transition to lose state if player dies
             if self.player.brokenJumps == PLAYER_MAX_JUMPS then
                 Timer.tween(1, {
                     [self] = {rectangleOpacity = 255}
