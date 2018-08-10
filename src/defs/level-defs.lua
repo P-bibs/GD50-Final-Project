@@ -1,3 +1,7 @@
+--[[
+    data driven level defs. Add more levels by adding to this before level 3
+]]
+
 LEVEL_DEFS = {
     [1] = {
         height = 1500,

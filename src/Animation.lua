@@ -1,5 +1,5 @@
 --[[
-    
+    Class that represents a set of frames for an animation
 ]]
 
 Animation = Class{}

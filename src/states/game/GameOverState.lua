@@ -1,3 +1,6 @@
+--[[
+    State for when the player wins
+]]
 GameOverState = Class {__includes = BaseState}
 
 function GameOverState:enter(def) 

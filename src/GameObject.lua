@@ -1,5 +1,5 @@
 --[[
-    
+    Represents object and effects in game
 ]]
 
 GameObject = Class{}

@@ -1,5 +1,5 @@
 --[[
-    
+    Base state for entities moving
 ]]
 
 EntityMoveState = Class{__includes = BaseState}

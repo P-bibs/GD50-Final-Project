@@ -1,3 +1,8 @@
+--[[
+    State where the dash enemy is motionless and charging up.
+    Charges after player after random time
+]]
+
 DashIdleState = Class {__includes = EntityIdleState}
 
 function DashIdleState:enter(def)
@@ -8,6 +13,7 @@ function DashIdleState:enter(def)
 end
 
 function DashIdleState:processAI(params, dt)
+    --slow down the entity
     self.entity.vx = self.entity.vx * .98
     self.entity.vy = self.entity.vy * .98
 

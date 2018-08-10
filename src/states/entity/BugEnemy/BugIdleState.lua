@@ -1,3 +1,8 @@
+--[[
+    state when the bug enemy is too far from the player to notice.
+    Transitions back to move state if the player comes close enough
+]]
+
 BugIdleState = Class {__includes = EntityIdleState}
 
 function BugIdleState:enter(def)

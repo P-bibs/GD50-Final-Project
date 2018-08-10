@@ -1,5 +1,6 @@
 --[[
-    
+    Static class that creates levels and fills them with entities
+    Also draws finish line at top of level
 ]]
 
 LevelFiller = Class{}
@@ -42,6 +43,7 @@ function LevelFiller.generate(width, height, boss)
         entities[#entities]:changeState('move', {entity = entities[#entities]})
     end
 
+    --spawn one enemy per 200 * 200 box
     for y = -100, -height, -200 do
         for x = 100, width * TILE_SIZE, 200 do
             if x ~= 900 then --don't spawn an enemy where the player spawns
@@ -77,7 +79,7 @@ function LevelFiller.generate(width, height, boss)
     end
 
     for x = 1, width do  
-        --draw ground
+        --fill ground
         for y = 1, 20 do
             tiles[y][x] = Tile(x, y, 
             y == 1 and TILE_ID_TOP or TILE_ID_GROUND

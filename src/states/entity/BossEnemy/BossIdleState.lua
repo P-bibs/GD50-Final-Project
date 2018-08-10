@@ -1,3 +1,7 @@
+--[[
+    State for when the boss is idling
+]]
+
 BossIdleState = Class {__includes = EntityIdleState}
 
 function BossIdleState:enter(def)

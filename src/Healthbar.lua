@@ -1,3 +1,9 @@
+--[[
+    A healthbar is usually attached to an entity and represents that entities healthbar
+    This healthbar is style after those found in the Dark Souls franchise.
+    A red healthbar is draw on top to show actual health remaining, and
+        a yellow health bar below follows along to emphasize damage
+]]
 Healthbar = Class {}
 
 function Healthbar:init(max, text)

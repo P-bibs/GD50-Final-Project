@@ -9,7 +9,7 @@ require 'src/Dependencies'
 
 function love.load()
     love.graphics.setFont(gFonts['medium'])
-    love.window.setTitle('Super 50 Bros.')
+    love.window.setTitle('Super Beat Up')
 
     math.randomseed(os.time())
     

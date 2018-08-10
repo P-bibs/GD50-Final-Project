@@ -1,5 +1,7 @@
 --[[
-    
+    Class that represents the play area for a level.
+    Handles collisions between all entities and objects in a level.
+    Also stores references to all entities and player
 ]]
 
 Stage = Class{}

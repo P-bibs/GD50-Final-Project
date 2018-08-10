@@ -1,9 +1,6 @@
 --[[
-    GD50
-    Legend of Zelda
-
-    Author: Colton Ogden
-    cogden@cs50.harvard.edu
+    table of data for the main menu items
+    data driven system allows easy additions to menu
 ]]
 
 MENU_DEFS = {
@@ -63,7 +60,7 @@ MENU_DEFS = {
         }
     },
     ['level-select'] = {
-        text = 'Select a level to play',
+        text = 'Select a level to play\n(Press k to unlock all levels)',
         type = 'title',
         options = {
             {

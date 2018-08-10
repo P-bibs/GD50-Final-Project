@@ -1,5 +1,5 @@
 --[[
-    
+    data driven table of entities in the game
 ]]
 
 ENTITY_DEFS = {
@@ -70,7 +70,7 @@ ENTITY_DEFS = {
         speed = 60,
         height = 256,
         width = 256,
-        health = 5,
+        health = 20,
         name = 'Marauder of the Deep',
         animations = {
             ['idle'] = {

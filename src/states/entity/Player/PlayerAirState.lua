@@ -1,5 +1,7 @@
 --[[
-    
+    State where the player is in the air
+    Mostly just used for animations
+    Actual movement happens in player class
 ]]
 
 PlayerAirState = Class{__includes = BaseState}

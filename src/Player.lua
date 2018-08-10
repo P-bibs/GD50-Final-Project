@@ -1,5 +1,6 @@
 --[[
-    
+    Class that represents the player.
+    The player is controlled by acceleration, not velocity, so is very floaty
 ]]
 
 Player = Class{__includes = Entity}
@@ -86,6 +87,8 @@ function Player:update(dt)
         self.hitbox = nil --if the animation has expired, destroy the hitbox
     end
 
+    --[[ All below is movemt calculations ]]
+
     --set initial acceleration values
     self.ay = -7
     self.ax = 0
@@ -136,6 +139,8 @@ function Player:update(dt)
         self.x = self.x + self.vx * dt
         self.y = self.y - self.vy * dt
     end
+
+    --[[ End movement logic ]]
 
     --update animation
     if self.currentAnimation then

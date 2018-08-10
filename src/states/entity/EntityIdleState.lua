@@ -1,5 +1,5 @@
 --[[
-
+    Base state for entities idling
 ]]
 
 EntityIdleState = Class{__includes = BaseState}

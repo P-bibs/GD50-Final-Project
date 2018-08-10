@@ -1,3 +1,7 @@
+--[[
+    State where the bug chases the player. The bug purposefully overshoots the player sometimes
+]]
+
 BugMoveState = Class {__includes = EntityMoveState}
 
 function BugMoveState:enter(def)

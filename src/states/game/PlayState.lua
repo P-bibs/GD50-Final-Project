@@ -1,5 +1,7 @@
 --[[
-   
+   Play State
+   main state used to check overarching logic (ie: is the level beat)
+   Renders stage, as well as HUD items that need to be rendered seperate of any camera translation
 ]]
 
 PlayState = Class{__includes = BaseState}
@@ -34,42 +36,10 @@ function PlayState:enter(def)
 
     self.vignetteOpacity = 0
     self.rectangleOpacity = 0
-
-    -- Timer.every(4, function()
-    --     local enemyType = math.random(2) == 1 and 'bug' or 'dash'
-    --     index = #self.stage.entities + 1
-    --     table.insert(self.stage.entities, Entity({
-    --         entityType = enemyType,
-    --         animations = ENTITY_DEFS[enemyType].animations,
-    --         speed = ENTITY_DEFS[enemyType].speed,
-    --         health = ENTITY_DEFS[enemyType].health,
-    --         width = ENTITY_DEFS[enemyType].width,
-    --         height = ENTITY_DEFS[enemyType].height,
-    --         player = self.player,
-
-    --         stateMachine = enemyType == 'bug' and 
-    --             StateMachine {
-    --                 ['move'] = function() return BugMoveState() end,
-    --                 ['idle'] = function() return BugIdleState() end
-    --             }
-    --             or
-    --             StateMachine {
-    --                 ['move'] = function() return DashMoveState() end,
-    --                 ['idle'] = function() return DashIdleState() end
-    --             }
-    --     },
-    --     math.random(self.player.x - 100, self.player.x + 100), 
-    --     math.random(self.player.y - 100, self.player.y + 100)
-    --     )
-    --     )
-
-    --     self.stage.entities[index]:changeState('idle', {entity = self.stage.entities[index]})
-    -- end
-    -- )
 end
 
 function PlayState:update(dt)
-    --If updating Stage tirggers a player damaged event, flash a red vignette over the screen to indicate damage
+    --handle player being damaged
     Event.on('player-damaged', function()
         if not self.player.invulnerable then
             --damage the player by removing a jump
@@ -155,25 +125,25 @@ function PlayState:update(dt)
     end
 end
 
+--update camera based on player position. Camera translation values are based on a spring equation with some damping
+--Camera follows player, but lags slightly behind
 function PlayState:updateCamera(dt)
-    -- clamp movement of the camera's X between 0 and the map bounds - virtual width,
-    -- setting it half the screen to the left of the player so they are in the center
-    self.camX = math.max(0,
-        math.min(TILE_SIZE * self.tileMap.width - VIRTUAL_WIDTH,
-        self.player.x - (VIRTUAL_WIDTH / 2 - 8)))
-
-    -- adjust background X to move a third the rate of the camera for parallax
-    self.backgroundX = (self.camX / 3) % 256
-
+    --equilibrium position. The place where hte camera is perfectly centerd on the player. Clamped
     self.cameraXEquilibrium = self.player.x - (VIRTUAL_WIDTH / 2) + (self.player.width / 2)
     self.cameraXEquilibrium = math.max(0,
         math.min(TILE_SIZE * self.tileMap.width - VIRTUAL_WIDTH,
         self.player.x - (VIRTUAL_WIDTH / 2 - 8)))
+
+    --Set the acceleration on the camera based on a spring equation with damping
+    --(spring constant) * (currentX - equilibrumX) - (damping constant)*(velocity)
     self.cameraAX = ((self.K * (self.cameraXEquilibrium - self.cameraX)) - (self.damping * self.cameraVX)) * dt
+    
+    --update velocity and position based on acceleration
     self.cameraVX = self.cameraVX + self.cameraAX
     self.cameraX = self.cameraX + self.cameraVX 
     self.cameraX = math.max(0, self.cameraX)
 
+    --see above
     self.cameraYEquilibrium = self.player.y - (VIRTUAL_HEIGHT / 2) + (self.player.height / 2)
     self.cameraAY = ((self.K*2 * (self.cameraYEquilibrium - self.cameraY)) - (self.damping * self.cameraVY)) * dt
     self.cameraVY = self.cameraVY + self.cameraAY

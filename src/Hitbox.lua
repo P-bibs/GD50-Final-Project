@@ -1,5 +1,5 @@
 --[[
-    
+    Simple class to represent a box for testing collision
 ]]
 
 Hitbox = Class{}

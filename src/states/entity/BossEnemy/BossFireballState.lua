@@ -1,3 +1,8 @@
+--[[
+    Boss shoots a predetermined number of fireballs at angles ranging from straight ahead to straight down
+    These can be reflected to stun the boss
+]]
+
 BossFireballState = Class {__includes = BossIdleState}
 
 function BossFireballState:enter(def)
@@ -33,14 +38,18 @@ function BossFireballState:enter(def)
         table.insert(self.entity.effects, GameObject(
             GAME_OBJECT_DEFS['fireball'], x, y
         ))
+
         --use trig to set velocities, flipping x if the boss is facing right
         self.entity.effects[#self.entity.effects].vx = math.cos(self.angle) * GAME_OBJECT_DEFS['fireball'].speed * (self.entity.direction == 'right' and -1 or 1)
         self.entity.effects[#self.entity.effects].vy = math.sin(self.angle) * GAME_OBJECT_DEFS['fireball'].speed
+
         --increment angle
         self.angle = self.angle + PI / (NUMBER_FIREBALLS * 2)
     end)
+
     --only shoot a certain number of fireballs
     :limit(NUMBER_FIREBALLS) 
+
     --once done, transition back to walking
     :finish(function()
         self.entity.stateMachine:change('move', {entity = self.entity})
@@ -48,7 +57,7 @@ function BossFireballState:enter(def)
 end
 
 function BossFireballState:processAI(dt)
-
+    --do nothing
 end
 
 function BossFireballState:exit()

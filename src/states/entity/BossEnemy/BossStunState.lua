@@ -20,7 +20,3 @@ function BossStunState:enter(def)
         self.entity.stateMachine:change('move', {entity = self.entity})
     end)
 end
-
--- function BossStunState:processAI(dt)
-
--- end

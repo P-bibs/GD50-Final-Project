@@ -1,12 +1,16 @@
 --[[
-    
+    Menu state
+    Reads from a table in a seperate file to create an easily alterable menu
+    None of the actual data is in this file, only directions for how
+        to display it and how to move the currently selected item
+    Update processes input in a variety of ways
+    Render renders the currently selected menu and its options
 ]]
 
 StartState = Class{__includes = BaseState}
 
 function StartState:init()
     self.map = LevelFiller.generate(100, 10)
-    self.background = math.random(3)
     self.currentMenu = 'primary'
     self.selected = 1
 
@@ -37,6 +41,7 @@ function StartState:update(dt)
             self.selected = 1
         end
     end
+    
     --change currently selected menu item up
     if love.keyboard.wasPressed(KEY_MOVE_UP) or love.keyboard.wasPressed(KEY_ATTACK_UP) and self.allowInput then
         self.selected = self.selected  - 1
@@ -60,6 +65,7 @@ function StartState:update(dt)
             self.currentMenu = 'primary'
         end
     end
+
     --DEBUG: unlock all levels
     if love.keyboard.wasPressed('k') then
         MENU_DEFS['level-select'].options = LEVELS

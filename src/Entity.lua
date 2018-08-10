@@ -1,5 +1,5 @@
 --[[
-    
+  Base state that all other entities are or inherit from  
 ]]
 
 Entity = Class{}
@@ -88,7 +88,7 @@ function Entity:update(dt)
         self.y = self.y - self.vy * dt
     end
 
-    --update hurtbox and collisionbox so they tracks entity
+    --update hurtbox and collisionbox so they track entity
     self.hurtbox = Hitbox(self.x, self.y, self.width, self.height, self.direction)
     self.collisionBox = Hitbox(self.x, self.y, self.width, self.height, self.direction)
 
@@ -131,6 +131,7 @@ function Entity:render()
     --love.graphics.rectangle('line', self.collisionBox.x, self.collisionBox.y, self.collisionBox.width, self.collisionBox.height)
 end
 
+--temporarily freeze position
 function Entity:freeze(duration)
     self.frozen = true
     Timer.after(duration, function() self.frozen = false end)

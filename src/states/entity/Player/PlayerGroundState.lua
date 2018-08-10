@@ -1,5 +1,7 @@
 --[[
-
+    State where the player is on the ground.
+    Mostly just used to set animations and create particle effects
+    Actual movement happens in player class
 ]]
 
 PlayerGroundState = Class{__includes = BaseState}

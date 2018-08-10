@@ -1,3 +1,9 @@
+--[[
+    State where the dash enemy jets towards the player.
+    Velocities are set when the state is entered, and then the entity slowly slows down
+    Once stopped, transition back to charge up idle state
+]]
+
 DashMoveState = Class {__includes = EntityMoveState}
 
 function DashMoveState:enter(def)

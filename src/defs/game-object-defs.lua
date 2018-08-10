@@ -1,9 +1,5 @@
 --[[
-    GD50
-    Legend of Zelda
-
-    Author: Colton Ogden
-    cogden@cs50.harvard.edu
+    data driven table of Game objects and effects
 ]]
 
 GAME_OBJECT_DEFS = {
@@ -31,7 +27,7 @@ GAME_OBJECT_DEFS = {
             }
         }
     },
-    ['character-attack-right'] = { --Effect
+    ['character-attack-right'] = {
         width = 32,
         height = 16,
         animations = {
@@ -43,7 +39,7 @@ GAME_OBJECT_DEFS = {
             }
         }
     },
-    ['character-attack-left'] = { --Effect
+    ['character-attack-left'] = {
         width = 32,
         height = 16,
         animations = {
@@ -55,7 +51,7 @@ GAME_OBJECT_DEFS = {
             }
         }
     },
-    ['character-attack-up'] = { --Effect
+    ['character-attack-up'] = {
         width = 16,
         height = 32,
         animations = {
@@ -67,7 +63,7 @@ GAME_OBJECT_DEFS = {
             }
         }
     },
-    ['character-attack-down'] = { --Effect
+    ['character-attack-down'] = {
         width = 16,
         height = 32,
         animations = {
@@ -79,7 +75,7 @@ GAME_OBJECT_DEFS = {
             }
         }
     },
-    ['hit-effect'] = { --Effect
+    ['hit-effect'] = {
         width = 16,
         height = 16,
         animations = {
@@ -97,7 +93,7 @@ GAME_OBJECT_DEFS = {
             }
         }
     },
-    ['fireball'] = { --Effect
+    ['fireball'] = {
         width = 16,
         height = 16,
         speed = 120,

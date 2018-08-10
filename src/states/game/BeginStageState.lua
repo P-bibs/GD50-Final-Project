@@ -1,3 +1,9 @@
+--[[
+    Info that appears when beginning a level. Includes a countdown timer
+    and an indication of which levle is about to start
+    Also sets up player and stage and other variables necessary for playState
+]]
+
 BeginStageState = Class{__includes = BaseState}
 
 function BeginStageState:init() --init is used here to set up tweens and related variables
