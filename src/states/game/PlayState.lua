@@ -81,6 +81,9 @@ function PlayState:update(dt)
             --make player tmeporarily invulnerable
             self.player:makeInvulnerable()
 
+            --Clear combo
+            self.player.comboTracker:clear()
+
             --red vignette
             self.vignetteOpacity = 255
             Timer.tween(.3, {
@@ -201,6 +204,9 @@ function PlayState:render()
     love.graphics.print(tostring(-math.min(0, math.floor(self.player.y + self.player.height))), 5, 5)
     love.graphics.setColor(255, 255, 255, 255)
     love.graphics.print(tostring(-math.min(0, math.floor(self.player.y  + self.player.height))), 4, 4)
+
+    --render player combo
+    self.player.comboTracker:render()
 
     --draw vignette caused by getting hurt
     love.graphics.setColor(255, 255, 255, self.vignetteOpacity)

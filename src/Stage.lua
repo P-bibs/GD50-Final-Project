@@ -32,6 +32,7 @@ function Stage:update(dt)
 
                     --update variables
                     self.player:alterJumps(PLAYER_MAX_JUMPS)
+                    self.player.comboTracker:addHit()
 
                     --freeze entities and animations temporarily
                     entity.currentAnimation:freeze(FREEZE_DURATION)
@@ -85,6 +86,7 @@ function Stage:update(dt)
                     --update variables
                     self.player:alterJumps(PLAYER_MAX_JUMPS)
                     fireball.reflected = true
+                    self.player.comboTracker:addHit()
 
                     --freeze entities and animations temporarily
                     fireball.currentAnimation:freeze(FREEZE_DURATION)

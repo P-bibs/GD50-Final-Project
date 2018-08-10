@@ -47,6 +47,7 @@ require 'src/Animation'
 require 'src/Player'
 require 'src/Hitbox'
 require 'src/Healthbar'
+require 'src/ComboTracker'
 
 require 'src/GameObject'
 require 'src/Effect'

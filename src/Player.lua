@@ -17,6 +17,8 @@ function Player:init(def, x, y)
 
     self.score = 0
 
+    self.comboTracker = ComboTracker(COMBO_TIMEOUT, VIRTUAL_WIDTH - 80, 60)
+
 end
 
 function Player:update(dt)
@@ -131,6 +133,9 @@ function Player:update(dt)
     if self.currentAnimation then
         self.currentAnimation:update(dt)
     end
+
+    --update combo
+    self.comboTracker:update(dt)
 end
 
 function Player:alterJumps(amount)

@@ -71,3 +71,5 @@ HOW_TO_TEXT2 = [[Attempt to make youre way through 2 challenging levels of ascen
 
 --Number of fireballs the boss shoots
 NUMBER_FIREBALLS = 8
+
+COMBO_TIMEOUT = 4
