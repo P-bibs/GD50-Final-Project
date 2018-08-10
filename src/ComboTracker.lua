@@ -4,7 +4,7 @@
 
 ComboTracker = Class {}
 
-function ComboTracker:init(timeout, x, y)
+function ComboTracker:init(timeout, x, y, addHitCallback)
     --time before combo expires
     self.timeout = timeout
 
@@ -20,6 +20,8 @@ function ComboTracker:init(timeout, x, y)
     --location to draw
     self.x = x
     self.y = y
+
+    self.hitCallback = addHitCallback
 end
 
 function ComboTracker:update(dt)
@@ -45,6 +47,9 @@ function ComboTracker:addHit()
     
     --reset hit count
     self.timer = self.timeout
+
+    --call a function in the player class that is passed in the combotracker's contructor
+    self.hitCallback(self.hits)
 end
 
 --clear the combo if the player gets hit

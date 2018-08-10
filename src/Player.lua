@@ -17,7 +17,15 @@ function Player:init(def, x, y)
 
     self.score = 0
 
-    self.comboTracker = ComboTracker(COMBO_TIMEOUT, VIRTUAL_WIDTH - 80, 60)
+    self.comboTracker = ComboTracker(COMBO_TIMEOUT, VIRTUAL_WIDTH - 80, 60, 
+        --callback function that is called each time the combo is incremented
+        function(hits)
+            --if the combo is a multiple of 3, repair all the player's jumps
+            if hits % 3 == 0 then 
+                self.brokenJumps = 0
+                self:alterJumps(PLAYER_MAX_JUMPS)
+            end
+        end)
 
 end
 
