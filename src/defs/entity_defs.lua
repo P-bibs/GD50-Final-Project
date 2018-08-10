@@ -74,7 +74,7 @@ ENTITY_DEFS = {
         name = 'Marauder of the Deep',
         animations = {
             ['idle'] = {
-                frames = {1},
+                frames = {1, 2},
                 interval = 1,
                 texture = 'boss-walk'
             },
@@ -87,6 +87,11 @@ ENTITY_DEFS = {
                 frames = {1, 2, 3, 4, 5, 6},
                 interval = 0.1,
                 texture = 'boss-stun'
+            },
+            ['mouth-open'] = {
+                frames = {1, 2},
+                interval = 0.1,
+                texture = 'boss-mouth-open'
             }
         }
     }

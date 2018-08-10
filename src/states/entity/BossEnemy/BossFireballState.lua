@@ -14,12 +14,18 @@ function BossFireballState:enter(def)
 
     --Every five seconds, shoot a fireball. Starting horizontal, then angling down
     self.fireballTimer = Timer.every(.5, function()
+        --open the mouth when the boss shoots, and then close it shortly after
+        self.entity:changeAnimation('mouth-open')
+        self.mouthCloseTimer = Timer.after(.4, function()
+            self.entity:changeAnimation('idle')
+        end)
+
         --use hardcoded values to pinpoint location of monsters mouth. This is where the fireball is spawned
         local x, y
         if self.entity.direction == 'left' then 
             x = self.entity.x + 30
         else
-            x = self.entity.x + self.entity.width - 10
+            x = self.entity.x + self.entity.width - 40
         end
         y = self.entity.y + 85
 
@@ -47,4 +53,5 @@ end
 
 function BossFireballState:exit()
     self.fireballTimer:remove()
+    self.mouthCloseTimer:remove()
 end

@@ -91,6 +91,10 @@ function PlayState:update(dt)
     elseif self.player.x > TILE_SIZE * self.tileMap.width - self.player.width then
         self.player.x = TILE_SIZE * self.tileMap.width - self.player.width
     end
+
+    if love.keyboard.wasPressed('escape') then
+        gStateMachine:change('start')
+    end
 end
 
 function PlayState:updateCamera(dt)

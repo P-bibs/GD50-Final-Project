@@ -73,6 +73,10 @@ function BeginStageState:update(dt)
             player = self.player
         })
     end
+
+    if love.keyboard.wasPressed('escape') then
+        gStateMachine:change('start')
+    end
 end
 
 function BeginStageState:render()

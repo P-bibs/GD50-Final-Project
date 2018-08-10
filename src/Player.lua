@@ -14,8 +14,6 @@ function Player:init(def, x, y)
         })
     end
 
-    self.jumps[#self.jumps].status = 'broken'
-
     self.hitbox = nil
     self.attackAnim = nil
 
