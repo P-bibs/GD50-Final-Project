@@ -67,7 +67,7 @@ end
 
 function BeginStageState:update(dt)
     --if the timer has counted down to 0, change to PlayState
-    if self.timer == 0 then
+    if self.timer <= 0 then
         gStateMachine:change('play', {
             stage = self.stage,
             player = self.player

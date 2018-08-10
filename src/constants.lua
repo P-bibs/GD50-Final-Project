@@ -61,6 +61,6 @@ KNOCKBACK = 100
 
 HOW_TO_TEXT = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam molestie, tellus eget eleifend volutpat, lacus sapien porttitor velit, ut fermentum urna tortor vel tellus. Nullam in bibendum felis. Morbi vel arcu vel turpis convallis imperdiet auctor vitae odio. Donec interdum mi risus, sed tempus odio laoreet sed. Nunc ultricies odio massa, aliquam lobortis nulla vehicula at. Etiam sem neque, semper ac mi pretium, viverra bibendum lorem. Curabitur et fermentum dolor, et molestie nisl. Sed luctus sagittis ipsum sit amet pellentesque. Quisque viverra felis a imperdiet dapibus. Morbi malesuada iaculis nulla, quis finibus elit laoreet vitae. In eu urna porttitor, dapibus.'
 
-PLAYER_MAX_JUMPS = 100
+PLAYER_MAX_JUMPS = 10
 
 NUMBER_FIREBALLS = 8

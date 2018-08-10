@@ -7,7 +7,14 @@ Player = Class{__includes = Entity}
 function Player:init(def, x, y)
     Entity.init(self, def, x, y)
 
-    self.jumps = PLAYER_MAX_JUMPS
+    self.jumps = {}
+    for i = 1, PLAYER_MAX_JUMPS do
+        table.insert(self.jumps, {
+            status = 'ready'
+        })
+    end
+
+    self.jumps[#self.jumps].status = 'broken'
 
     self.hitbox = nil
     self.attackAnim = nil
@@ -26,7 +33,7 @@ function Player:update(dt)
             self.y
         )
         self.hitbox = Hitbox(self.x + self.width, self.y, 32, 16, 'right')
-        self.jumps = self.jumps - 1
+        self:alterJumps(-1)
     end
 
     if love.keyboard.wasPressed(KEY_ATTACK_LEFT) then
@@ -36,7 +43,7 @@ function Player:update(dt)
             self.y
         )
         self.hitbox = Hitbox(self.x - 4 - GAME_OBJECT_DEFS['character-attack-left'].width, self.y, 32, 16, 'left')
-        self.jumps = self.jumps - 1
+        self:alterJumps(-1)
     end
 
     if love.keyboard.wasPressed(KEY_ATTACK_UP) then
@@ -46,7 +53,7 @@ function Player:update(dt)
             self.y - GAME_OBJECT_DEFS['character-attack-down'].height
         )
         self.hitbox = Hitbox(self.x, self.y - GAME_OBJECT_DEFS['character-attack-down'].height, 16, 32, 'up')
-        self.jumps = self.jumps - 1
+        self:alterJumps(-1)
     end
 
     if love.keyboard.wasPressed(KEY_ATTACK_DOWN) then
@@ -56,7 +63,7 @@ function Player:update(dt)
             self.y + self.height
         )
         self.hitbox = Hitbox(self.x, self.y + self.height, 16, 32, 'down')
-        self.jumps = self.jumps - 1
+        self:alterJumps(-1)
     end
 
     --update effects
@@ -82,13 +89,13 @@ function Player:update(dt)
         self.y = 0 - self.height
         self.ay = 0
         self.vy = 0
-        self.jumps = PLAYER_MAX_JUMPS
+        self:alterJumps(PLAYER_MAX_JUMPS)
     end
 
     --jump
-    if love.keyboard.wasPressed(KEY_JUMP) and self.jumps > 0 then
+    if love.keyboard.wasPressed(KEY_JUMP) and self:getJumps() > 0 then
         self.vy = PLAYER_JUMP_VELOCITY
-        self.jumps = self.jumps - 1
+        self:alterJumps(-1)
         gSounds['player-jump']:play()
         self.stateMachine:change('air')
     end
@@ -130,6 +137,43 @@ function Player:update(dt)
     end
 end
 
+--function that alters the number of jumps the player has remaining, either adding or subtracting based on sign
+--this has to be done intelligently because jump slots can become temporarily unusable
+function Player:alterJumps(amount)
+    --figure out the current highest jump slot thats ready (not broken or used)
+    local currentIndex = 0
+    for i = 1, #self.jumps do
+        if self.jumps[i].status == 'ready' then
+            currentIndex = i
+        end
+    end
+
+    --if the funciton call was to subtract jumps, start at the index calculated above and remove it as well as
+    --those below it depending on the amount passed in
+    if amount < 0 then
+        for i = currentIndex, math.max(1, currentIndex + amount + 1), -1 do
+            self.jumps[i].status = 'used'
+        end
+    else 
+    --if the funciton call was positive, start at the index above the current index and set it to ready,
+    --unless it is broken
+        for i = currentIndex + 1, math.min(PLAYER_MAX_JUMPS, currentIndex + amount), 1 do
+            if self.jumps[i].status ~= 'broken' then 
+                self.jumps[i].status = 'ready'
+            end
+        end
+    end
+end
+
+--get current number of usable jumps
+function Player:getJumps()
+    for i = 1, #self.jumps do
+        if self.jumps[i].status ~= 'ready' then
+            return i - 1
+        end
+    end
+    return #self.jumps
+end
 
 function Player:render()
     --debug to show area around player in which bug enemies will be alerted
@@ -137,14 +181,27 @@ function Player:render()
     --love.graphics.circle('fill', self.x + self.width, self.y + self.height, BUG_ALERT_DISTANCE)
     --love.graphics.setColor(255, 255, 255, 255)
 
+    love.graphics.setColor(255, 255, 255, 255)
     love.graphics.draw(gTextures[self.currentAnimation.texture], gFrames[self.currentAnimation.texture][self.currentAnimation:getCurrentFrame()],
         math.floor(self.x) + 8, math.floor(self.y) + 10, 0, 1, 1, 8, 10)
 
-    for i = 1, PLAYER_MAX_JUMPS do
-        if i <= self.jumps then
+    for i = 1, #self.jumps do
+        if self.jumps[i].status == 'ready' then
+            love.graphics.setColor(255, 255, 255, 255)
+            love.graphics.circle('fill', math.floor(self.x  - 3 + 3 * i), math.floor(self.y), 1)
+        end
+        if self.jumps[i].status == 'used' then
+            love.graphics.setColor(100, 100, 100, 100)
+            love.graphics.circle('fill', math.floor(self.x  - 3 + 3 * i), math.floor(self.y), 1)
+        end
+        --if i <= self.jumps then
+        if self.jumps[i].status == 'broken' then
+            love.graphics.setColor(255, 0, 0, 255)
             love.graphics.circle('fill', math.floor(self.x  - 3 + 3 * i), math.floor(self.y), 1)
         end
     end
+
+    love.graphics.setColor(255, 255, 255, 255)
 
     for i = 1, #self.effects do
         if not self.effects[i].dead then self.effects[i]:render() end

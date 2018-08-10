@@ -31,7 +31,7 @@ function Stage:update(dt)
                     gSounds['enemy-hurt']:play()
 
                     --update variables
-                    self.player.jumps = PLAYER_MAX_JUMPS
+                    self.player:alterJumps(PLAYER_MAX_JUMPS)
 
                     --freeze entities and animations temporarily
                     entity.currentAnimation:freeze(FREEZE_DURATION)
@@ -83,7 +83,7 @@ function Stage:update(dt)
                 local fireball = self.entities[1].effects[i] --alias fireball
                 if self.player.hitbox:collides(fireball) then
                     --update variables
-                    self.player.jumps = PLAYER_MAX_JUMPS
+                    self.player:alterJumps(PLAYER_MAX_JUMPS)
                     fireball.reflected = true
 
                     --freeze entities and animations temporarily
